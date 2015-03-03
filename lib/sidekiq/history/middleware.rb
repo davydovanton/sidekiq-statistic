@@ -4,11 +4,7 @@ module Sidekiq
       attr_accessor :msg
 
       def call(worker, msg, queue, &block)
-        if worker.kind_of?(Sidetiq::Schedulable)
-          call_with_sidekiq_history(worker, msg, queue, &block)
-        else
-          yield
-        end
+        call_with_sidekiq_history(worker, msg, queue, &block)
       end
 
       private
@@ -42,7 +38,7 @@ module Sidekiq
 
       def save_entry_for_worker(worker_history, worker)
         Sidekiq.redis do |redis|
-          history = "sidekiq:history"
+          history = 'sidekiq:history'
           redis.lpush(history, Sidekiq.dump_json(worker_history))
         end
       end
