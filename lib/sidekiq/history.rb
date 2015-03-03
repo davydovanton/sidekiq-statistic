@@ -5,12 +5,19 @@ rescue LoadError
 end
 
 require 'sidekiq/api'
-require 'sidekiq/history/version'
+require 'sidekiq/history/middleware'
 require 'sidekiq/history/web_extension'
+require 'sidekiq/history/version'
 
 module Sidekiq
   module History
     # Your code goes here...
+  end
+end
+
+Sidekiq.configure_server do |config|
+  config.server_middleware do |chain|
+    chain.add Sidekiq::History::Middleware
   end
 end
 
