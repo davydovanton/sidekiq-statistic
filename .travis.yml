@@ -1,6 +1,8 @@
 language: ruby
 sudo: false
 cache: bundler
+services:
+  - redis-server
 rvm:
   - 2.1
   - 2.0.0
