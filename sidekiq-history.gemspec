@@ -23,7 +23,7 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^exe/}) { |f| File.basename(f) }
   gem.require_paths = ["lib"]
 
-  gem.add_dependency 'sidekiq',   '>= 3.0.0'
+  gem.add_dependency 'sidekiq',  '>= 3.0.0'
 
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'sinatra'
