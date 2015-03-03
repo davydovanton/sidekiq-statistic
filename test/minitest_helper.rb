@@ -14,3 +14,14 @@ require 'sidekiq-history'
 require 'sidekiq/history'
 
 Sidekiq.logger.level = Logger::ERROR
+
+class HistoryWorker
+  include Sidekiq::Worker
+end
+
+def middlewared
+  middleware = Sidekiq::History::Middleware.new
+  middleware.call HistoryWorker.new, {}, 'default' do
+    yield
+  end
+end

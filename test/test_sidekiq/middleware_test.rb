@@ -1,19 +1,8 @@
 require 'minitest_helper'
 
-class HistoryWorker
-  include Sidekiq::Worker
-end
-
 module Sidekiq
   module History
     describe 'Middleware' do
-      def middlewared
-        middleware = Sidekiq::History::Middleware.new
-        middleware.call HistoryWorker.new, {}, 'default' do
-          yield
-        end
-      end
-
       it 'records history for passed workers' do
         middlewared {}
 
