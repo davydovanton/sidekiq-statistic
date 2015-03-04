@@ -1,9 +1,50 @@
-<div class='history'>
-  <h2>History</h2>
-
-  <div class='history__container'>
-    <% @history.each do |worker| %>
-      <p><%= worker[:name] %> : <%= worker[:status] %></p>
-    <% end %>
+<div class="row header">
+  <div class="col-sm-7">
+    <h3>Workers</h3>
   </div>
 </div>
+
+<table class="workers table table-hover table-bordered table-striped table-white">
+  <thead>
+    <th>Worker</th>
+    <th>Success</th>
+    <th>Failure</th>
+    <th>Total Time (sec)</th>
+    <th>Average (sec)</th>
+    <th>StdDev (sec)</th>
+    <th>Date</th>
+  </thead>
+  <tr>
+    <td>
+      <a href="<%= root_path %>history/my_worker">My Worker #1</a>
+    </td>
+    <td>100</td>
+    <td>10</td>
+    <td>220.0</td>
+    <td>2</td>
+    <td>0.2</td>
+    <td>2015-02-27 13:21:41</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="<%= root_path %>history/my_worker">My Worker #2</a>
+    </td>
+    <td>90</td>
+    <td>30</td>
+    <td>120.0</td>
+    <td>1</td>
+    <td>0.2</td>
+    <td>2015-02-27 13:51:41</td>
+  </tr>
+  <tr>
+    <td>
+      <a href="<%= root_path %>history/my_worker">My Worker #3</a>
+    </td>
+    <td>80</td>
+    <td>20</td>
+    <td>200.0</td>
+    <td>5</td>
+    <td>0.2</td>
+    <td>2015-02-27 12:59:31</td>
+  </tr>
+</table>

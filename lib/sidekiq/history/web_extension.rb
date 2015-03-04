@@ -7,9 +7,17 @@ module Sidekiq
         app.helpers do
         end
 
+        # app.get '/history' do
+        #   @history = Sidekiq::History::SortedEntry.new.history
+        #   render(:erb, File.read(File.join(view_path, 'history.erb')))
+        # end
+
         app.get '/history' do
-          @history = Sidekiq::History::SortedEntry.new.history
           render(:erb, File.read(File.join(view_path, 'history.erb')))
+        end
+
+        app.get '/history/:worker' do
+          render(:erb, File.read(File.join(view_path, 'worker.erb')))
         end
       end
     end

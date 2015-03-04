@@ -1,0 +1,29 @@
+<div class="row header">
+  <div class="col-sm-7">
+    <h3>Log for My Worker #1</h3>
+  </div>
+</div>
+
+<div style=" background-color: #fff; -webkit-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25); -moz-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25); box-shadow: 0 0 5px rgba(50, 50, 50, 0.25); -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; padding: 8px; margin-bottom: 10px; border-width: 0;">
+    <p>
+      2015-03-04T21:00:04.709Z 94785 TID-ovuaqeits MyWorker1 JID-48ae43df3bddd6ac6f1ebd6b INFO: done: 0.001 sec
+    </p>
+    <p>
+      2015-03-04T21:00:42.558Z 94785 TID-ovuaqdhsg MyWorker1 JID-c3b87b20d9b81b0c7736d682 INFO: start
+    </p>
+    <p>
+      2015-03-04T21:00:42.559Z 94785 TID-ovuaqeits MyWorker1 JID-4553ec14fd63a817e9d2b892 INFO: start
+    </p>
+    <p>
+      2015-03-04T21:00:42.561Z 94785 TID-ovuaqdhsg MyWorker1 JID-c3b87b20d9b81b0c7736d682 INFO: fail: 0.003 sec
+    </p>
+    <p>
+      2015-03-04T21:00:42.562Z 94785 TID-ovuaqeits MyWorker1 JID-4553ec14fd63a817e9d2b892 INFO: fail: 0.002 sec
+    </p>
+    <p>
+      2015-03-04T21:00:42.563Z 94785 TID-ovuaqeits WARN: {"retry"=>true, "queue"=>"default", "unique"=>true, "class"=>"MyWorker1", "args"=>[1425502740.0, 1425502800.0], "jid"=>"4553ec14fd63a817e9d2b892", "enqueued_at"=>1425502740.256565, "error_message"=>"failed", "error_class"=>"StandardError", "failed_at"=>1425502804.707503, "retry_count"=>1, "retried_at"=>1425502842.561755}
+    </p>
+    <p>
+      2015-03-04T21:00:42.563Z 94785 TID-ovuaqdhsg WARN: {"retry"=>true, "queue"=>"default", "unique"=>true, "class"=>"MyWorker1", "args"=>[1425502560.0, 1425502620.0], "jid"=>"c3b87b20d9b81b0c7736d682", "enqueued_at"=>1425502560.623177, "error_message"=>"failed", "error_class"=>"StandardError", "failed_at"=>1425502625.392153, "retry_count"=>3, "retried_at"=>1425502842.561333}
+    </p>
+</div>
