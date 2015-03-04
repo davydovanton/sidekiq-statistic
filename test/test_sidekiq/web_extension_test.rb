@@ -20,7 +20,7 @@ module Sidekiq
     it 'can display history page without any failures' do
       get '/history'
       last_response.status.must_equal 200
-      last_response.body.must_match /Hello world!/
+      last_response.body.must_match /History/
     end
 
     describe 'when there are history' do

@@ -1,1 +1,9 @@
-<h2>Hello world!</h2>
+<div class='history'>
+  <h2>History</h2>
+
+  <div class='history__container'>
+    <% @history.each do |worker| %>
+      <p><%= worker[:name] %> : <%= worker[:status] %></p>
+    <% end %>
+  </div>
+</div>

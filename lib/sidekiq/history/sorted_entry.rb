@@ -2,7 +2,8 @@ module Sidekiq
   module History
     class SortedEntry
       def history
-        { history: redis_data[0] }
+        redis_data.first
+          .map { |worker| Sidekiq.load_json(worker).symbolize_keys }
       end
 
     private

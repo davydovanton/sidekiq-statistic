@@ -8,17 +8,17 @@ module Sidekiq
       end
 
       it 'returns hash with all workers' do
-        middlewared {}
-
         begin
           middlewared do
             raise StandardError.new('failed')
           end
         rescue
         end
+        middlewared {}
 
-        sorted_entry = Sidekiq::History::SortedEntry.new.history
-        assert_equal 2, sorted_entry[:history].size
+        history = Sidekiq::History::SortedEntry.new.history
+        assert_equal 2, history.size
+        assert_equal 'success', history.first[:status]
       end
     end
   end
