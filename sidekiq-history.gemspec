@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "TODO: Put your gem's website or public repo URL here."
   gem.license       = 'MIT'
 
-  gem.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  gem.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|images)/}) }
   gem.bindir        = 'exe'
   gem.executables   = gem.files.grep(%r{^exe/}) { |f| File.basename(f) }
   gem.require_paths = ['lib']
