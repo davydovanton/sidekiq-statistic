@@ -14,3 +14,4 @@ matrix:
   allow_failures:
     - rvm: rbx-2
     - rvm: jruby
+bundler_args: --without test --jobs 3 --retry 3
