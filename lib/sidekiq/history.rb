@@ -6,7 +6,6 @@ end
 
 require 'sidekiq/api'
 require 'sidekiq/history/middleware'
-require 'sidekiq/history/sorted_entry'
 require 'sidekiq/history/web_extension'
 require 'sidekiq/history/version'
 

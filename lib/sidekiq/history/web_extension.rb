@@ -8,7 +8,6 @@ module Sidekiq
         end
 
         app.get '/history' do
-          @history = Sidekiq::History::SortedEntry.new.history
           render(:erb, File.read(File.join(view_path, 'history.erb')))
         end
       end
