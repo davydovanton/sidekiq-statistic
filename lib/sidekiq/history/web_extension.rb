@@ -13,6 +13,7 @@ module Sidekiq
           @passed_statistic = worker_statistic.datasets(:passed)
           @failed_statistic = worker_statistic.datasets(:failed)
 
+
           render(:erb, File.read(File.join(view_path, 'history.erb')))
         end
       end

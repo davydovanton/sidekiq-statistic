@@ -36,11 +36,11 @@ module Sidekiq
       end
 
       def workers
-        @workers ||= redis_hash.flat_map { |day_hash| day_hash.values.first.keys }.uniq
+        @workers ||= redis_hash.flat_map { |hash| hash.values.first.keys }.uniq
       end
 
       def values(worker)
-        @worker_values ||= redis_hash.map { |h| h.values.first[worker] || {} }
+        redis_hash.map { |h| h.values.first[worker] || {} }
       end
 
       def redis_hash
