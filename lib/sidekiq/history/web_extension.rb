@@ -8,6 +8,11 @@ module Sidekiq
         end
 
         app.get '/history' do
+          worker_statistic = Sidekiq::History::WorkerStatistic.new(20)
+          @labels = worker_statistic.labels
+          @passed_statistic = worker_statistic.datasets(:passed)
+          @failed_statistic = worker_statistic.datasets(:failed)
+
           render(:erb, File.read(File.join(view_path, 'history.erb')))
         end
       end

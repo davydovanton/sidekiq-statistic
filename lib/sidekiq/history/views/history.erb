@@ -1,6 +1,31 @@
+<script type="text/javascript" src="http://www.chartjs.org/assets/Chart.min.js"></script>
+
 <div class='history'>
   <h2>History</h2>
 
   <div class='history__container'>
+    <canvas id="js-passed-chart" width="800" height="200"></canvas>
+    <canvas id="js-failed-chart" width="800" height="200"></canvas>
+    <script type="text/javascript">
+      $(function () {
+        Chart.defaults.global.responsive = true
+
+        var failedData = {
+          labels: <%= @labels %>,
+          datasets: <%= @failed_statistic %>
+        };
+
+        var passedData = {
+          labels: <%= @labels %>,
+          datasets: <%= @passed_statistic %>
+        };
+
+        var ctx_failed = document.getElementById("js-failed-chart").getContext("2d");
+        new Chart(ctx_failed).Line(failedData, {});
+
+        var ctx_passed = document.getElementById("js-passed-chart").getContext("2d");
+        new Chart(ctx_passed).Line(passedData, {});
+      });
+    </script>
   </div>
 </div>
