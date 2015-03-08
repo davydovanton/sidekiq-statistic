@@ -32,7 +32,7 @@ module Sidekiq
 
       def save_entry_for_worker(worker_sratus, worker)
         Sidekiq.redis do |redis|
-          history = "sidekiq:history:#{Time.now.utc.to_date - 2}"
+          history = "sidekiq:history:#{Time.now.utc.to_date}"
           value = redis.hget(history, worker.class.to_s)
 
           if value
