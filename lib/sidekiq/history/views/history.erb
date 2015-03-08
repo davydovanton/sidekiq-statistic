@@ -13,12 +13,12 @@
         Chart.defaults.global.responsive = true
 
         var failedData = {
-          labels: <%= @labels %>,
+          labels: <%= @dates %>,
           datasets: <%= @failed_statistic %>
         };
 
         var passedData = {
-          labels: <%= @labels %>,
+          labels: <%= @dates %>,
           datasets: <%= @passed_statistic %>
         };
 

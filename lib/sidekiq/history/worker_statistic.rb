@@ -6,11 +6,11 @@ module Sidekiq
         @end_date = @start_date - days_previous
       end
 
-      def labels
-        @labels ||= redis_hash.flat_map { |day_hash| day_hash.keys }
+      def dates
+        @dates ||= redis_hash.flat_map(&:keys)
       end
 
-      def charts(type)
+      def charts(type, options = {})
         workers.map do |worker|
           {
             label: worker,
@@ -20,17 +20,17 @@ module Sidekiq
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
-            data: values(worker).map { |val| val.fetch(type, 0) }
+            data: values(worker).map{ |val| val.fetch(type, 0) }
           }
         end.to_json
       end
 
       def workers
-        @workers ||= redis_hash.flat_map { |hash| hash.values.first.keys }.uniq
+        @workers ||= redis_hash.flat_map{ |hash| hash.values.first.keys }.uniq
       end
 
       def values(worker)
-        redis_hash.map { |h| h.values.first[worker] || {} }
+        redis_hash.map{ |h| h.values.first[worker] || {} }
       end
 
       def redis_hash
@@ -44,6 +44,7 @@ module Sidekiq
       end
 
     private
+
       def parse_statistic(hash)
         hash.each do |worker, json|
           hash[worker] = Sidekiq.load_json(json).symbolize_keys
