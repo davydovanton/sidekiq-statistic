@@ -12,25 +12,22 @@
       $(function () {
         Chart.defaults.global.responsive = true
         Chart.defaults.global.scaleLineColor = "rgba(0,0,0,.4)"
-        Chart.defaults.global.multiTooltipTemplate = "<%= @tooltip_template %>"
 
         $.getJSON( '/sidekiq/history/charts.json', function (data) {
-          var failedData = {
-            labels: data.labels,
-            datasets: data.failed_datasets
-          }
-
-          var passedData = {
-            labels: data.labels,
-            datasets: data.passed_datasets
-          }
-
-          var ctxFailed = document.getElementById("js-failed-chart").getContext("2d")
-            , ctxPassed = document.getElementById("js-passed-chart").getContext("2d")
-
-          new Chart(ctxFailed).Line(failedData, {})
-          new Chart(ctxPassed).Line(passedData, {})
+          createChart('failed', data, data.failed_datasets)
+          createChart('passed', data, data.passed_datasets)
         })
+
+      function createChart(type, data, datasets) {
+        var ctxFailed = document.getElementById("js-" + type + "-chart").getContext("2d")
+
+        new Chart(ctxFailed).Line({
+          labels: data.labels,
+          datasets: datasets
+        }, {
+          multiTooltipTemplate: data.tooltip_template
+        })
+      }
       })
     </script>
   </div>
