@@ -26,6 +26,10 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## Dependency
+
+* [Chart.js](http://www.chartjs.org) Simple, clean and engaging charts js library.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.

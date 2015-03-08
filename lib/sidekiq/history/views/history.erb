@@ -1,6 +1,35 @@
+<script type="text/javascript" src="http://www.chartjs.org/assets/Chart.js"></script>
+
 <div class='history'>
   <h2>History</h2>
 
   <div class='history__container'>
+    <h2>Failed</h2>
+    <canvas id="js-failed-chart" width="800" height="200"></canvas>
+    <h2>Passed</h2>
+    <canvas id="js-passed-chart" width="800" height="200"></canvas>
+    <script type="text/javascript">
+      $(function () {
+        Chart.defaults.global.responsive = true
+        Chart.defaults.global.scaleLineColor = "rgba(0,0,0,.4)"
+        Chart.defaults.global.multiTooltipTemplate = "<%= @tooltip_template %>"
+
+        var failedData = {
+          labels: <%= @worker_statistic.dates %>,
+          datasets: <%= @worker_statistic.charts(:failed) %>
+        }
+
+        var passedData = {
+          labels: <%= @worker_statistic.dates %>,
+          datasets: <%= @worker_statistic.charts(:passed) %>
+        }
+
+        var ctxFailed = document.getElementById("js-failed-chart").getContext("2d")
+        new Chart(ctxFailed).Line(failedData, {}).generateLegend()
+
+        var ctxPassed = document.getElementById("js-passed-chart").getContext("2d")
+        new Chart(ctxPassed).Line(passedData, {})
+      })
+    </script>
   </div>
 </div>

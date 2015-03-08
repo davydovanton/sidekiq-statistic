@@ -1,4 +1,7 @@
-* 08.03.2015: Add Statistic class which provide statistic hash
+* 08.03.2015: Add charts for each passed and failed jobs for each worker.
+
+  *Anton Davydov*
+* 08.03.2015: Add Statistic class which provide statistics
               for each day and each worker.
 
   Sidekiq::History::Statistic.new(0).workers_hash
