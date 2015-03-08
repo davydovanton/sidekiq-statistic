@@ -12,19 +12,23 @@ module Sidekiq
 
       def charts(type, options = {})
         workers.map do |worker|
-          color_hash = [Random.new.rand(256), Random.new.rand(256), Random.new.rand(256)].join ','
+          color_hash = random_color_hash
           {
             label: worker,
             fillColor: "rgba(#{color_hash},0.2)",
             strokeColor: "rgba(#{color_hash},0.9)",
             pointColor: "rgba(#{color_hash},0.2)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(220,220,220,1)',
             data: values(worker).map{ |val| val.fetch(type, 0) }
           }
         # TODO: remove #to_json method
         end.to_json
+      end
+
+      def random_color_hash
+        [Random.new.rand(256), Random.new.rand(256), Random.new.rand(256)].join ','
       end
 
       def workers
