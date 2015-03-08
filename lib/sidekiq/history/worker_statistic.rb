@@ -10,29 +10,19 @@ module Sidekiq
         @labels ||= redis_hash.flat_map { |day_hash| day_hash.keys }
       end
 
-      def datasets(option)
-        chart.map do |worker|
+      def charts(type)
+        workers.map do |worker|
           {
-            label: worker[:name],
+            label: worker,
             fillColor: "rgba(220,220,220,0.2)",
             strokeColor: "rgba(220,220,220,1)",
             pointColor: "rgba(220,220,220,1)",
             pointStrokeColor: "#fff",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
-            data: worker[option]
+            data: values(worker).map { |val| val.fetch(type, 0) }
           }
         end.to_json
-      end
-
-      def chart
-        @chart ||= workers.map do |worker|
-          {
-            name: worker,
-            failed: values(worker).map { |val| val.fetch(:failed, 0) },
-            passed: values(worker).map { |val| val.fetch(:passed, 0) }
-          }
-        end
       end
 
       def workers
