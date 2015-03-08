@@ -23,8 +23,7 @@ module Sidekiq
             pointHighlightStroke: 'rgba(220,220,220,1)',
             data: values(worker).map{ |val| val.fetch(type, 0) }
           }
-        # TODO: remove #to_json method
-        end.to_json
+        end
       end
 
       def random_color_hash
