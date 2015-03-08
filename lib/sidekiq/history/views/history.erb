@@ -17,19 +17,19 @@
         var failedData = {
           labels: <%= @worker_statistic.dates %>,
           datasets: <%= @worker_statistic.charts(:failed) %>
-        };
+        }
 
         var passedData = {
           labels: <%= @worker_statistic.dates %>,
           datasets: <%= @worker_statistic.charts(:passed) %>
-        };
+        }
 
-        var ctxFailed = document.getElementById("js-failed-chart").getContext("2d");
-        new Chart(ctxFailed).Line(failedData, {});
+        var ctxFailed = document.getElementById("js-failed-chart").getContext("2d")
+        new Chart(ctxFailed).Line(failedData, {}).generateLegend()
 
-        var ctxPassed = document.getElementById("js-passed-chart").getContext("2d");
-        new Chart(ctxPassed).Line(passedData, {});
-      });
+        var ctxPassed = document.getElementById("js-passed-chart").getContext("2d")
+        new Chart(ctxPassed).Line(passedData, {})
+      })
     </script>
   </div>
 </div>
