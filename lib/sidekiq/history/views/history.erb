@@ -11,7 +11,7 @@
     <script type="text/javascript">
       $(function () {
         Chart.defaults.global.responsive = true
-        Chart.defaults.global.scaleLineColor = "rgba(0,0,0,.4)"
+        Chart.defaults.global.scaleLineColor = 'rgba(0,0,0,.4)'
 
         $.getJSON( '/sidekiq/history/charts.json', function (data) {
           createChart('failed', data, data.failed_datasets)
