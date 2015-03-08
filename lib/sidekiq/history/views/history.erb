@@ -13,13 +13,13 @@
         Chart.defaults.global.responsive = true
 
         var failedData = {
-          labels: <%= @dates %>,
-          datasets: <%= @failed_statistic %>
+          labels: <%= @worker_statistic.dates %>,
+          datasets: <%= @worker_statistic.charts(:failed) %>
         };
 
         var passedData = {
-          labels: <%= @dates %>,
-          datasets: <%= @passed_statistic %>
+          labels: <%= @worker_statistic.dates %>,
+          datasets: <%= @worker_statistic.charts(:passed) %>
         };
 
         var ctx_failed = document.getElementById("js-failed-chart").getContext("2d");
