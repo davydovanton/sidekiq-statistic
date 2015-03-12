@@ -20,7 +20,7 @@ module Sidekiq
         end
       end
 
-      def charts(type, options = {})
+      def charts(type)
         workers.map do |worker|
           color_hash = random_color_hash
           {
