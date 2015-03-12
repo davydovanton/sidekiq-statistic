@@ -11,7 +11,7 @@ module Sidekiq
 
         app.get '/history' do
           worker_statistic = Sidekiq::History::WorkerStatistic.new(20)
-          @workers = worker_statistic.workers
+          @workers = worker_statistic.statistic
           render(:erb, File.read(File.join(view_path, 'history.erb')))
         end
 

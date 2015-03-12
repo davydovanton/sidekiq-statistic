@@ -16,6 +16,24 @@ module Sidekiq
         end
       end
 
+      describe '#last_runtime' do
+        it 'returns last runtime for worker' do
+          middlewared {}
+
+          time = DateTime.now
+          DateTime.stub :now, time do
+            values = worker_static.values('HistoryWorker')
+            assert_equal time.to_s, worker_static.last_runtime('HistoryWorker')
+          end
+        end
+
+        describe 'when jobs were not call' do
+          it 'returns nil' do
+            assert_equal nil, worker_static.last_runtime('HistoryWorker')
+          end
+        end
+      end
+
       describe '#workers' do
         it 'returns array with workers' do
           middlewared {}
@@ -38,7 +56,7 @@ module Sidekiq
 
           DateTime.stub :now, time do
             values = worker_static.values('HistoryWorker')
-            assert_equal [{}, { failed: 0, passed: 1, recently_execution: time.to_s }], values
+            assert_equal [{}, { failed: 0, passed: 1, last_runtime: time.to_s }], values
           end
         end
 

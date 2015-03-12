@@ -21,10 +21,10 @@
         <th>Average(sec)</th>
         <th>StdDev(sec)</th>
       </thead>
-      <% @workers.each do |name| %>
+      <% @workers.each do |worker| %>
         <tr>
-          <td><%= name %></td>
-          <td><%= DateTime.now %></td>
+          <td><%= worker[:name] %></td>
+          <td><%= worker[:last_runtime] %></td>
           <td>10</td>
           <td>10</td>
           <td>20</td>

@@ -27,7 +27,7 @@ module Sidekiq
         {
           failed: 0,
           passed: 1,
-          recently_execution: DateTime.now
+          last_runtime: DateTime.now
         }
       end
 

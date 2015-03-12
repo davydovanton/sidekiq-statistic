@@ -10,6 +10,15 @@ module Sidekiq
         @dates ||= redis_hash.flat_map(&:keys)
       end
 
+      def statistic
+        workers.map do |worker|
+          {
+            name: worker,
+            last_runtime: last_runtime(worker)
+          }
+        end
+      end
+
       def charts(type, options = {})
         workers.map do |worker|
           color_hash = random_color_hash
@@ -52,6 +61,10 @@ module Sidekiq
       end
 
       def failure_for(worker)
+      end
+
+      def last_runtime(worker)
+        values(worker).map{ |s| s[:last_runtime] }.compact.last
       end
 
     private
