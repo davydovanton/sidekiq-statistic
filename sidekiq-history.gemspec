@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
 
   gem.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
   gem.description   = %q{TODO: Write a longer description or delete this line.}
-  gem.homepage      = "TODO: Put your gem's website or public repo URL here."
+  gem.homepage      = "https://github.com/davydovanton/sidekiq-history"
   gem.license       = 'MIT'
 
   gem.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|images)/}) }
