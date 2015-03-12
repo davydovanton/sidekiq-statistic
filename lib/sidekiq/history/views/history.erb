@@ -21,9 +21,9 @@
         <th>Average(sec)</th>
         <th>StdDev(sec)</th>
       </thead>
-      <% 10.times do |number| %>
+      <% @workers.each do |name| %>
         <tr>
-          <td>Worker #<%= number %></td>
+          <td><%= name %></td>
           <td><%= DateTime.now %></td>
           <td>10</td>
           <td>10</td>

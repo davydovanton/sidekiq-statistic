@@ -48,6 +48,12 @@ module Sidekiq
         end
       end
 
+      def success_for(worker)
+      end
+
+      def failure_for(worker)
+      end
+
     private
 
       def parse_statistic(hash)

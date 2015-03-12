@@ -34,8 +34,12 @@ module Sidekiq
       describe '#values' do
         it 'returns array with values for HistoryWorker per day' do
           middlewared {}
-          values = worker_static.values('HistoryWorker')
-          assert_equal [{}, { failed: 0, passed: 1 }], values
+          time = DateTime.now
+
+          DateTime.stub :now, time do
+            values = worker_static.values('HistoryWorker')
+            assert_equal [{}, { failed: 0, passed: 1, recently_execution: time.to_s }], values
+          end
         end
 
         describe 'when jobs were not call' do

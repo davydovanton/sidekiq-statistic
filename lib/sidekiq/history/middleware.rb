@@ -26,7 +26,8 @@ module Sidekiq
         # worker.sidekiq_options_hash
         {
           failed: 0,
-          passed: 1
+          passed: 1,
+          recently_execution: DateTime.now
         }
       end
 
