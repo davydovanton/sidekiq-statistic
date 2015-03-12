@@ -8,6 +8,34 @@
     <canvas id="js-failed-chart" width="800" height="200"></canvas>
     <h2>Passed</h2>
     <canvas id="js-passed-chart" width="800" height="200"></canvas>
+
+    <h2>Worker table</h2>
+    <table class="workers-statistic table table-hover table-bordered table-striped table-white">
+      <thead>
+        <th>Worker</th>
+        <th>Date</th>
+        <th>Success</th>
+        <th>Failure</th>
+        <th>Total</th>
+        <th>Time(sec)</th>
+        <th>Average(sec)</th>
+        <th>StdDev(sec)</th>
+      </thead>
+      <% 10.times do |number| %>
+        <tr>
+          <td>Worker #<%= number %></td>
+          <td><%= DateTime.now %></td>
+          <td>10</td>
+          <td>10</td>
+          <td>20</td>
+          <td>200</td>
+          <td>100</td>
+          <td>140</td>
+        </tr>
+      <% end %>
+    </table>
+
+
     <script type="text/javascript">
       $(function () {
         Chart.defaults.global.responsive = true
