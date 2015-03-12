@@ -1,6 +1,8 @@
 module Sidekiq
   module History
     class WorkerStatistic
+      JOB_STATES = %i[passed failed]
+
       def initialize(days_previous, start_date = nil)
         @start_date = start_date || Time.now.utc.to_date
         @end_date = @start_date - days_previous
@@ -15,7 +17,7 @@ module Sidekiq
           {
             name: worker,
             last_runtime: last_runtime(worker),
-            jobs_count: jobs_count(worker)
+            number_of_calls: number_of_calls(worker)
           }
         end
       end
@@ -31,7 +33,7 @@ module Sidekiq
             pointStrokeColor: '#fff',
             pointHighlightFill: '#fff',
             pointHighlightStroke: 'rgba(220,220,220,1)',
-            data: values(worker).map{ |val| val.fetch(type, 0) }
+            data: statistic_for(worker).map{ |val| val.fetch(type, 0) }
           }
         end
       end
@@ -44,7 +46,7 @@ module Sidekiq
         @workers ||= redis_hash.flat_map{ |hash| hash.values.first.keys }.uniq
       end
 
-      def values(worker)
+      def statistic_for(worker)
         redis_hash.map{ |h| h.values.first[worker] || {} }
       end
 
@@ -58,19 +60,24 @@ module Sidekiq
         end
       end
 
-      def jobs_count(worker)
-        total = %i[passed failed].map{ |key| jobs_count_value worker, key }
-        { success: total[0], failure: total[1], total: total.inject(:+) }
+      def number_of_calls(worker)
+        number_of_calls = JOB_STATES.map{ |state| number_of_calls_for state, worker }
+
+        {
+          success: number_of_calls.first,
+          failure: number_of_calls.last,
+          total: number_of_calls.inject(:+)
+        }
       end
 
-      def jobs_count_value(worker, key)
-        values(worker)
+      def number_of_calls_for(state, worker)
+        statistic_for(worker)
           .select(&:any?)
-          .map{ |hash| hash[key] }.inject(:+) || 0
+          .map{ |hash| hash[state] }.inject(:+) || 0
       end
 
       def last_runtime(worker)
-        values(worker).map{ |s| s[:last_runtime] }.compact.last
+        statistic_for(worker).map{ |s| s[:last_runtime] }.compact.last
       end
 
     private

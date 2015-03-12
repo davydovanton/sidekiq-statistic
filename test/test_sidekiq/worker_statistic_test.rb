@@ -22,7 +22,7 @@ module Sidekiq
 
           time = DateTime.now
           DateTime.stub :now, time do
-            values = worker_static.values('HistoryWorker')
+            values = worker_static.statistic_for('HistoryWorker')
             assert_equal time.to_s, worker_static.last_runtime('HistoryWorker')
           end
         end
@@ -55,24 +55,24 @@ module Sidekiq
           time = DateTime.now
 
           DateTime.stub :now, time do
-            values = worker_static.values('HistoryWorker')
+            values = worker_static.statistic_for('HistoryWorker')
             assert_equal [{}, { failed: 0, passed: 1, last_runtime: time.to_s }], values
           end
         end
 
         describe 'when jobs were not call' do
           it 'returns array with empty values' do
-            values = worker_static.values('HistoryWorker')
+            values = worker_static.statistic_for('HistoryWorker')
             assert_equal [{}, {}], values
           end
         end
       end
 
-      describe '#jobs_count' do
+      describe '#number_of_calls' do
         it 'returns success jobs count for worker' do
           10.times { middlewared {} }
 
-          count = worker_static.jobs_count('HistoryWorker')
+          count = worker_static.number_of_calls('HistoryWorker')
           assert_equal 10, count[:success]
         end
 
@@ -87,7 +87,7 @@ module Sidekiq
               end
             end
 
-            count = worker_static.jobs_count('HistoryWorker')
+            count = worker_static.number_of_calls('HistoryWorker')
             assert_equal 0, count[:success]
           end
         end
@@ -102,7 +102,7 @@ module Sidekiq
             end
           end
 
-          count = worker_static.jobs_count('HistoryWorker')
+          count = worker_static.number_of_calls('HistoryWorker')
           assert_equal 10, count[:failure]
         end
 
@@ -110,7 +110,7 @@ module Sidekiq
           it 'returns zero' do
             10.times { middlewared {} }
 
-            count = worker_static.jobs_count('HistoryWorker')
+            count = worker_static.number_of_calls('HistoryWorker')
             assert_equal 0, count[:failure]
           end
         end
@@ -127,13 +127,13 @@ module Sidekiq
             end
           end
 
-          count = worker_static.jobs_count('HistoryWorker')
+          count = worker_static.number_of_calls('HistoryWorker')
           assert_equal 20, count[:total]
         end
 
         describe 'when total jobs were not call' do
           it 'returns zero' do
-            count = worker_static.jobs_count('HistoryWorker')
+            count = worker_static.number_of_calls('HistoryWorker')
             assert_equal 0, count[:failure]
           end
         end
