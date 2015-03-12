@@ -14,7 +14,8 @@ module Sidekiq
         workers.map do |worker|
           {
             name: worker,
-            last_runtime: last_runtime(worker)
+            last_runtime: last_runtime(worker),
+            jobs_count: jobs_count(worker)
           }
         end
       end
@@ -57,10 +58,15 @@ module Sidekiq
         end
       end
 
-      def success_for(worker)
+      def jobs_count(worker)
+        total = %i[passed failed].map{ |key| jobs_count_value worker, key }
+        { success: total[0], failure: total[1], total: total.inject(:+) }
       end
 
-      def failure_for(worker)
+      def jobs_count_value(worker, key)
+        values(worker)
+          .select(&:any?)
+          .map{ |hash| hash[key] }.inject(:+) || 0
       end
 
       def last_runtime(worker)

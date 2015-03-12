@@ -25,9 +25,9 @@
         <tr>
           <td><%= worker[:name] %></td>
           <td><%= worker[:last_runtime] %></td>
-          <td>10</td>
-          <td>10</td>
-          <td>20</td>
+          <td><%= worker[:jobs_count][:success] %></td>
+          <td><%= worker[:jobs_count][:failure] %></td>
+          <td><%= worker[:jobs_count][:total] %></td>
           <td>200</td>
           <td>100</td>
           <td>140</td>
