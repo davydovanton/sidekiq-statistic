@@ -1,7 +1,7 @@
 module Sidekiq
   module History
     class WorkerStatistic
-      JOB_STATES = %i[passed failed]
+      JOB_STATES = [:passed, :failed]
 
       def initialize(days_previous, start_date = nil)
         @start_date = start_date || Time.now.utc.to_date
