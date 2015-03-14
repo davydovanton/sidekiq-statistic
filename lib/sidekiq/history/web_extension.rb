@@ -18,7 +18,6 @@ module Sidekiq
           worker_statistic = Sidekiq::History::WorkerStatistic.new(20)
 
           {
-            tooltip_template: '<%= datasetLabel %> - <%= value %>',
             labels: worker_statistic.dates,
             failed_datasets: worker_statistic.charts(:failed),
             passed_datasets: worker_statistic.charts(:passed)

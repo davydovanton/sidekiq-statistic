@@ -12,15 +12,8 @@ module Sidekiq
 
       def charts(type, options = {})
         workers.map do |worker|
-          color_hash = random_color_hash
           {
-            label: worker,
-            fillColor: "rgba(#{color_hash},0.2)",
-            strokeColor: "rgba(#{color_hash},0.9)",
-            pointColor: "rgba(#{color_hash},0.2)",
-            pointStrokeColor: '#fff',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(220,220,220,1)',
+            name: worker,
             data: values(worker).map{ |val| val.fetch(type, 0) }
           }
         end
