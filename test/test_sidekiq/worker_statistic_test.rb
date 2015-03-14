@@ -138,6 +138,22 @@ module Sidekiq
         end
       end
 
+      describe '#total_runtime' do
+        it 'returns totle runtime HistoryWorker' do
+          middlewared { sleep 0.2 }
+
+          values = worker_static.total_runtime('HistoryWorker')
+          assert_equal 0.2, values.round(1)
+        end
+
+        describe 'when jobs were not call' do
+          it 'returns array with empty values' do
+            values = worker_static.total_runtime('HistoryWorker')
+            assert_equal 0.0, values
+          end
+        end
+      end
+
       describe '#redis_hash' do
         it 'returns hash for each day' do
           history = worker_static.redis_hash

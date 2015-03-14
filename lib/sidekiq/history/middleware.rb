@@ -17,7 +17,7 @@ module Sidekiq
       rescue StandardError => e
         worker_status[:failed] = 1
         worker_status[:passed] = 0
-        worker_status[:runtime] = 0
+        worker_status[:runtime] = 0.0
 
         raise e
       ensure
@@ -42,7 +42,7 @@ module Sidekiq
 
           if value
             summary = Sidekiq.load_json(value).symbolize_keys
-            %i[ failed passed runtime ].each do |stat|
+            [:failed, :passed, :runtime].each do |stat|
               worker_status[stat] = worker_status[stat] + summary[stat]
             end
           end

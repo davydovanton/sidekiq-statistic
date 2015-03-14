@@ -17,7 +17,8 @@ module Sidekiq
           {
             name: worker,
             last_runtime: last_runtime(worker),
-            number_of_calls: number_of_calls(worker)
+            number_of_calls: number_of_calls(worker),
+            total_runtime: total_runtime(worker).round(3)
           }
         end
       end
@@ -78,6 +79,10 @@ module Sidekiq
 
       def last_runtime(worker)
         statistic_for(worker).map{ |s| s[:last_runtime] }.compact.last
+      end
+
+      def total_runtime(worker)
+        statistic_for(worker).map{ |s| s[:runtime] }.compact.inject(:+) || 0.0
       end
 
     private
