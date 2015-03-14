@@ -10,16 +10,17 @@ module Sidekiq
       private
 
       def call_with_sidekiq_history(worker, msg, queue)
-        worker_sratus = new_status
+        worker_status = new_status
 
         yield
       rescue StandardError => e
-        worker_sratus[:failed] = 1
-        worker_sratus[:passed] = 0
+        worker_status[:failed] = 1
+        worker_status[:passed] = 0
+        worker_status[:runtime] = 0
 
         raise e
       ensure
-        save_entry_for_worker(worker_sratus, worker)
+        save_entry_for_worker(worker_status, worker)
       end
 
       def new_status
@@ -31,18 +32,18 @@ module Sidekiq
         }
       end
 
-      def save_entry_for_worker(worker_sratus, worker)
+      def save_entry_for_worker(worker_status, worker)
         Sidekiq.redis do |redis|
           history = "sidekiq:history:#{Time.now.utc.to_date}"
           value = redis.hget(history, worker.class.to_s)
 
           if value
             summary = Sidekiq.load_json(value).symbolize_keys
-            worker_sratus[:failed] = worker_sratus[:failed] + summary[:failed]
-            worker_sratus[:passed] = worker_sratus[:passed] + summary[:passed]
+            worker_status[:failed] = worker_status[:failed] + summary[:failed]
+            worker_status[:passed] = worker_status[:passed] + summary[:passed]
           end
 
-          redis.hset(history, worker.class.to_s, Sidekiq.dump_json(worker_sratus))
+          redis.hset(history, worker.class.to_s, Sidekiq.dump_json(worker_status))
         end
       end
     end

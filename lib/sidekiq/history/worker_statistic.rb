@@ -12,7 +12,7 @@ module Sidekiq
         @dates ||= redis_hash.flat_map(&:keys)
       end
 
-      def statistic
+      def display
         workers.map do |worker|
           {
             name: worker,
