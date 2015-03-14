@@ -39,14 +39,15 @@ module Sidekiq
       end
 
       it 'records history for any workers' do
-        middlewared {}
-        middlewared {}
+        middlewared { sleep 0.1 }
         begin
           middlewared do
+            sleep 0.1
             raise StandardError.new('failed')
           end
         rescue
         end
+        middlewared { sleep 0.1 }
 
         entry = Sidekiq.redis do |redis|
           redis.hgetall(history)
@@ -55,6 +56,7 @@ module Sidekiq
 
         assert_equal 2, actual[:passed]
         assert_equal 1, actual[:failed]
+        assert_equal 0.2, actual[:runtime].round(1)
       end
     end
   end

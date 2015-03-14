@@ -11,6 +11,7 @@ module Sidekiq
 
       def call_with_sidekiq_history(worker, msg, queue)
         worker_status = new_status
+        start = Time.now
 
         yield
       rescue StandardError => e
@@ -20,6 +21,8 @@ module Sidekiq
 
         raise e
       ensure
+        worker_status[:runtime] ||= elapsed start
+
         save_entry_for_worker(worker_status, worker)
       end
 
@@ -39,13 +42,21 @@ module Sidekiq
 
           if value
             summary = Sidekiq.load_json(value).symbolize_keys
-            worker_status[:failed] = worker_status[:failed] + summary[:failed]
-            worker_status[:passed] = worker_status[:passed] + summary[:passed]
+            %i[ failed passed runtime ].each do |stat|
+              worker_status[stat] = worker_status[stat] + summary[stat]
+            end
           end
 
           redis.hset(history, worker.class.to_s, Sidekiq.dump_json(worker_status))
         end
       end
+
+      private
+
+        # this methos already exist in Sidekiq::Middleware::Server::Logging class
+        def elapsed(start)
+          (Time.now - start).to_f.round(3)
+        end
     end
   end
 end

@@ -22,7 +22,6 @@ module Sidekiq
 
           time = DateTime.now
           DateTime.stub :now, time do
-            values = worker_static.statistic_for('HistoryWorker')
             assert_equal time.to_s, worker_static.last_runtime('HistoryWorker')
           end
         end
@@ -56,7 +55,7 @@ module Sidekiq
 
           DateTime.stub :now, time do
             values = worker_static.statistic_for('HistoryWorker')
-            assert_equal [{}, { failed: 0, passed: 1, last_runtime: time.to_s }], values
+            assert_equal [{}, { failed: 0, passed: 1, last_runtime: time.to_s, runtime: 0 }], values
           end
         end
 
