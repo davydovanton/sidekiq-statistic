@@ -16,6 +16,23 @@ module Sidekiq
         end
       end
 
+      describe '#last_runtime' do
+        it 'returns last runtime for worker' do
+          middlewared {}
+
+          time = DateTime.now
+          DateTime.stub :now, time do
+            assert_equal time.to_s, worker_static.last_runtime('HistoryWorker')
+          end
+        end
+
+        describe 'when jobs were not call' do
+          it 'returns nil' do
+            assert_equal nil, worker_static.last_runtime('HistoryWorker')
+          end
+        end
+      end
+
       describe '#workers' do
         it 'returns array with workers' do
           middlewared {}
@@ -34,14 +51,123 @@ module Sidekiq
       describe '#values' do
         it 'returns array with values for HistoryWorker per day' do
           middlewared {}
-          values = worker_static.values('HistoryWorker')
-          assert_equal [{}, { failed: 0, passed: 1 }], values
+          time = DateTime.now
+
+          DateTime.stub :now, time do
+            values = worker_static.statistic_for('HistoryWorker')
+            assert_equal [{}, { failed: 0, passed: 1, last_runtime: time.to_s, runtime: [0.0] }], values
+          end
         end
 
         describe 'when jobs were not call' do
           it 'returns array with empty values' do
-            values = worker_static.values('HistoryWorker')
+            values = worker_static.statistic_for('HistoryWorker')
             assert_equal [{}, {}], values
+          end
+        end
+      end
+
+      describe '#number_of_calls' do
+        it 'returns success jobs count for worker' do
+          10.times { middlewared {} }
+
+          count = worker_static.number_of_calls('HistoryWorker')
+          assert_equal 10, count[:success]
+        end
+
+        describe 'when success jobs were not call' do
+          it 'returns zero' do
+            10.times do
+              begin
+                middlewared do
+                  raise StandardError.new('failed')
+                end
+              rescue
+              end
+            end
+
+            count = worker_static.number_of_calls('HistoryWorker')
+            assert_equal 0, count[:success]
+          end
+        end
+
+        it 'returns failure jobs count for worker' do
+          10.times do
+            begin
+              middlewared do
+                raise StandardError.new('failed')
+              end
+            rescue
+            end
+          end
+
+          count = worker_static.number_of_calls('HistoryWorker')
+          assert_equal 10, count[:failure]
+        end
+
+        describe 'when failure jobs were not call' do
+          it 'returns zero' do
+            10.times { middlewared {} }
+
+            count = worker_static.number_of_calls('HistoryWorker')
+            assert_equal 0, count[:failure]
+          end
+        end
+
+        it 'returns total jobs count for worker' do
+          10.times do
+            middlewared {}
+
+            begin
+              middlewared do
+                raise StandardError.new('failed')
+              end
+            rescue
+            end
+          end
+
+          count = worker_static.number_of_calls('HistoryWorker')
+          assert_equal 20, count[:total]
+        end
+
+        describe 'when total jobs were not call' do
+          it 'returns zero' do
+            count = worker_static.number_of_calls('HistoryWorker')
+            assert_equal 0, count[:failure]
+          end
+        end
+      end
+
+      describe '#total_runtime' do
+        it 'returns totle runtime HistoryWorker' do
+          middlewared { sleep 0.2 }
+
+          values = worker_static.total_runtime('HistoryWorker')
+          assert_equal 0.2, values.round(1)
+        end
+
+        describe 'when jobs were not call' do
+          it 'returns array with empty values' do
+            values = worker_static.total_runtime('HistoryWorker')
+            assert_equal 0.0, values
+          end
+        end
+      end
+
+      describe '#average_runtime' do
+        it 'returns totle runtime HistoryWorker' do
+          middlewared { sleep 0.2 }
+          middlewared { sleep 0.1 }
+          middlewared { sleep 0.3 }
+
+          values = worker_static.average_runtime('HistoryWorker')
+          assert_equal 0.2, values.round(1)
+        end
+
+        describe 'when jobs were not call' do
+          it 'returns array with empty values' do
+            values = worker_static.average_runtime('HistoryWorker')
+            assert_equal 0.0, values
           end
         end
       end

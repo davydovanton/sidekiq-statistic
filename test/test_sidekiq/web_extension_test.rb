@@ -35,6 +35,16 @@ module Sidekiq
           last_response.status.must_equal 200
         end
       end
+
+      it 'can display worker table' do
+        last_response.body.must_match /Worker/
+        last_response.body.must_match /Date/
+        last_response.body.must_match /Success/
+        last_response.body.must_match /Failure/
+        last_response.body.must_match /Total/
+        last_response.body.must_match /Time\(sec\)/
+        last_response.body.must_match /Average\(sec\)/
+      end
     end
 
     describe 'GET /sidekiq/history/charts.json' do

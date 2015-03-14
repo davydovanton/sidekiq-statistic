@@ -1,6 +1,8 @@
 module Sidekiq
   module History
     class WorkerStatistic
+      JOB_STATES = [:passed, :failed]
+
       def initialize(days_previous, start_date = nil)
         @start_date = start_date || Time.now.utc.to_date
         @end_date = @start_date - days_previous
@@ -10,7 +12,19 @@ module Sidekiq
         @dates ||= redis_hash.flat_map(&:keys)
       end
 
-      def charts(type, options = {})
+      def display
+        workers.map do |worker|
+          {
+            name: worker,
+            number_of_calls: number_of_calls(worker),
+            last_runtime: last_runtime(worker),
+            total_runtime: total_runtime(worker).round(3),
+            average_runtime: average_runtime(worker).round(3)
+          }
+        end
+      end
+
+      def charts(type)
         workers.map do |worker|
           color_hash = random_color_hash
           {
@@ -21,7 +35,7 @@ module Sidekiq
             pointStrokeColor: '#fff',
             pointHighlightFill: '#fff',
             pointHighlightStroke: 'rgba(220,220,220,1)',
-            data: values(worker).map{ |val| val.fetch(type, 0) }
+            data: statistic_for(worker).map{ |val| val.fetch(type, 0) }
           }
         end
       end
@@ -34,7 +48,7 @@ module Sidekiq
         @workers ||= redis_hash.flat_map{ |hash| hash.values.first.keys }.uniq
       end
 
-      def values(worker)
+      def statistic_for(worker)
         redis_hash.map{ |h| h.values.first[worker] || {} }
       end
 
@@ -46,6 +60,36 @@ module Sidekiq
             }
           end
         end
+      end
+
+      def number_of_calls(worker)
+        number_of_calls = JOB_STATES.map{ |state| number_of_calls_for state, worker }
+
+        {
+          success: number_of_calls.first,
+          failure: number_of_calls.last,
+          total: number_of_calls.inject(:+)
+        }
+      end
+
+      def number_of_calls_for(state, worker)
+        statistic_for(worker)
+          .select(&:any?)
+          .map{ |hash| hash[state] }.inject(:+) || 0
+      end
+
+      def last_runtime(worker)
+        statistic_for(worker).map{ |s| s[:last_runtime] }.compact.last
+      end
+
+      def total_runtime(worker)
+        statistic_for(worker).flat_map{ |s| s[:runtime] }.compact.inject(:+) || 0.0
+      end
+
+      def average_runtime(worker)
+        count = statistic_for(worker).flat_map{ |s| s[:runtime] }.compact.count
+        return 0.0 if count == 0
+        total_runtime(worker) / count
       end
 
     private

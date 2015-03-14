@@ -8,6 +8,31 @@
     <canvas id="js-failed-chart" width="800" height="200"></canvas>
     <h2>Passed</h2>
     <canvas id="js-passed-chart" width="800" height="200"></canvas>
+
+    <h2>Worker table</h2>
+    <table class="workers-statistic table table-hover table-bordered table-striped table-white">
+      <thead>
+        <th>Worker</th>
+        <th>Date</th>
+        <th>Success</th>
+        <th>Failure</th>
+        <th>Total</th>
+        <th>Time(sec)</th>
+        <th>Average(sec)</th>
+      </thead>
+      <% @workers.each do |worker| %>
+        <tr>
+          <td><%= worker[:name] %></td>
+          <td><%= worker[:last_runtime] %></td>
+          <td><%= worker[:number_of_calls][:success] %></td>
+          <td><%= worker[:number_of_calls][:failure] %></td>
+          <td><%= worker[:number_of_calls][:total] %></td>
+          <td><%= worker[:total_runtime] %></td>
+          <td><%= worker[:average_runtime] %></td>
+        </tr>
+      <% end %>
+    </table>
+
     <script type="text/javascript">
       $(function () {
         Chart.defaults.global.responsive = true
