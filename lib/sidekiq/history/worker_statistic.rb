@@ -18,7 +18,8 @@ module Sidekiq
             name: worker,
             last_runtime: last_runtime(worker),
             number_of_calls: number_of_calls(worker),
-            total_runtime: total_runtime(worker).round(3)
+            total_runtime: total_runtime(worker).round(3),
+            average_runtime: average_runtime(worker).round(3)
           }
         end
       end
@@ -82,7 +83,13 @@ module Sidekiq
       end
 
       def total_runtime(worker)
-        statistic_for(worker).map{ |s| s[:runtime] }.compact.inject(:+) || 0.0
+        statistic_for(worker).flat_map{ |s| s[:runtime] }.compact.inject(:+) || 0.0
+      end
+
+      def average_runtime(worker)
+        count = statistic_for(worker).flat_map{ |s| s[:runtime] }.compact.count
+        return 0.0 if count == 0
+        total_runtime(worker) / count
       end
 
     private

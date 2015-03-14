@@ -56,7 +56,7 @@ module Sidekiq
 
         assert_equal 2, actual[:passed]
         assert_equal 1, actual[:failed]
-        assert_equal 0.002, actual[:runtime].round(3)
+        assert_equal 3, actual[:runtime].count
       end
     end
   end

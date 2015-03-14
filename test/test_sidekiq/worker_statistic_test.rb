@@ -55,7 +55,7 @@ module Sidekiq
 
           DateTime.stub :now, time do
             values = worker_static.statistic_for('HistoryWorker')
-            assert_equal [{}, { failed: 0, passed: 1, last_runtime: time.to_s, runtime: 0 }], values
+            assert_equal [{}, { failed: 0, passed: 1, last_runtime: time.to_s, runtime: [0.0] }], values
           end
         end
 
@@ -149,6 +149,24 @@ module Sidekiq
         describe 'when jobs were not call' do
           it 'returns array with empty values' do
             values = worker_static.total_runtime('HistoryWorker')
+            assert_equal 0.0, values
+          end
+        end
+      end
+
+      describe '#average_runtime' do
+        it 'returns totle runtime HistoryWorker' do
+          middlewared { sleep 0.2 }
+          middlewared { sleep 0.1 }
+          middlewared { sleep 0.3 }
+
+          values = worker_static.average_runtime('HistoryWorker')
+          assert_equal 0.2, values.round(1)
+        end
+
+        describe 'when jobs were not call' do
+          it 'returns array with empty values' do
+            values = worker_static.average_runtime('HistoryWorker')
             assert_equal 0.0, values
           end
         end

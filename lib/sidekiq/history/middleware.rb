@@ -17,11 +17,10 @@ module Sidekiq
       rescue StandardError => e
         worker_status[:failed] = 1
         worker_status[:passed] = 0
-        worker_status[:runtime] = 0.0
 
         raise e
       ensure
-        worker_status[:runtime] ||= elapsed start
+        worker_status[:runtime] ||= [elapsed(start)]
 
         save_entry_for_worker(worker_status, worker)
       end
@@ -43,7 +42,7 @@ module Sidekiq
           if value
             summary = Sidekiq.load_json(value).symbolize_keys
             [:failed, :passed, :runtime].each do |stat|
-              worker_status[stat] = worker_status[stat] + summary[stat]
+              worker_status[stat] = summary[stat] + worker_status[stat]
             end
           end
 
