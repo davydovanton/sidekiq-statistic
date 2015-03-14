@@ -19,7 +19,6 @@
         <th>Total</th>
         <th>Time(sec)</th>
         <th>Average(sec)</th>
-        <th>StdDev(sec)</th>
       </thead>
       <% @workers.each do |worker| %>
         <tr>
@@ -30,11 +29,9 @@
           <td><%= worker[:number_of_calls][:total] %></td>
           <td><%= worker[:total_runtime] %></td>
           <td><%= worker[:average_runtime] %></td>
-          <td>140</td>
         </tr>
       <% end %>
     </table>
-
 
     <script type="text/javascript">
       $(function () {

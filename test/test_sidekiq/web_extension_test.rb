@@ -44,7 +44,6 @@ module Sidekiq
         last_response.body.must_match /Total/
         last_response.body.must_match /Time\(sec\)/
         last_response.body.must_match /Average\(sec\)/
-        last_response.body.must_match /StdDev\(sec\)/
       end
     end
 

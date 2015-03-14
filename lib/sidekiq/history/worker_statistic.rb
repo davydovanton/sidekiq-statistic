@@ -16,8 +16,8 @@ module Sidekiq
         workers.map do |worker|
           {
             name: worker,
-            last_runtime: last_runtime(worker),
             number_of_calls: number_of_calls(worker),
+            last_runtime: last_runtime(worker),
             total_runtime: total_runtime(worker).round(3),
             average_runtime: average_runtime(worker).round(3)
           }
