@@ -26,6 +26,11 @@ module Sidekiq
             passed_datasets: worker_statistic.charts(:passed)
           }.to_json
         end
+
+        app.get '/history/:worker' do
+          @name = params[:worker]
+          render(:erb, File.read(File.join(view_path, 'worker.erb')))
+        end
       end
     end
   end
