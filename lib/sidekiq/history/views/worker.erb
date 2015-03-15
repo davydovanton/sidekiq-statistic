@@ -2,6 +2,8 @@
   <h2><%= @name %></h2>
 
   <div class="history__log">
-    <%= @worker_log %>
+    <% @worker_log.each do |line| %>
+      <p><%= line %></p>
+    <% end %>
   </div>
 </div>
