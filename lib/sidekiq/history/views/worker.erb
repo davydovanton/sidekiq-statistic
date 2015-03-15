@@ -3,7 +3,7 @@
 
   <div class="history__log">
     <% @worker_log.each do |line| %>
-      <p><%= line %></p>
+      <p style="color: <%= line[:color] %>"><%= line[:text] %></p>
     <% end %>
   </div>
 </div>

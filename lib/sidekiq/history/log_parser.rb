@@ -10,7 +10,21 @@ module Sidekiq
 
       def parse
         File.open(@logfile).map do |line|
-          line if line[/\W#@worker_name\W/]
+          line_hash(line) if line[/\W#@worker_name\W/]
+        end.compact
+      end
+
+    private
+
+      def line_hash(line)
+        { color: color(line), text: line }
+      end
+
+      def color(line)
+        case
+        when line.include?('done') then 'green'
+        when line.include?('start') then 'yellow'
+        when line.include?('fail') then 'red'
         end
       end
     end
