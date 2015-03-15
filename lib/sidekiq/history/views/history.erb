@@ -10,7 +10,7 @@
     <canvas id="js-passed-chart" width="800" height="200"></canvas>
 
     <h2>Worker table</h2>
-    <table class="workers-statistic table table-hover table-bordered table-striped table-white">
+    <table class="history__table table table-hover table-bordered table-striped table-white">
       <thead>
         <th>Worker</th>
         <th>Date</th>
@@ -22,13 +22,13 @@
       </thead>
       <% @workers.each do |worker| %>
         <tr>
-          <td><a href="<%= root_path %>history/<%= worker[:name] %>"><%= worker[:name] %></a></td>
-          <td><%= worker[:last_runtime] %></td>
-          <td><%= worker[:number_of_calls][:success] %></td>
-          <td><%= worker[:number_of_calls][:failure] %></td>
-          <td><%= worker[:number_of_calls][:total] %></td>
-          <td><%= worker[:total_runtime] %></td>
-          <td><%= worker[:average_runtime] %></td>
+          <td class="history__i"><a href="<%= root_path %>history/<%= worker[:name] %>"><%= worker[:name] %></a></td>
+          <td class="history__i"><%= worker[:last_runtime] %></td>
+          <td class="history__i"><%= worker[:number_of_calls][:success] %></td>
+          <td class="history__i"><%= worker[:number_of_calls][:failure] %></td>
+          <td class="history__i"><%= worker[:number_of_calls][:total] %></td>
+          <td class="history__i"><%= worker[:total_runtime] %></td>
+          <td class="history__i"><%= worker[:average_runtime] %></td>
         </tr>
       <% end %>
     </table>

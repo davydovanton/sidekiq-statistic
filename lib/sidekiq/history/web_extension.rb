@@ -29,6 +29,7 @@ module Sidekiq
 
         app.get '/history/:worker' do
           @name = params[:worker]
+          @worker_log = ''
           render(:erb, File.read(File.join(view_path, 'worker.erb')))
         end
       end
