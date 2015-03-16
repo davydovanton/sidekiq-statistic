@@ -5,6 +5,7 @@ rescue LoadError
 end
 
 require 'sidekiq/api'
+require 'sidekiq/history/log_parser'
 require 'sidekiq/history/middleware'
 require 'sidekiq/history/web_extension'
 require 'sidekiq/history/worker_statistic'
