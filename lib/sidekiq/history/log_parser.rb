@@ -3,21 +3,19 @@ module Sidekiq
     # Heroku have read only file system. See more in this link:
     # https://devcenter.heroku.com/articles/read-only-filesystem
     class LogParser
-      def initialize(worker_name)
+      def initialize(worker_name, logfile = nil)
         @worker_name = worker_name
-        @logfile = Sidekiq.options[:logfile] || 'log/sidekiq.log'
+        @logfile = logfile || Sidekiq.options[:logfile] || 'log/sidekiq.log'
       end
 
       def parse
         File.open(@logfile).map do |line|
-          line_hash(line) if line[/\W#@worker_name\W/]
+          line_hash(line) if line[/\W?#@worker_name\W?/]
         end.compact
       end
 
-    private
-
       def line_hash(line)
-        { color: color(line), text: line }
+        { color: color(line), text: line.sub(/\n/, '') }
       end
 
       def color(line)
