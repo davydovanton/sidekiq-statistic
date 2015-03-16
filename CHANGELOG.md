@@ -1,3 +1,9 @@
+* 16.03.2015: Add worker page where user can see log for this worker
+
+  *Anton Davydov*
+* 15.03.2015: Add worker statistic table to index history page
+
+  *Anton Davydov*
 * 08.03.2015: Add charts for each passed and failed jobs for each worker.
 
   *Anton Davydov*
