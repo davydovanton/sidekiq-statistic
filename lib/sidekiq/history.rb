@@ -17,6 +17,9 @@ module Sidekiq
   end
 end
 
+# Add configuration patterns. For this reed this link:
+#   http://brandonhilkert.com/blog/ruby-gem-configuration-patterns/
+
 Sidekiq.configure_server do |config|
   config.server_middleware do |chain|
     chain.add Sidekiq::History::Middleware
