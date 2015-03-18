@@ -9,6 +9,10 @@ module Sidekiq
         app.helpers do
         end
 
+        app.get '/style.css' do
+          File.read(File.join(view_path, 'style.css'))
+        end
+
         app.get '/history' do
           worker_statistic = Sidekiq::History::WorkerStatistic.new(20)
           @workers = worker_statistic.display
