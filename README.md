@@ -23,7 +23,7 @@ Or install it yourself as:
 TODO: Write usage instructions here
 
 ## Configuration
-Sidekiq history gem have `log_fole` option. This option lets you specify a custom path to sidekiq log file. By default this option equal `log/sidekiq.log`
+Sidekiq history gem have `log_file` option. This option lets you specify a custom path to sidekiq log file. By default this option equal `log/sidekiq.log`
 
 ``` ruby
 Sidekiq::History.configure do |config|
