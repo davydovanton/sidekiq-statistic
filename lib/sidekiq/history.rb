@@ -5,6 +5,7 @@ rescue LoadError
 end
 
 require 'sidekiq/api'
+require 'sidekiq/history/configuration'
 require 'sidekiq/history/log_parser'
 require 'sidekiq/history/middleware'
 require 'sidekiq/history/web_extension'
@@ -13,7 +14,17 @@ require 'sidekiq/history/version'
 
 module Sidekiq
   module History
-    # Your code goes here...
+    class << self
+      attr_writer :configuration
+    end
+
+    def self.configuration
+      @configuration ||= Configuration.new
+    end
+
+    def self.configure
+      yield(configuration)
+    end
   end
 end
 

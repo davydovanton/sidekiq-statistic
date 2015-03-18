@@ -1,3 +1,6 @@
+* 18.03.2015: Add configuration class with log_file options
+
+  *Anton Davydov*
 * 16.03.2015: Add worker page where user can see log for this worker
 
   *Anton Davydov*
