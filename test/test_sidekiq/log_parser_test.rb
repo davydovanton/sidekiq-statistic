@@ -26,10 +26,6 @@ module Sidekiq
 
         describe 'when worker don\'t called' do
           it 'returns empty array' do
-            Sidekiq::History.configure do |config|
-              config.log_file = 'test/helpers/logfile.log'
-            end
-
             other_log_parse = Sidekiq::History::LogParser.new('FailedHistoryWorker')
             assert_equal [], other_log_parse.parse
           end
