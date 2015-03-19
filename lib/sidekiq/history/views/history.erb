@@ -1,4 +1,4 @@
-<script type="text/javascript" src="http://www.chartjs.org/assets/Chart.js"></script>
+<script type="text/javascript" src="<%= root_path %>chart.js"></script>
 
 <div class='history'>
   <h2>History</h2>
@@ -32,28 +32,5 @@
         </tr>
       <% end %>
     </table>
-
-    <script type="text/javascript">
-      $(function () {
-        Chart.defaults.global.responsive = true
-        Chart.defaults.global.scaleLineColor = 'rgba(0,0,0,.4)'
-
-        $.getJSON( '/sidekiq/history/charts.json', function (data) {
-          createChart('failed', data, data.failed_datasets)
-          createChart('passed', data, data.passed_datasets)
-        })
-
-      function createChart(type, data, datasets) {
-        var ctxFailed = document.getElementById("js-" + type + "-chart").getContext("2d")
-
-        new Chart(ctxFailed).Line({
-          labels: data.labels,
-          datasets: datasets
-        }, {
-          multiTooltipTemplate: data.tooltip_template
-        })
-      }
-      })
-    </script>
   </div>
 </div>

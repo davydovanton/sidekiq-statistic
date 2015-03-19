@@ -9,6 +9,11 @@ module Sidekiq
         app.helpers do
         end
 
+        app.get '/chart.js' do
+          content_type 'text/javascript'
+          File.read(File.join(view_path, 'chart.js'))
+        end
+
         app.get '/history' do
           worker_statistic = Sidekiq::History::WorkerStatistic.new(20)
           @workers = worker_statistic.display
