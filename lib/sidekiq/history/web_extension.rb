@@ -9,8 +9,9 @@ module Sidekiq
         app.helpers do
         end
 
-        app.get '/style.css' do
-          File.read(File.join(view_path, 'style.css'))
+        app.get '/chart.js' do
+          content_type 'text/javascript'
+          File.read(File.join(view_path, 'chart.js'))
         end
 
         app.get '/history' do
