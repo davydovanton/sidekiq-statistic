@@ -1,3 +1,6 @@
+* 19.03.2015: Add functionality for adding custom css and js files to web page
+
+  *Anton Davydov*
 * 18.03.2015: Add configuration class with log_file options
 
   *Anton Davydov*
