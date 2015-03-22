@@ -13,8 +13,8 @@ Gem::Specification.new do |gem|
     gem.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com' to prevent pushes to rubygems.org, or delete to allow pushes to any server."
   end
 
-  gem.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  gem.description   = %q{TODO: Write a longer description or delete this line.}
+  gem.summary       = %q{See history about your workers (GSoC project)}
+  gem.description   = %q{See history about your workers (GSoC project)}
   gem.homepage      = "https://github.com/davydovanton/sidekiq-history"
   gem.license       = 'MIT'
 
