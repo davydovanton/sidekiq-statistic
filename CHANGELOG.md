@@ -1,3 +1,6 @@
+* 23.03.2015: Add max runtime column to worker web table
+
+  *Anton Davydov*
 * 19.03.2015: Add functionality for adding custom css and js files to web page
 
   *Anton Davydov*
