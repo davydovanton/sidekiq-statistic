@@ -19,7 +19,8 @@ module Sidekiq
             number_of_calls: number_of_calls(worker),
             last_runtime: last_runtime(worker),
             total_runtime: total_runtime(worker).round(3),
-            average_runtime: average_runtime(worker).round(3)
+            average_runtime: average_runtime(worker).round(3),
+            max_runtime: max_runtime(worker).round(3)
           }
         end
       end
@@ -83,16 +84,24 @@ module Sidekiq
       end
 
       def total_runtime(worker)
-        statistic_for(worker).flat_map{ |s| s[:runtime] }.compact.inject(:+) || 0.0
+        runtimes_for(worker).inject(:+) || 0.0
       end
 
       def average_runtime(worker)
-        count = statistic_for(worker).flat_map{ |s| s[:runtime] }.compact.count
+        count = runtimes_for(worker).count
         return 0.0 if count == 0
         total_runtime(worker) / count
       end
 
+      def max_runtime(worker)
+        runtimes_for(worker).max || 0.0
+      end
+
     private
+
+      def runtimes_for(worker)
+        @runtimes ||= statistic_for(worker).flat_map{ |s| s[:runtime] }.compact
+      end
 
       def parse_statistic(hash)
         hash.each do |worker, json|

@@ -19,6 +19,7 @@
         <th>Total</th>
         <th>Time(sec)</th>
         <th>Average(sec)</th>
+        <th>Max time(sec)</th>
       </thead>
       <% @workers.each do |worker| %>
         <tr>
@@ -29,6 +30,7 @@
           <td class="history__i"><%= worker[:number_of_calls][:total] %></td>
           <td class="history__i"><%= worker[:total_runtime] %></td>
           <td class="history__i"><%= worker[:average_runtime] %></td>
+          <td class="history__i"><%= worker[:max_runtime] %></td>
         </tr>
       <% end %>
     </table>

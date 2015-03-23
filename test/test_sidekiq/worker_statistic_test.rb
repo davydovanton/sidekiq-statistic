@@ -172,6 +172,24 @@ module Sidekiq
         end
       end
 
+      describe '#max_runtime' do
+        it 'returns max runtime for worker HistoryWorker' do
+          middlewared { sleep 0.2 }
+          middlewared { sleep 0.3 }
+          middlewared { sleep 0.1 }
+
+          values = worker_static.max_runtime('HistoryWorker')
+          assert_equal 0.3, values.round(1)
+        end
+
+        describe 'when jobs were not call' do
+          it 'returns zero' do
+            values = worker_static.max_runtime('HistoryWorker')
+            assert_equal 0.0, values
+          end
+        end
+      end
+
       describe '#redis_hash' do
         it 'returns hash for each day' do
           history = worker_static.redis_hash
