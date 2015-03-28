@@ -9,6 +9,8 @@ module Sidekiq
       end
 
       def parse
+        return [] unless File.exists?(@logfile)
+
         File.open(@logfile).map do |line|
           line_hash(line) if line[/\W?#@worker_name\W?/]
         end.compact
