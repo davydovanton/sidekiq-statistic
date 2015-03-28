@@ -19,18 +19,20 @@
         <th>Total</th>
         <th>Time(sec)</th>
         <th>Average(sec)</th>
+        <th>Min time(sec)</th>
         <th>Max time(sec)</th>
       </thead>
       <% @workers.each do |worker| %>
         <tr>
           <td class="history__i"><a href="<%= root_path %>history/<%= worker[:name] %>"><%= worker[:name] %></a></td>
-          <td class="history__i"><%= worker[:last_runtime] %></td>
+          <td class="history__i"><%= worker[:runtime][:last] %></td>
           <td class="history__i"><%= worker[:number_of_calls][:success] %></td>
           <td class="history__i"><%= worker[:number_of_calls][:failure] %></td>
           <td class="history__i"><%= worker[:number_of_calls][:total] %></td>
-          <td class="history__i"><%= worker[:total_runtime] %></td>
-          <td class="history__i"><%= worker[:average_runtime] %></td>
-          <td class="history__i"><%= worker[:max_runtime] %></td>
+          <td class="history__i"><%= worker[:runtime][:total] %></td>
+          <td class="history__i"><%= worker[:runtime][:average] %></td>
+          <td class="history__i"><%= worker[:runtime][:min] %></td>
+          <td class="history__i"><%= worker[:runtime][:max] %></td>
         </tr>
       <% end %>
     </table>

@@ -58,9 +58,6 @@ module Sidekiq
 
         response['tooltip_template'].must_equal '<%= datasetLabel %> - <%= value %>'
         response['labels'].wont_be_empty
-
-        response['failed_datasets'].wont_be_empty
-        response['passed_datasets'].wont_be_empty
       end
 
       describe 'when there are history' do

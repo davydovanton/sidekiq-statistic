@@ -15,20 +15,20 @@ module Sidekiq
         end
 
         app.get '/history' do
-          worker_statistic = Sidekiq::History::WorkerStatistic.new(20)
-          @workers = worker_statistic.display
+          statistic = Sidekiq::History::Statistic.new(20)
+          @workers = statistic.display
           render(:erb, File.read(File.join(view_path, 'history.erb')))
         end
 
         app.get '/history/charts.json' do
           content_type :json
-          worker_statistic = Sidekiq::History::WorkerStatistic.new(20)
+          charts = Sidekiq::History::Charts.new(20)
 
           {
             tooltip_template: '<%= datasetLabel %> - <%= value %>',
-            labels: worker_statistic.dates,
-            failed_datasets: worker_statistic.charts(:failed),
-            passed_datasets: worker_statistic.charts(:passed)
+            labels: charts.dates,
+            failed_datasets: charts.information_for(:failed),
+            passed_datasets: charts.information_for(:passed)
           }.to_json
         end
 

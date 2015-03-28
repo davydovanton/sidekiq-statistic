@@ -5,12 +5,15 @@ rescue LoadError
 end
 
 require 'sidekiq/api'
+require 'sidekiq/history/charts'
 require 'sidekiq/history/configuration'
 require 'sidekiq/history/log_parser'
 require 'sidekiq/history/middleware'
-require 'sidekiq/history/web_extension'
-require 'sidekiq/history/worker_statistic'
+require 'sidekiq/history/statistic/redis_statistic'
+require 'sidekiq/history/statistic/runtime_statistic'
+require 'sidekiq/history/statistic'
 require 'sidekiq/history/version'
+require 'sidekiq/history/web_extension'
 
 module Sidekiq
   module History
