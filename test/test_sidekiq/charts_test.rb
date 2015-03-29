@@ -7,12 +7,18 @@ module Sidekiq
         Sidekiq.redis(&:flushdb)
       end
 
-      let(:worker_static) { Sidekiq::History::Charts.new(1) }
+      let(:chart) { Sidekiq::History::Charts.new(1) }
 
       describe '#dates' do
         it 'returns array with all days' do
-          days = worker_static.dates
+          days = chart.dates
           assert_equal Time.now.utc.to_date.to_s, days.last
+        end
+      end
+
+      describe '#color' do
+        it 'returns rgb color for worker' do
+          assert_equal '102,63,243', chart.color_for('HistoryWorker')
         end
       end
     end
