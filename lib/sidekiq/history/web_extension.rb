@@ -14,6 +14,11 @@ module Sidekiq
           File.read(File.join(view_path, 'chart.js'))
         end
 
+        app.get '/sidekiq-history.css' do
+          content_type 'text/css'
+          File.read(File.join(view_path, 'sidekiq-history.css'))
+        end
+
         app.get '/history' do
           statistic = Sidekiq::History::Statistic.new(20)
           @workers = statistic.display

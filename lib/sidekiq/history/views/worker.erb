@@ -1,7 +1,11 @@
+<% add_to_head do %>
+<link href="<%= root_path %>sidekiq-history.css" media="screen" rel="stylesheet" type="text/css" />
+<% end %>
+
 <div class='history'>
   <h2><%= @name %> log</h2>
 
-  <div class="history__log" style="margin-top: 32px; background-color: #fff; -webkit-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25); -moz-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25); box-shadow: 0 0 5px rgba(50, 50, 50, 0.25); -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; padding: 8px; margin-bottom: 10px; border-width: 0; ">
+  <div class="history__log">
     <% @worker_log.each do |line| %>
       <p style="color: <%= line[:color] %>"><%= line[:text] %></p>
     <% end %>
