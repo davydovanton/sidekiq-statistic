@@ -1,3 +1,6 @@
+* 04.04.2015: Fix livereload button in index page
+
+  *Anton Davydov*
 * 23.03.2015: Add max runtime column to worker web table
 
   *Anton Davydov*
