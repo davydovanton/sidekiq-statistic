@@ -13,3 +13,8 @@
     margin-bottom: 10px;
     border-width: 0;
     }
+  #history__search {
+    float: right;
+    margin: -39px 0 0;
+    width: 200px;
+    }
