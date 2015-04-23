@@ -18,7 +18,7 @@ Or install it yourself as:
     $ gem install sidekiq-history
 
 ## Usage
-Open `/sidekiq/history` page.
+Open in your browser `/sidekiq/history` page.
 
 ## Configuration
 Sidekiq history gem have `log_file` option. This option lets you specify a custom path to sidekiq log file. By default this option equal `log/sidekiq.log`
