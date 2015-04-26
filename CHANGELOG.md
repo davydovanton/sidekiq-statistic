@@ -1,10 +1,10 @@
+* 27.04.2015: Set specific color for any worker
+
+  *Anton Davydov*
 * 10.04.2015: Add search field on worker page
 
   *Anton Davydov*
 * 04.04.2015: Fix livereload button in index page
-
-  *Anton Davydov*
-* 31.04.2015: Set specific color for any worker
 
   *Anton Davydov*
 * 23.03.2015: Add max runtime column to worker web table
