@@ -7,6 +7,9 @@ module Sidekiq
         view_path = File.join(File.expand_path('..', __FILE__), 'views')
 
         app.helpers do
+          def formate_date(string)
+            Date.parse(string).strftime('%T, %e %B %Y')
+          end
         end
 
         app.get '/history.js' do

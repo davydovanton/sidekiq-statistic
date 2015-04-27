@@ -28,15 +28,15 @@
       </thead>
       <% @workers.each do |worker| %>
         <tr>
-          <td class="history__i"><a href="<%= root_path %>history/<%= worker[:name] %>"><%= worker[:name] %></a></td>
-          <td class="history__i"><%= worker[:runtime][:last] %></td>
-          <td class="history__i"><%= worker[:number_of_calls][:success] %></td>
-          <td class="history__i"><%= worker[:number_of_calls][:failure] %></td>
-          <td class="history__i"><%= worker[:number_of_calls][:total] %></td>
-          <td class="history__i"><%= worker[:runtime][:total] %></td>
-          <td class="history__i"><%= worker[:runtime][:average] %></td>
-          <td class="history__i"><%= worker[:runtime][:min] %></td>
-          <td class="history__i"><%= worker[:runtime][:max] %></td>
+          <td class="worker"><a href="<%= root_path %>history/<%= worker[:name] %>"><%= worker[:name] %></a></td>
+          <td class="worker"><%= formate_date worker[:runtime][:last] %></td>
+          <td class="worker"><%= worker[:number_of_calls][:success] %></td>
+          <td class="worker"><%= worker[:number_of_calls][:failure] %></td>
+          <td class="worker"><%= worker[:number_of_calls][:total] %></td>
+          <td class="worker"><%= worker[:runtime][:total] %></td>
+          <td class="worker"><%= worker[:runtime][:average] %></td>
+          <td class="worker"><%= worker[:runtime][:min] %></td>
+          <td class="worker"><%= worker[:runtime][:max] %></td>
         </tr>
       <% end %>
     </table>

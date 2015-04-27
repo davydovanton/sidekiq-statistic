@@ -1,3 +1,6 @@
+* 28.04.2015: Formating worker date in web UI
+
+  *Anton Davydov*
 * 27.04.2015: Set specific color for any worker
 
   *Anton Davydov*
