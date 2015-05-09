@@ -37,11 +37,11 @@ module Sidekiq
       describe '#for_worker' do
         it 'returns array with values for HistoryWorker per day' do
           middlewared {}
-          time = DateTime.now
+          time = Time.now.utc
 
-          DateTime.stub :now, time do
+          Time.stub :now, time do
             values = redis_static.for_worker('HistoryWorker')
-            assert_equal [{}, { failed: 0, passed: 1, last_runtime: time.to_s, runtime: [0.0] }], values
+            assert_equal [{}, { failed: 0, passed: 1, runtime: [0.0], last_runtime: time.to_s }], values
           end
         end
 
