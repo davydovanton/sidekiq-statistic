@@ -16,8 +16,8 @@ module Sidekiq
         it 'returns last runtime for worker' do
           middlewared {}
 
-          time = DateTime.now
-          DateTime.stub :now, time do
+          time = Time.now.utc
+          Time.stub :now, time do
             assert_equal time.to_s, runtime_static.last_runtime
           end
         end

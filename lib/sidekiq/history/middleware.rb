@@ -11,7 +11,7 @@ module Sidekiq
 
       def call_with_sidekiq_history(worker, msg, queue)
         worker_status = new_status
-        start = Time.now
+        start = Time.now.utc
 
         yield
       rescue StandardError => e
@@ -21,6 +21,7 @@ module Sidekiq
         raise e
       ensure
         worker_status[:runtime] ||= [elapsed(start)]
+        worker_status[:last_runtime] = Time.now.utc
 
         save_entry_for_worker(worker_status, worker)
       end
@@ -29,8 +30,7 @@ module Sidekiq
         # worker.sidekiq_options_hash
         {
           failed: 0,
-          passed: 1,
-          last_runtime: DateTime.now
+          passed: 1
         }
       end
 
@@ -54,7 +54,7 @@ module Sidekiq
 
         # this methos already exist in Sidekiq::Middleware::Server::Logging class
         def elapsed(start)
-          (Time.now - start).to_f.round(3)
+          (Time.now.utc - start).to_f.round(3)
         end
     end
   end
