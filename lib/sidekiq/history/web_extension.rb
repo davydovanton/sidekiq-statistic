@@ -8,7 +8,7 @@ module Sidekiq
 
         app.helpers do
           def formate_date(string)
-            Time.parse("2015-05-10 01:04:21 +0300").strftime('%T, %e %B %Y')
+            Time.parse(string).strftime('%T, %e %B %Y')
           end
         end
 
