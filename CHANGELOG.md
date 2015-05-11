@@ -1,3 +1,6 @@
+* 12.05.2015: Add last job status data parameter for each worker
+
+  *Anton Davydov*
 * 11.05.2015: Add page woth worker data table for each day
 
   *Anton Davydov*
