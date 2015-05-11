@@ -42,6 +42,7 @@ module Sidekiq
 
         app.get '/history/:worker' do
           @name = params[:worker]
+          @worker_statistic = []
           @worker_log =
             Sidekiq::History::LogParser.new(params[:worker]).parse
 
