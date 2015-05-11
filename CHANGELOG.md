@@ -1,3 +1,6 @@
+* 11.05.2015: Add page woth worker data table for each day
+
+  *Anton Davydov*
 * 28.04.2015: Formating worker date in web UI
 
   *Anton Davydov*
