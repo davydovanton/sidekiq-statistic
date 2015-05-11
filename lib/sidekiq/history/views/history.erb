@@ -25,6 +25,7 @@
         <th>Average(sec)</th>
         <th>Min time(sec)</th>
         <th>Max time(sec)</th>
+        <th>Last Job Status</th>
       </thead>
       <% @workers.each do |worker| %>
         <tr>
@@ -37,6 +38,7 @@
           <td class="worker"><%= worker[:runtime][:average] %></td>
           <td class="worker"><%= worker[:runtime][:min] %></td>
           <td class="worker"><%= worker[:runtime][:max] %></td>
+          <td class="worker"><%= worker[:last_job_status] %></td>
         </tr>
       <% end %>
     </table>
