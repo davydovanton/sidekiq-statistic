@@ -26,3 +26,6 @@
     .history__log {
       display: none;
       }
+    .history__table {
+      margin-top: 25px;
+      }
