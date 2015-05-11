@@ -1,9 +1,10 @@
 module Sidekiq
   module History
     class RuntimeStatistic
-      def initialize(redis_statistic, worker)
+      def initialize(redis_statistic, worker, values = nil)
         @redis_statistic = redis_statistic
         @worker = worker
+        @values = values
       end
 
       def values_hash
