@@ -22,6 +22,8 @@ module Sidekiq
         redis_statistic.hash.flat_map do |day|
           day.reject{ |_, workers| workers.empty? }.map do |date, workers|
             worker_data = workers[worker_name]
+            next unless worker_data
+
             {
               date: date,
               failure: worker_data[:failed],
@@ -30,7 +32,7 @@ module Sidekiq
               runtime: runtime_for_day(worker_name, worker_data)
             }
           end
-        end
+        end.compact.reverse
       end
 
       def runtime_for_day(worker_name, worker_data)

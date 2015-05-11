@@ -42,6 +42,7 @@ module Sidekiq
 
         app.get '/history/:worker' do
           @name = params[:worker]
+
           @worker_statistic =
             Sidekiq::History::Statistic.new(365).display_pre_day(@name)
           @worker_log =
