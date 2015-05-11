@@ -18,6 +18,29 @@ module Sidekiq
         end
       end
 
+      def display_pre_day(worker_name)
+        redis_statistic.hash.flat_map do |day|
+          day.reject{ |_, workers| workers.empty? }.map do |date, workers|
+            worker_data = workers[worker_name]
+            next unless worker_data
+
+            {
+              date: date,
+              failure: worker_data[:failed],
+              success: worker_data[:passed],
+              total: worker_data[:failed] + worker_data[:passed],
+              runtime: runtime_for_day(worker_name, worker_data)
+            }
+          end
+        end.compact.reverse
+      end
+
+      def runtime_for_day(worker_name, worker_data)
+        runtime_statistic(worker_name, worker_data[:runtime])
+          .values_hash
+          .merge!(last: worker_data[:last_runtime])
+      end
+
       def number_of_calls(worker)
         number_of_calls = JOB_STATES.map{ |state| number_of_calls_for state, worker }
 
@@ -34,8 +57,8 @@ module Sidekiq
           .map{ |hash| hash[state] }.inject(:+) || 0
       end
 
-      def runtime_statistic(worker)
-        RuntimeStatistic.new(redis_statistic, worker)
+      def runtime_statistic(worker, values = nil)
+        RuntimeStatistic.new(redis_statistic, worker, values)
       end
 
       def redis_statistic

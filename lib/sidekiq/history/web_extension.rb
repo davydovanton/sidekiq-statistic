@@ -7,8 +7,8 @@ module Sidekiq
         view_path = File.join(File.expand_path('..', __FILE__), 'views')
 
         app.helpers do
-          def formate_date(string)
-            Time.parse(string).strftime('%T, %e %B %Y')
+          def formate_date(string, format = nil)
+            Time.parse(string).strftime(format || '%T, %e %B %Y')
           end
         end
 
@@ -42,8 +42,11 @@ module Sidekiq
 
         app.get '/history/:worker' do
           @name = params[:worker]
+
+          @worker_statistic =
+            Sidekiq::History::Statistic.new(365).display_pre_day(@name)
           @worker_log =
-            Sidekiq::History::LogParser.new(params[:worker]).parse
+            Sidekiq::History::LogParser.new(@name).parse
 
           render(:erb, File.read(File.join(view_path, 'worker.erb')))
         end

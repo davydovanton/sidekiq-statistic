@@ -5,12 +5,49 @@
 <script type="text/javascript" src="<%= root_path %>history.js"></script>
 
 <div class='history'>
-  <h2><%= @name %> log</h2>
-  <input type='text' name='' id='history__search' value='' placeholder='Search text in log file'/>
+  <h2><%= @name %> information</h2>
 
-  <div class="history__log">
-    <% @worker_log.each do |line| %>
-      <p class="history__i history__<%= line[:color] %>"><%= line[:text] %></p>
-    <% end %>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#" class="history__tab" data-target=".history__table">Information table</a></li>
+    <li><a href="#" class="history__tab" data-target=".history__log">Worker log</a></li>
+  </ul>
+
+  <div class="history__container">
+    <div class="history__table">
+      <h2>Worker table (per day)</h2>
+      <table class="history__table table table-hover table-bordered table-striped table-white">
+        <thead>
+          <th>Date</th>
+          <th>Last run</th>
+          <th>Success</th>
+          <th>Failure</th>
+          <th>Total</th>
+          <th>Time(sec)</th>
+          <th>Average(sec)</th>
+          <th>Min time(sec)</th>
+          <th>Max time(sec)</th>
+        </thead>
+        <% @worker_statistic.each do |worker| %>
+          <tr>
+            <td class="worker"><%= formate_date worker[:date], '%e %B %Y' %></td>
+            <td class="worker"><%= formate_date worker[:runtime][:last] %></td>
+            <td class="worker"><%= worker[:success] %></td>
+            <td class="worker"><%= worker[:failure] %></td>
+            <td class="worker"><%= worker[:total] %></td>
+            <td class="worker"><%= worker[:runtime][:total] %></td>
+            <td class="worker"><%= worker[:runtime][:average] %></td>
+            <td class="worker"><%= worker[:runtime][:min] %></td>
+            <td class="worker"><%= worker[:runtime][:max] %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+
+    <div class="history__log">
+      <input type='text' name='' id='history__search' value='' placeholder='Search text in log file'/>
+      <% @worker_log.each do |line| %>
+        <p class="history__i history__<%= line[:color] %>"><%= line[:text] %></p>
+      <% end %>
+    </div>
   </div>
 </div>
