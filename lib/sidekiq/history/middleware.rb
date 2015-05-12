@@ -17,11 +17,13 @@ module Sidekiq
       rescue StandardError => e
         worker_status[:failed] = 1
         worker_status[:passed] = 0
+        worker_status[:last_job_status] = 'failed'.freeze
 
         raise e
       ensure
         worker_status[:runtime] ||= [elapsed(start)]
         worker_status[:last_runtime] = Time.now.utc
+        worker_status[:last_job_status] ||= 'passed'.freeze
 
         save_entry_for_worker(worker_status, worker)
       end

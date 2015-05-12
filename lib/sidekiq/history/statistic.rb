@@ -12,6 +12,7 @@ module Sidekiq
         redis_statistic.worker_names.map do |worker|
           {
             name: worker,
+            last_job_status: last_job_status_for(worker),
             number_of_calls: number_of_calls(worker),
             runtime: runtime_statistic(worker).values_hash
           }
@@ -29,6 +30,7 @@ module Sidekiq
               failure: worker_data[:failed],
               success: worker_data[:passed],
               total: worker_data[:failed] + worker_data[:passed],
+              last_job_status: worker_data[:last_job_status],
               runtime: runtime_for_day(worker_name, worker_data)
             }
           end
@@ -55,6 +57,13 @@ module Sidekiq
         redis_statistic.for_worker(worker)
           .select(&:any?)
           .map{ |hash| hash[state] }.inject(:+) || 0
+      end
+
+      def last_job_status_for(worker)
+        redis_statistic
+          .for_worker(worker)
+          .select(&:any?)
+          .last[:last_job_status]
       end
 
       def runtime_statistic(worker, values = nil)
