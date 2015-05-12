@@ -3,12 +3,25 @@ require 'json'
 module Sidekiq
   module History
     module WebExtension
+      DAFAULT_DAYS = 20
+
       def self.registered(app)
         view_path = File.join(File.expand_path('..', __FILE__), 'views')
 
         app.helpers do
           def formate_date(string, format = nil)
             Time.parse(string).strftime(format || '%T, %e %B %Y')
+          end
+
+          def calculate_date_range(params)
+            if params['dateFrom'] && params['dateTo']
+              from = Date.parse(params['dateFrom'])
+              to   = Date.parse(params['dateTo'])
+
+              [(to - from).to_i, to]
+            else
+              [DAFAULT_DAYS]
+            end
           end
         end
 
@@ -23,14 +36,14 @@ module Sidekiq
         end
 
         app.get '/history' do
-          statistic = Sidekiq::History::Statistic.new(20)
+          statistic = Sidekiq::History::Statistic.new(*calculate_date_range(params))
           @workers = statistic.display
           render(:erb, File.read(File.join(view_path, 'history.erb')))
         end
 
         app.get '/history/charts.json' do
           content_type :json
-          charts = Sidekiq::History::Charts.new(20)
+          charts = Sidekiq::History::Charts.new(*calculate_date_range(params))
 
           {
             tooltip_template: '<%= datasetLabel %> - <%= value %>',
@@ -44,7 +57,7 @@ module Sidekiq
           @name = params[:worker]
 
           @worker_statistic =
-            Sidekiq::History::Statistic.new(365).display_pre_day(@name)
+            Sidekiq::History::Statistic.new(*calculate_date_range(params)).display_pre_day(@name)
           @worker_log =
             Sidekiq::History::LogParser.new(@name).parse
 

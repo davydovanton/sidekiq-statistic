@@ -8,13 +8,17 @@
   <h2>History</h2>
 
   <div class='history__container'>
+    <div class='history__datepicker'>
+      Start: <input id='datepicker_from' />
+      End: <input id='datepicker_to' />
+    </div>
     <h2>Failed</h2>
     <canvas id="js-failed-chart" width="800" height="200"></canvas>
     <h2>Passed</h2>
     <canvas id="js-passed-chart" width="800" height="200"></canvas>
 
     <h2>Workers table</h2>
-    <table class="history__table table table-hover table-bordered table-striped table-white">
+    <table class="history__table table table-hover table-bordered table-striped table-white live-reload">
       <thead>
         <th>Worker</th>
         <th>Date</th>
