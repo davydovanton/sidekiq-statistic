@@ -57,7 +57,7 @@ module Sidekiq
           @name = params[:worker]
 
           @worker_statistic =
-            Sidekiq::History::Statistic.new(365).display_pre_day(@name)
+            Sidekiq::History::Statistic.new(*calculate_date_range(params)).display_pre_day(@name)
           @worker_log =
             Sidekiq::History::LogParser.new(@name).parse
 
