@@ -1,3 +1,6 @@
+* 13.05.2015: Add ability to change any date range on any history page
+
+  *Anton Davydov*
 * 12.05.2015: Add last job status data parameter for each worker
 
   *Anton Davydov*
