@@ -32,6 +32,9 @@
     margin-bottom: 10px;
     border-width: 0;
     }
+    .long_table {
+      overflow: overlay;
+      }
     .history__log {
       display: none;
       }
