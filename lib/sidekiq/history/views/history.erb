@@ -21,33 +21,35 @@
     </div>
 
     <h2>Workers table</h2>
-    <table class="history__table table table-hover table-bordered table-striped table-white live-reload">
-      <thead>
-        <th>Worker</th>
-        <th>Date</th>
-        <th>Success</th>
-        <th>Failure</th>
-        <th>Total</th>
-        <th>Time(sec)</th>
-        <th>Average(sec)</th>
-        <th>Min time(sec)</th>
-        <th>Max time(sec)</th>
-        <th>Last Job Status</th>
-      </thead>
-      <% @workers.each do |worker| %>
-        <tr>
-          <td class="worker"><a href="<%= root_path %>history/<%= worker[:name] %>"><%= worker[:name] %></a></td>
-          <td class="worker"><%= formate_date worker[:runtime][:last] %></td>
-          <td class="worker"><%= worker[:number_of_calls][:success] %></td>
-          <td class="worker"><%= worker[:number_of_calls][:failure] %></td>
-          <td class="worker"><%= worker[:number_of_calls][:total] %></td>
-          <td class="worker"><%= worker[:runtime][:total] %></td>
-          <td class="worker"><%= worker[:runtime][:average] %></td>
-          <td class="worker"><%= worker[:runtime][:min] %></td>
-          <td class="worker"><%= worker[:runtime][:max] %></td>
-          <td class="worker"><%= worker[:last_job_status] %></td>
-        </tr>
-      <% end %>
-    </table>
+    <div class="table_container">
+      <table class="history__table table table-hover table-bordered table-striped table-white live-reload">
+        <thead>
+          <th>Worker</th>
+          <th>Date</th>
+          <th>Success</th>
+          <th>Failure</th>
+          <th>Total</th>
+          <th>Time(sec)</th>
+          <th>Average(sec)</th>
+          <th>Min time(sec)</th>
+          <th>Max time(sec)</th>
+          <th>Last Job Status</th>
+        </thead>
+        <% @workers.each do |worker| %>
+          <tr>
+            <td class="worker"><a href="<%= root_path %>history/<%= worker[:name] %>"><%= worker[:name] %></a></td>
+            <td class="worker"><%= formate_date worker[:runtime][:last] %></td>
+            <td class="worker"><%= worker[:number_of_calls][:success] %></td>
+            <td class="worker"><%= worker[:number_of_calls][:failure] %></td>
+            <td class="worker"><%= worker[:number_of_calls][:total] %></td>
+            <td class="worker"><%= worker[:runtime][:total] %></td>
+            <td class="worker"><%= worker[:runtime][:average] %></td>
+            <td class="worker"><%= worker[:runtime][:min] %></td>
+            <td class="worker"><%= worker[:runtime][:max] %></td>
+            <td class="worker"><%= worker[:last_job_status] %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
   </div>
 </div>
