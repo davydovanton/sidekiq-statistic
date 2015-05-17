@@ -4,6 +4,7 @@ module Sidekiq
   module History
     module WebExtension
       DAFAULT_DAYS = 20
+      LIVE_SECONDS = 200
 
       def self.registered(app)
         view_path = File.join(File.expand_path('..', __FILE__), 'views')
@@ -44,12 +45,25 @@ module Sidekiq
         app.get '/history/charts.json' do
           content_type :json
           charts = Sidekiq::History::Charts.new(*calculate_date_range(params))
+          range = (1..LIVE_SECONDS).map { |i| (Time.now - i).strftime '%T' }
 
           {
             tooltip_template: '<%= datasetLabel %> - <%= value %>',
             labels: charts.dates,
+            live_labels: range,
             failed_datasets: charts.information_for(:failed),
-            passed_datasets: charts.information_for(:passed)
+            passed_datasets: charts.information_for(:passed),
+            failed_live_datasets: charts.live_information,
+            passed_live_datasets: charts.live_information
+          }.to_json
+        end
+
+        app.get '/history/stream_charts.json' do
+          charts = Sidekiq::History::Charts.new(1)
+
+          {
+            values: charts.stream,
+            label: Time.now.strftime('%T')
           }.to_json
         end
 

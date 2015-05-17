@@ -39,7 +39,9 @@ module Sidekiq
       def save_entry_for_worker(worker_status, worker)
         Sidekiq.redis do |redis|
           history = "sidekiq:history:#{Time.now.utc.to_date}"
+          live_history = "sidekiq:live_history"
           value = redis.hget(history, worker.class.to_s)
+          live_history
 
           if value
             summary = Sidekiq.load_json(value).symbolize_keys

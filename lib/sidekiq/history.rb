@@ -34,6 +34,7 @@ end
 Sidekiq.configure_server do |config|
   config.server_middleware do |chain|
     chain.add Sidekiq::History::Middleware
+    # TODO: run redis clinner (each 5 minutes) here
   end
 end
 
