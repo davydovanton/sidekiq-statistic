@@ -1,3 +1,4 @@
+require 'sinatra/streaming'
 require 'json'
 
 module Sidekiq
@@ -8,6 +9,9 @@ module Sidekiq
       def self.registered(app)
         view_path = File.join(File.expand_path('..', __FILE__), 'views')
 
+        app.set connections: []
+
+        app.helpers Sinatra::Streaming
         app.helpers do
           def formate_date(string, format = nil)
             Time.parse(string).strftime(format || '%T, %e %B %Y')
@@ -51,6 +55,12 @@ module Sidekiq
             failed_datasets: charts.information_for(:failed),
             passed_datasets: charts.information_for(:passed)
           }.to_json
+        end
+
+        app.get '/live-history', provides: 'text/event-stream' do
+          stream do |out|
+            out << "data: bla\nretry: 60000\n\n"
+          end
         end
 
         app.get '/history/:worker' do

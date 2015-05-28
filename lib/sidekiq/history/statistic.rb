@@ -3,6 +3,31 @@ module Sidekiq
     class Statistic
       JOB_STATES = [:passed, :failed]
 
+      def self.pubsub
+        begin
+          Sidekiq.redis do |conn|
+            conn.subscribe(:'sidekiq:history-live') do |on|
+              on.subscribe do |channel, subscriptions|
+                puts "Subscribed to ##{channel} (#{subscriptions} subscriptions)"
+              end
+
+              on.message do |channel, message|
+                puts "#{channel}: #{message}"
+                redis.unsubscribe if message == "exit"
+              end
+
+              on.unsubscribe do |channel, subscriptions|
+                puts "Unsubscribed from #{channel} (#{subscriptions} subscriptions)"
+              end
+            end
+          end
+        rescue Redis::BaseConnectionError => error
+          puts "#{error}, retrying in 1s"
+          sleep 1
+          retry
+        end
+      end
+
       def initialize(days_previous, start_date = nil)
         @start_date = start_date || Time.now.utc.to_date
         @end_date = @start_date - days_previous
