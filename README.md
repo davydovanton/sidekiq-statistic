@@ -9,7 +9,11 @@ Improved display of statistics for your workers and jobs statistic
 ## Installation
 Add this line to your application's Gemfile:
 
-    gem 'sidekiq-history'
+    gem 'sidekiq_history'
+
+Or add dev version:
+
+    gem 'sidekiq_history', github: 'davydovanton/sidekiq-history'
 
 And then execute:
 
@@ -17,7 +21,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install sidekiq-history
+    $ gem install sidekiq_history
 
 ## Usage
 Open in your browser `/sidekiq/history` page.
