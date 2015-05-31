@@ -5,11 +5,11 @@ module Sidekiq
   module History
     module WebExtension
       DAFAULT_DAYS = 20
+      $connections = []
 
       def self.registered(app)
-        view_path = File.join(File.expand_path('..', __FILE__), 'views')
 
-        app.set connections: []
+        view_path = File.join(File.expand_path('..', __FILE__), 'views')
 
         app.helpers Sinatra::Streaming
         app.helpers do
@@ -57,12 +57,6 @@ module Sidekiq
           }.to_json
         end
 
-        app.get '/live-history', provides: 'text/event-stream' do
-          stream do |out|
-            out << "data: bla\nretry: 60000\n\n"
-          end
-        end
-
         app.get '/history/:worker' do
           @name = params[:worker]
 
@@ -72,6 +66,31 @@ module Sidekiq
             Sidekiq::History::LogParser.new(@name).parse
 
           render(:erb, File.read(File.join(view_path, 'worker.erb')))
+        end
+
+        app.get '/live-history', provides: 'text/event-stream' do
+          stream do |out|
+            $connections << out
+require 'debug'
+
+            # out << "data: foo\nretry: 60000\n\n"
+            out.callback { $connections.delete(out) }
+          end
+        end
+
+        Thread.new do
+          loop do
+            puts '***'
+            sleep 1
+            puts $connections.count
+
+            # require 'debug'
+            # $connections.each do |out|
+            #   out << "data: bar\nretry: 600\n\n"
+            # end
+            puts $connections.count
+            puts '==='
+          end
         end
       end
     end
