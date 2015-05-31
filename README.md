@@ -6,6 +6,8 @@ Improved display of statistics for your workers and jobs statistic
 
 **This gem work only with sidekiq version more than [3.3.4](https://github.com/mperham/sidekiq/releases/tag/v3.3.4)**
 
+**This not production version of gem**
+
 ## Installation
 Add this line to your application's Gemfile:
 
