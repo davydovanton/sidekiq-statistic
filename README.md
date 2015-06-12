@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/davydovanton/sidekiq-history.svg?branch=master)](https://travis-ci.org/davydovanton/sidekiq-history) [![Code Climate](https://codeclimate.com/github/davydovanton/sidekiq-history/badges/gpa.svg)](https://codeclimate.com/github/davydovanton/sidekiq-history) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/davydovanton/sidekiq-history?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-Improved display of statistics for your workers and jobs statistic
+Improved display of statistics for your sidekiq workers and jobs.
 
 **This gem work only with sidekiq version more than [3.3.4](https://github.com/mperham/sidekiq/releases/tag/v3.3.4)**
 
@@ -11,19 +11,11 @@ Improved display of statistics for your workers and jobs statistic
 ## Installation
 Add this line to your application's Gemfile:
 
-    gem 'sidekiq_history'
-
-Or add dev version:
-
     gem 'sidekiq_history', github: 'davydovanton/sidekiq-history'
 
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install sidekiq_history
 
 ## Usage
 Open in your browser `/sidekiq/history` page.
