@@ -8,6 +8,16 @@ Improved display of statistics for your sidekiq workers and jobs.
 
 **This not production version of gem**
 
+## Screenshots
+### Index page:
+![sidekiq-history_index](https://cloud.githubusercontent.com/assets/1147484/8071172/1708e3b0-0f10-11e5-84cf-86a910f5ecc2.png)
+
+### Worker page with table (per day):
+![sidekiq-history_worker](https://cloud.githubusercontent.com/assets/1147484/8071171/1706924a-0f10-11e5-9ddc-8aeeb7f5c794.png)
+
+### Worker page with log:
+![screenshot 2015-06-10 01 27 50](https://cloud.githubusercontent.com/assets/1147484/8071166/0edd7688-0f10-11e5-9841-0572ab5704e3.jpg)
+
 ## Installation
 Add this line to your application's Gemfile:
 
