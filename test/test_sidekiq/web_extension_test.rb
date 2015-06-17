@@ -11,9 +11,11 @@ module Sidekiq
     end
 
     describe 'GET /sidekiq' do
-      it 'can display home with history tab' do
+      before do
         get '/'
+      end
 
+      it 'can display home with history tab' do
         last_response.status.must_equal 200
         last_response.body.must_match /Sidekiq/
         last_response.body.must_match /History/

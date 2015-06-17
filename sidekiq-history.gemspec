@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sidekiq/history/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = 'sidekiq_history'
+  gem.name          = 'sidekiq-history'
   gem.version       = Sidekiq::History::VERSION
   gem.authors       = ['Anton Davydov']
   gem.email         = ['antondavydov.o@gmail.com']
@@ -22,7 +22,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'sidekiq', '~> 3.3', '>= 3.3.4'
 
   gem.add_development_dependency 'rake', '~> 0'
-  gem.add_development_dependency 'sinatra', '~> 0'
+  gem.add_development_dependency 'sinatra', '~> 1.4.6'
   gem.add_development_dependency 'mocha', '~> 0'
   gem.add_development_dependency 'rack-test', '~> 0'
   gem.add_development_dependency 'minitest', '~> 5.0', '>= 5.0.7'
