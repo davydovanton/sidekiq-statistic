@@ -30,7 +30,9 @@ module Sidekiq
 
     private
       def log_file
-        Sidekiq.options[:logfile] || Sidekiq::History.configuration.log_file
+        Sidekiq.options[:logfile] ||
+          Sidekiq.logger.instance_variable_get(:@logdev).filename ||
+          Sidekiq::History.configuration.log_file
       end
     end
   end
