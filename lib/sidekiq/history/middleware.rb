@@ -1,8 +1,6 @@
 module Sidekiq
   module History
     class Middleware
-      SERVESLIST = 'sidekiq:history:serveslist'.freeze
-
       attr_accessor :msg
 
       def call(worker, msg, queue, &block)
@@ -38,57 +36,27 @@ module Sidekiq
         }
       end
 
-      #
-      # Reed more about rpoplpush here (also reed about brpoplpush):
-      #   http://redis.io/commands/rpoplpush
-
-      def push_to_serveslist(worker_status)
-        Sidekiq.redis do |redis|
-          # atomic push to list
-          redis.hset(SERVESLIST, Sidekiq.dump_json(worker_status))
-        end
-      end
-
-      # run unique servise_actor. Reed celluloid documentation
-      def servise_actor
-        Sidekiq.redis do |redis|
-          # atomig get from list
-          worker_status = Sidekiq.load_json(redis.hget(SERVESLIST)).symbolize_keys
-          worker = worker_status.delete :class
-
-          history = "sidekiq:history:#{Time.now.utc.to_date}"
-          value = redis.hget(history, worker.class.to_s)
-
-          if value
-            summary = Sidekiq.load_json(value).symbolize_keys
-            [:failed, :passed, :runtime].each do |stat|
-              worker_status[stat] = summary[stat] + worker_status[stat]
-            end
-          end
-
-          redis.hset(history, worker.class.to_s, Sidekiq.dump_json(worker_status))
-        end
-
-        after(0.1) do
-          servise_actor
-        end
-      end
-
       def save_entry_for_worker(worker_status)
-        worker = worker_status.delete :class
+        status = worker_status.dup
+        worker = status.delete :class
 
         Sidekiq.redis do |redis|
           history = "sidekiq:history:#{Time.now.utc.to_date}"
-          value = redis.hget(history, worker)
 
-          if value
-            summary = Sidekiq.load_json(value).symbolize_keys
-            [:failed, :passed, :runtime].each do |stat|
-              worker_status[stat] = summary[stat] + worker_status[stat]
+          redis.watch(history) do
+          value = redis.get history
+
+          redis.multi do |multi|
+            if value
+              summary = Sidekiq.load_json(value)[worker].symbolize_keys
+              [:failed, :passed, :runtime].each do |stat|
+                status[stat] = summary[stat] + status[stat]
+              end
             end
-          end
 
-          redis.hset(history, worker, Sidekiq.dump_json(worker_status))
+            multi.set(history, Sidekiq.dump_json({ worker => status}))
+          end
+          end || save_entry_for_worker(worker_status)
         end
       end
 

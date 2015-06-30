@@ -18,7 +18,7 @@ module Sidekiq
         @redis_hash = Sidekiq.redis do |conn|
           (@end_date..@start_date).map do |date|
             {
-              date.to_s => parse(conn.hgetall("sidekiq:history:#{date}"))
+              date.to_s => parse(conn.get("sidekiq:history:#{date}"))
             }
           end
         end
@@ -26,9 +26,10 @@ module Sidekiq
 
     private
 
-      def parse(hash)
-        hash.each do |worker, json|
-          hash[worker] = Sidekiq.load_json(json).symbolize_keys
+      def parse(json)
+        hash = Sidekiq.load_json(json || '{}')
+        hash.each do |worker, attributes|
+          hash[worker] = attributes.symbolize_keys
         end
       end
     end
