@@ -24,40 +24,46 @@ module Sidekiq
         worker_status[:runtime] ||= [elapsed(start)]
         worker_status[:last_runtime] = Time.now.utc
         worker_status[:last_job_status] ||= 'passed'.freeze
+        worker_status[:class] = worker.class.to_s
 
-        save_entry_for_worker(worker_status, worker)
+        save_entry_for_worker worker_status
       end
 
       def new_status
-        # worker.sidekiq_options_hash
         {
           failed: 0,
           passed: 1
         }
       end
 
-      def save_entry_for_worker(worker_status, worker)
+      def save_entry_for_worker(worker_status)
+        status = worker_status.dup
+        worker = status.delete :class
+
         Sidekiq.redis do |redis|
           history = "sidekiq:history:#{Time.now.utc.to_date}"
-          value = redis.hget(history, worker.class.to_s)
 
-          if value
-            summary = Sidekiq.load_json(value).symbolize_keys
-            [:failed, :passed, :runtime].each do |stat|
-              worker_status[stat] = summary[stat] + worker_status[stat]
+          redis.watch(history) do
+          value = redis.get history
+
+          redis.multi do |multi|
+            if value
+              summary = Sidekiq.load_json(value)[worker].symbolize_keys
+              [:failed, :passed, :runtime].each do |stat|
+                status[stat] = summary[stat] + status[stat]
+              end
             end
-          end
 
-          redis.hset(history, worker.class.to_s, Sidekiq.dump_json(worker_status))
+            multi.set(history, Sidekiq.dump_json({ worker => status}))
+          end
+          end || save_entry_for_worker(worker_status)
         end
       end
 
-      private
-
-        # this methos already exist in Sidekiq::Middleware::Server::Logging class
-        def elapsed(start)
-          (Time.now.utc - start).to_f.round(3)
-        end
+      # this methos already exist in Sidekiq::Middleware::Server::Logging class
+      def elapsed(start)
+        (Time.now.utc - start).to_f.round(3)
+      end
     end
   end
 end

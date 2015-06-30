@@ -13,9 +13,9 @@ module Sidekiq
         middlewared {}
 
         entry = Sidekiq.redis do |redis|
-          redis.hgetall(history)
+          redis.get(history)
         end
-        actual = Sidekiq.load_json(entry['HistoryWorker']).symbolize_keys
+        actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
 
         assert_equal 1, actual[:passed]
         assert_equal 0, actual[:failed]
@@ -30,9 +30,9 @@ module Sidekiq
         end
 
         entry = Sidekiq.redis do |redis|
-          redis.hgetall(history)
+          redis.get(history)
         end
-        actual = Sidekiq.load_json(entry['HistoryWorker']).symbolize_keys
+        actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
 
         assert_equal 0, actual[:passed]
         assert_equal 1, actual[:failed]
@@ -49,14 +49,28 @@ module Sidekiq
         end
         middlewared { sleep 0.001 }
 
-        entry = Sidekiq.redis do |redis|
-          redis.hgetall(history)
-        end
-        actual = Sidekiq.load_json(entry['HistoryWorker']).symbolize_keys
+        entry  = Sidekiq.redis { |redis| redis.get(history) }
+        actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
 
         assert_equal 2, actual[:passed]
         assert_equal 1, actual[:failed]
         assert_equal 3, actual[:runtime].count
+      end
+
+      it 'support multithreaded calculations' do
+        workers = []
+        25.times do
+          workers << Thread.new do
+            10.times { middlewared {} }
+          end
+        end
+
+        workers.each(&:join)
+
+        entry  = Sidekiq.redis { |redis| redis.get(history) }
+        actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
+
+        assert_equal 250, actual[:passed]
       end
     end
   end
