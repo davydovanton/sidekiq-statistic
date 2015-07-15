@@ -24,7 +24,7 @@ module Sidekiq
         worker_status[:runtime] ||= [elapsed(start)]
         worker_status[:last_runtime] = Time.now.utc
         worker_status[:last_job_status] ||= 'passed'.freeze
-        worker_status[:class] = worker.class.to_s
+        worker_status[:class] = msg['wrapped'.freeze] || worker.class.to_s
 
         save_entry_for_worker worker_status
       end
@@ -44,18 +44,18 @@ module Sidekiq
           history = "sidekiq:history:#{Time.now.utc.to_date}"
 
           redis.watch(history) do
-          value = redis.get history
+            value = redis.get history
 
-          redis.multi do |multi|
-            if value
-              summary = Sidekiq.load_json(value)[worker].symbolize_keys
-              [:failed, :passed, :runtime].each do |stat|
-                status[stat] = summary[stat] + status[stat]
+            redis.multi do |multi|
+              if value && summary = Sidekiq.load_json(value)[worker]
+                summary = summary.symbolize_keys
+                [:failed, :passed, :runtime].each do |stat|
+                  status[stat] = summary[stat] + status[stat]
+                end
               end
-            end
 
-            multi.set(history, Sidekiq.dump_json({ worker => status}))
-          end
+              multi.set(history, Sidekiq.dump_json(worker => status))
+            end
           end || save_entry_for_worker(worker_status)
         end
       end
