@@ -54,7 +54,7 @@ module Sidekiq
                 end
               end
 
-              multi.set(history, Sidekiq.dump_json(worker => status))
+              multi.set history, Sidekiq.dump_json(worker => status)
             end
           end || save_entry_for_worker(worker_status)
         end
