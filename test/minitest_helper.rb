@@ -19,9 +19,13 @@ class HistoryWorker
   include Sidekiq::Worker
 end
 
-def middlewared
+class OtherHistoryWorker
+  include Sidekiq::Worker
+end
+
+def middlewared(worker_class = HistoryWorker)
   middleware = Sidekiq::History::Middleware.new
-  middleware.call HistoryWorker.new, {}, 'default' do
+  middleware.call worker_class.new, {}, 'default' do
     yield
   end
 end

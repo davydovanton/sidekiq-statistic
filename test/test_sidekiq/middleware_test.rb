@@ -57,6 +57,25 @@ module Sidekiq
         assert_equal 3, actual[:runtime].count
       end
 
+      it 'records history for more than one worker' do
+        middlewared {}
+        middlewared(OtherHistoryWorker) {}
+
+        entry = Sidekiq.redis do |redis|
+          redis.get(history)
+        end
+
+        actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
+
+        assert_equal 1, actual[:passed]
+        assert_equal 0, actual[:failed]
+
+        other_actual = Sidekiq.load_json(entry)['OtherHistoryWorker'].symbolize_keys
+
+        assert_equal 1, other_actual[:passed]
+        assert_equal 0, other_actual[:failed]
+      end
+
       it 'support multithreaded calculations' do
         workers = []
         25.times do
