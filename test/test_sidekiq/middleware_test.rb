@@ -38,6 +38,39 @@ module Sidekiq
         assert_equal 1, actual[:failed]
       end
 
+      it 'records history for more than one worker' do
+        middlewared(HistoryWorker) {}
+        middlewared(OtherHistoryWorker) {}
+
+        entry = Sidekiq.redis do |redis|
+          redis.get(history)
+        end
+        actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
+
+        assert_equal 1, actual[:passed]
+        assert_equal 0, actual[:failed]
+
+        other_actual = Sidekiq.load_json(entry)['OtherHistoryWorker'].symbolize_keys
+
+        assert_equal 1, other_actual[:passed]
+        assert_equal 0, other_actual[:failed]
+      end
+
+      it 'records history for ActiveJob...JobWrapper workers' do
+        message =
+         {'class'   => 'ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper',
+          'wrapped' => 'RealWorkerClassName'}
+        middlewared(ActiveJobWorker, message) {}
+
+        entry = Sidekiq.redis do |redis|
+          redis.get(history)
+        end
+        actual = Sidekiq.load_json(entry)['RealWorkerClassName'].symbolize_keys
+        assert_equal Sidekiq.load_json(entry).keys, ['RealWorkerClassName']
+        assert_equal 1, actual[:passed]
+        assert_equal 0, actual[:failed]
+      end
+
       it 'records history for any workers' do
         middlewared { sleep 0.001 }
         begin

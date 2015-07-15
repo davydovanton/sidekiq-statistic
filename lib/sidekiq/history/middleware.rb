@@ -24,8 +24,11 @@ module Sidekiq
         worker_status[:runtime] ||= [elapsed(start)]
         worker_status[:last_runtime] = Time.now.utc
         worker_status[:last_job_status] ||= 'passed'.freeze
-        worker_status[:class] = worker.class.to_s
-
+        worker_status[:class] = if msg['wrapped']
+          Sidekiq::Job.new(msg).display_class
+        else
+          worker.class.to_s
+        end
         save_entry_for_worker worker_status
       end
 
@@ -47,20 +50,23 @@ module Sidekiq
           value = redis.get history
 
           redis.multi do |multi|
-            if value
+            if value && Sidekiq.load_json(value)[worker]
               summary = Sidekiq.load_json(value)[worker].symbolize_keys
               [:failed, :passed, :runtime].each do |stat|
                 status[stat] = summary[stat] + status[stat]
               end
             end
+            hash_value = Sidekiq.load_json(value) if value
+            hash_value ||= {}
 
-            multi.set(history, Sidekiq.dump_json({ worker => status}))
+            new_value = hash_value.merge({worker => status})
+            multi.set(history, Sidekiq.dump_json(new_value))
           end
           end || save_entry_for_worker(worker_status)
         end
       end
 
-      # this methos already exist in Sidekiq::Middleware::Server::Logging class
+      # this methods already exist in Sidekiq::Middleware::Server::Logging class
       def elapsed(start)
         (Time.now.utc - start).to_f.round(3)
       end
