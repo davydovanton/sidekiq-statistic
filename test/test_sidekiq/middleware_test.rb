@@ -3,9 +3,7 @@ require 'minitest_helper'
 module Sidekiq
   module History
     describe 'Middleware' do
-      before do
-        Sidekiq.redis { |c| c.flushdb }
-      end
+      before { Sidekiq.redis(&:flushdb) }
 
       let(:history) { "sidekiq:history:#{Time.now.utc.to_date}" }
 
@@ -71,6 +69,40 @@ module Sidekiq
         actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
 
         assert_equal 250, actual[:passed]
+      end
+
+      it 'support ActiveJob workers' do
+        message = {
+          'class'   => 'ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper',
+          'wrapped' => 'RealWorkerClassName'
+        }
+
+        middlewared(worker_class: ActiveJobWrapper, msg: message) {}
+
+        entry = Sidekiq.redis do |redis|
+          redis.get(history)
+        end
+
+        actual = Sidekiq.load_json(entry)['RealWorkerClassName'].symbolize_keys
+
+        assert_equal Sidekiq.load_json(entry).keys, ['RealWorkerClassName']
+        assert_equal 1, actual[:passed]
+        assert_equal 0, actual[:failed]
+      end
+
+      it 'saves statistic for more than one worker' do
+        middlewared{}
+        middlewared(worker_class: OtherHistoryWorker){}
+
+        entry = Sidekiq.redis{ |redis| redis.get(history) }
+
+        actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
+        assert_equal 1, actual[:passed]
+        assert_equal 0, actual[:failed]
+
+        actual = Sidekiq.load_json(entry)['OtherHistoryWorker'].symbolize_keys
+        assert_equal 1, actual[:passed]
+        assert_equal 0, actual[:failed]
       end
     end
   end

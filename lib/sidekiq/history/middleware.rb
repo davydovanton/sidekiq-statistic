@@ -36,6 +36,9 @@ module Sidekiq
         }
       end
 
+      # read this:
+      #   https://medium.com/@stockholmux/store-javascript-objects-in-redis-with-node-js-the-right-way-1e2e89dbbf64
+      #   http://www.rediscookbook.org/introduction_to_storing_objects.html
       def save_entry_for_worker(worker_status)
         status = worker_status.dup
         worker = status.delete :class
@@ -44,17 +47,19 @@ module Sidekiq
           history = "sidekiq:history:#{Time.now.utc.to_date}"
 
           redis.watch(history) do
-            value = redis.get history
+            value = Sidekiq.load_json(redis.get(history) || '{}'.freeze)
 
             redis.multi do |multi|
-              if value && summary = Sidekiq.load_json(value)[worker]
-                summary = summary.symbolize_keys
-                [:failed, :passed, :runtime].each do |stat|
-                  status[stat] = summary[stat] + status[stat]
+              if value[worker]
+                worker_summary = value[worker].symbolize_keys
+                %i[failed passed runtime].each do |stat|
+                  status[stat] = worker_summary[stat] + status[stat]
                 end
               end
 
-              multi.set history, Sidekiq.dump_json(worker => status)
+              value[worker] = status
+
+              multi.set history, Sidekiq.dump_json(value)
             end
           end || save_entry_for_worker(worker_status)
         end
