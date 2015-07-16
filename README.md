@@ -21,7 +21,7 @@ Improved display of statistics for your sidekiq workers and jobs.
 ## Installation
 Add this line to your application's Gemfile:
 
-    gem 'sidekiq_history', github: 'davydovanton/sidekiq-history'
+    gem 'sidekiq-history', github: 'davydovanton/sidekiq-history'
 
 And then execute:
 
