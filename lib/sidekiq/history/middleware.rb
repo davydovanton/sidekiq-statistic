@@ -35,7 +35,6 @@ module Sidekiq
           redis.watch(REDIS_HASH) do
             passed = redis.hget(REDIS_HASH, "#{worker_key}:passed")
             failed = redis.hget(REDIS_HASH, "#{worker_key}:failed")
-            total_time = redis.hget(REDIS_HASH, "#{worker_key}:total_time").to_f
             min_time = hget_time(redis, "#{worker_key}:min_time", status)
             max_time = hget_time(redis, "#{worker_key}:max_time", status)
             average_time = hget_time(redis, "#{worker_key}:average_time", status)
@@ -43,7 +42,6 @@ module Sidekiq
             statistic_hash = {
               "#{worker_key}:last_job_status" => status[:last_job_status],
               "#{worker_key}:average_time" => (average_time + status[:time]) / 2,
-              "#{worker_key}:total_time" => total_time + status[:time],
               "#{worker_key}:last_time" => status[:last_runtime],
               "#{worker_key}:min_time" => [min_time, status[:time]].min,
               "#{worker_key}:max_time" => [max_time, status[:time]].max,
@@ -53,6 +51,7 @@ module Sidekiq
               multi.hset(REDIS_HASH, "#{worker_key}:passed", 0) if passed.nil?
               multi.hset(REDIS_HASH, "#{worker_key}:failed", 0) if failed.nil?
               multi.hincrby REDIS_HASH, "#{worker_key}:#{status[:last_job_status]}", 1
+              multi.hincrbyfloat REDIS_HASH, "#{worker_key}:total_time", status[:time]
 
               statistic_hash.each{ |key, value| multi.hset REDIS_HASH, key, value }
             end
