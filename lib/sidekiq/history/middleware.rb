@@ -10,59 +10,58 @@ module Sidekiq
       private
 
       def call_with_sidekiq_history(worker, msg, queue)
-        worker_status = new_status
+        worker_status = { last_job_status: 'passed'.freeze }
+
         start = Time.now.utc
 
         yield
       rescue StandardError => e
-        worker_status[:failed] = 1
-        worker_status[:passed] = 0
         worker_status[:last_job_status] = 'failed'.freeze
 
         raise e
       ensure
-        worker_status[:runtime] ||= [elapsed(start)]
+        worker_status[:time] = elapsed(start)
         worker_status[:last_runtime] = Time.now.utc
-        worker_status[:last_job_status] ||= 'passed'.freeze
         worker_status[:class] = msg['wrapped'.freeze] || worker.class.to_s
 
         save_entry_for_worker worker_status
       end
 
-      def new_status
-        {
-          failed: 0,
-          passed: 1
-        }
-      end
-
-      # read this:
-      #   https://medium.com/@stockholmux/store-javascript-objects-in-redis-with-node-js-the-right-way-1e2e89dbbf64
-      #   http://www.rediscookbook.org/introduction_to_storing_objects.html
       def save_entry_for_worker(worker_status)
         status = worker_status.dup
-        worker = status.delete :class
+        worker_key = "#{Time.now.utc.to_date}:#{status.delete :class}"
 
         Sidekiq.redis do |redis|
-          history = "sidekiq:history:#{Time.now.utc.to_date}"
+          redis.watch(REDIS_HASH) do
+            passed = redis.hget(REDIS_HASH, "#{worker_key}:passed")
+            failed = redis.hget(REDIS_HASH, "#{worker_key}:failed")
+            total_time = redis.hget(REDIS_HASH, "#{worker_key}:total_time").to_f
+            min_time = hget_time(redis, "#{worker_key}:min_time", status)
+            max_time = hget_time(redis, "#{worker_key}:max_time", status)
+            average_time = hget_time(redis, "#{worker_key}:average_time", status)
 
-          redis.watch(history) do
-            value = Sidekiq.load_json(redis.get(history) || '{}'.freeze)
+            statistic_hash = {
+              "#{worker_key}:last_job_status" => status[:last_job_status],
+              "#{worker_key}:average_time" => (average_time + status[:time]) / 2,
+              "#{worker_key}:total_time" => total_time + status[:time],
+              "#{worker_key}:last_time" => status[:last_runtime],
+              "#{worker_key}:min_time" => [min_time, status[:time]].min,
+              "#{worker_key}:max_time" => [max_time, status[:time]].max,
+            }
 
             redis.multi do |multi|
-              if value[worker]
-                worker_summary = value[worker].symbolize_keys
-                %i[failed passed runtime].each do |stat|
-                  status[stat] = worker_summary[stat] + status[stat]
-                end
-              end
+              multi.hset(REDIS_HASH, "#{worker_key}:passed", 0) if passed.nil?
+              multi.hset(REDIS_HASH, "#{worker_key}:failed", 0) if failed.nil?
+              multi.hincrby REDIS_HASH, "#{worker_key}:#{status[:last_job_status]}", 1
 
-              value[worker] = status
-
-              multi.set history, Sidekiq.dump_json(value)
+              statistic_hash.each{ |key, value| multi.hset REDIS_HASH, key, value }
             end
           end || save_entry_for_worker(worker_status)
         end
+      end
+
+      def hget_time(redis, key, status)
+        (redis.hget(REDIS_HASH, key) || status[:time]).to_f
       end
 
       # this methos already exist in Sidekiq::Middleware::Server::Logging class

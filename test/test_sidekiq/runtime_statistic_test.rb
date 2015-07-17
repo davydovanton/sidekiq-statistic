@@ -33,6 +33,7 @@ module Sidekiq
         it 'returns totle runtime HistoryWorker' do
           middlewared { sleep 0.2 }
 
+          $debugger = true
           values = runtime_static.total_runtime
           assert_equal 0.2, values.round(1)
         end
@@ -82,7 +83,7 @@ module Sidekiq
       end
 
       describe '#min_runtime' do
-        it 'returns max runtime for worker HistoryWorker' do
+        it 'returns min runtime for worker HistoryWorker' do
           middlewared { sleep 0.2 }
           middlewared { sleep 0.3 }
           middlewared { sleep 0.1 }

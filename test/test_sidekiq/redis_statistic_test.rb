@@ -41,13 +41,14 @@ module Sidekiq
 
           Time.stub :now, time do
             values = redis_statistic.for_worker('HistoryWorker')
-            assert_equal [{}, { failed: 0, passed: 1, runtime: [0.0], last_runtime: time.to_s, last_job_status: "passed"}], values
+            assert_equal [{}, { passed:1, failed:0, last_job_status: 'passed', average_time: 0.0, total_time: 0.0, last_time: time.to_s, min_time: 0.0, max_time: 0.0 }], values
           end
         end
 
         describe 'when jobs were not call' do
           it 'returns array with empty values' do
             values = redis_statistic.for_worker('HistoryWorker')
+            $debugger = true
             assert_equal [{}, {}], values
           end
         end

@@ -17,6 +17,8 @@ require 'sidekiq/history/web_extension'
 
 module Sidekiq
   module History
+    REDIS_HASH = 'sidekiq:history'.freeze
+
     class << self
       attr_writer :configuration
     end

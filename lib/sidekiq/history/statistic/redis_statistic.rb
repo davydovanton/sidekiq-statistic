@@ -11,26 +11,27 @@ module Sidekiq
       end
 
       def worker_names
-        @worker_names ||= hash.flat_map{ |hash| hash.values.first.keys }.uniq
+        @worker_names ||= hash.flat_map{ |h| h.values.first.keys }.uniq
       end
 
       def hash
         @redis_hash = Sidekiq.redis do |conn|
-          (@end_date..@start_date).map do |date|
-            {
-              date.to_s => parse(conn.get("sidekiq:history:#{date}"))
-            }
-          end
+          redis_hash = {}
+          conn
+            .hgetall(REDIS_HASH)
+            .each do |keys, value|
+              *keys, last = keys.split(':'.freeze)
+              keys.inject(redis_hash){ |h, k| h[k] || h[k] = {} }[last.to_sym] = to_number(value)
+            end
+
+          (@end_date..@start_date).map(&:to_s).map{|key| { key => (redis_hash[key] || {}) } }
         end
       end
 
     private
 
-      def parse(json)
-        hash = Sidekiq.load_json(json || '{}')
-        hash.each do |worker, attributes|
-          hash[worker] = attributes.symbolize_keys
-        end
+      def to_number(value)
+        value.match('\.').nil? ? Integer(value) : Float(value) rescue value.to_s
       end
     end
   end

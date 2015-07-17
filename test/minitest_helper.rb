@@ -27,7 +27,7 @@ class ActiveJobWrapper
   include Sidekiq::Worker
 end
 
-def middlewared(worker_class: HistoryWorker, msg: {})
+def middlewared(worker_class = HistoryWorker, msg = {})
   middleware = Sidekiq::History::Middleware.new
   middleware.call worker_class.new, msg, 'default' do
     yield
