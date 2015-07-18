@@ -63,13 +63,13 @@ module Sidekiq
         workers = []
         25.times do
           workers << Thread.new do
-            10.times { middlewared {} }
+            25.times { middlewared {} }
           end
         end
 
         workers.each(&:join)
 
-        assert_equal 250, actual['HistoryWorker'][:passed]
+        assert_equal 625, actual['HistoryWorker'][:passed]
       end
 
       it 'support ActiveJob workers' do

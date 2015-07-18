@@ -32,29 +32,25 @@ module Sidekiq
         worker_key = "#{Time.now.utc.to_date}:#{status.delete :class}"
 
         Sidekiq.redis do |redis|
-          redis.watch(REDIS_HASH) do
-            min_time = hget_time(redis, "#{worker_key}:min_time", status)
-            max_time = hget_time(redis, "#{worker_key}:max_time", status)
-            average_time = hget_time(redis, "#{worker_key}:average_time", status)
+          min_time = hget_time(redis, "#{worker_key}:min_time", status)
+          max_time = hget_time(redis, "#{worker_key}:max_time", status)
+          average_time = hget_time(redis, "#{worker_key}:average_time", status)
 
-            statistics = [
-              "#{worker_key}:last_job_status", status[:last_job_status],
-              "#{worker_key}:average_time", (average_time + status[:time]) / 2,
-              "#{worker_key}:last_time", status[:last_runtime],
-              "#{worker_key}:min_time", [min_time, status[:time]].min,
-              "#{worker_key}:max_time", [max_time, status[:time]].max,
-            ]
+          statistics = [
+            "#{worker_key}:last_job_status", status[:last_job_status],
+            "#{worker_key}:average_time", (average_time + status[:time]) / 2,
+            "#{worker_key}:last_time", status[:last_runtime],
+            "#{worker_key}:min_time", [min_time, status[:time]].min,
+            "#{worker_key}:max_time", [max_time, status[:time]].max,
+          ]
 
-            redis.multi do |multi|
-              multi.hsetnx REDIS_HASH, "#{worker_key}:passed", 0
-              multi.hsetnx REDIS_HASH, "#{worker_key}:failed", 0
+          redis.hsetnx REDIS_HASH, "#{worker_key}:passed", 0
+          redis.hsetnx REDIS_HASH, "#{worker_key}:failed", 0
 
-              multi.hincrby REDIS_HASH, "#{worker_key}:#{status[:last_job_status]}", 1
-              multi.hincrbyfloat REDIS_HASH, "#{worker_key}:total_time", status[:time]
+          redis.hincrby REDIS_HASH, "#{worker_key}:#{status[:last_job_status]}", 1
+          redis.hincrbyfloat REDIS_HASH, "#{worker_key}:total_time", status[:time]
 
-              multi.hmset REDIS_HASH, statistics
-            end
-          end || save_entry_for_worker(worker_status)
+          redis.hmset REDIS_HASH, statistics
         end
       end
 
