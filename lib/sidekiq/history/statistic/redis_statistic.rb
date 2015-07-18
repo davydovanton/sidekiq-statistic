@@ -21,14 +21,32 @@ module Sidekiq
             .hgetall(REDIS_HASH)
             .each do |keys, value|
               *keys, last = keys.split(':'.freeze)
-              keys.inject(redis_hash){ |h, k| h[k] || h[k] = {} }[last.to_sym] = to_number(value)
+              keys.inject(redis_hash, &key_or_empty_hash)[last.to_sym] = to_number(value)
             end
 
-          (@end_date..@start_date).map(&:to_s).map{|key| { key => (redis_hash[key] || {}) } }
+          desired_dates.map { |key| result_hash(redis_hash, key) }
         end
       end
 
     private
+
+      def key_or_empty_hash
+        ->(h, k) { h[k] || h[k] = {} }
+      end
+
+      def desired_dates
+        (@end_date..@start_date).map(&:to_s)
+      end
+
+      def result_hash(redis_hash, key)
+        redis_hash.fetch(key, {}).each { |_, v| update_hash_statments v }
+        { key => (redis_hash[key] || {}) }
+      end
+
+      def update_hash_statments(hash)
+        hash[:passed] ||= 0
+        hash[:failed] ||= 0
+      end
 
       def to_number(value)
         case value

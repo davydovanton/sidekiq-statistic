@@ -29,7 +29,7 @@ module Sidekiq
         middlewared {}
 
         assert_equal 1, actual['HistoryWorker'][:passed]
-        assert_equal 0, actual['HistoryWorker'][:failed]
+        assert_equal nil, actual['HistoryWorker'][:failed]
       end
 
       it 'records statistic for failed worker' do
@@ -40,7 +40,7 @@ module Sidekiq
         rescue
         end
 
-        assert_equal 0, actual['HistoryWorker'][:passed]
+        assert_equal nil, actual['HistoryWorker'][:passed]
         assert_equal 1, actual['HistoryWorker'][:failed]
       end
 
@@ -82,7 +82,7 @@ module Sidekiq
 
         assert_equal actual.keys, ['RealWorkerClassName']
         assert_equal 1, actual['RealWorkerClassName'][:passed]
-        assert_equal 0, actual['RealWorkerClassName'][:failed]
+        assert_equal nil, actual['RealWorkerClassName'][:failed]
       end
 
       it 'records statistic for more than one worker' do
@@ -90,9 +90,9 @@ module Sidekiq
         middlewared(OtherHistoryWorker){}
 
         assert_equal 1, actual['HistoryWorker'][:passed]
-        assert_equal 0, actual['HistoryWorker'][:failed]
+        assert_equal nil, actual['HistoryWorker'][:failed]
         assert_equal 1, actual['OtherHistoryWorker'][:passed]
-        assert_equal 0, actual['OtherHistoryWorker'][:failed]
+        assert_equal nil, actual['OtherHistoryWorker'][:failed]
       end
     end
   end
