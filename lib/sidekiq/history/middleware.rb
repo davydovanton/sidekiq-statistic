@@ -10,12 +10,13 @@ module Sidekiq
       private
 
       def call_with_sidekiq_history(worker, msg, queue)
-        worker_status = { last_job_status: 'passed'.freeze }
-
+        worker_status = default_worker_status
         start = Time.now.utc
 
         yield
       rescue StandardError => e
+        worker_status[:passed] = 0
+        worker_status[:failed] = 1
         worker_status[:last_job_status] = 'failed'.freeze
 
         raise e
@@ -25,6 +26,14 @@ module Sidekiq
         worker_status[:class] = msg['wrapped'.freeze] || worker.class.to_s
 
         save_entry_for_worker worker_status
+      end
+
+      def default_worker_status
+        {
+          passed: 1,
+          failed: 0,
+          last_job_status: 'passed'.freeze
+        }
       end
 
       def save_entry_for_worker(worker_status)
@@ -44,10 +53,8 @@ module Sidekiq
             "#{worker_key}:max_time", [max_time, status[:time]].max,
           ]
 
-          redis.hsetnx REDIS_HASH, "#{worker_key}:passed", 0
-          redis.hsetnx REDIS_HASH, "#{worker_key}:failed", 0
-
-          redis.hincrby REDIS_HASH, "#{worker_key}:#{status[:last_job_status]}", 1
+          redis.hincrby REDIS_HASH, "#{worker_key}:passed", status[:passed]
+          redis.hincrby REDIS_HASH, "#{worker_key}:failed", status[:failed]
           redis.hincrbyfloat REDIS_HASH, "#{worker_key}:total_time", status[:time]
 
           redis.hmset REDIS_HASH, statistics
