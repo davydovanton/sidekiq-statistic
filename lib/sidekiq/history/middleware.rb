@@ -39,18 +39,19 @@ module Sidekiq
       def save_entry_for_worker(worker_status)
         status = worker_status.dup
         worker_key = "#{Time.now.utc.to_date}:#{status.delete :class}"
+        time_keys = ["#{worker_key}:min_time", "#{worker_key}:max_time", "#{worker_key}:average_time"]
 
         Sidekiq.redis do |redis|
-          min_time = hget_time(redis, "#{worker_key}:min_time", status)
-          max_time = hget_time(redis, "#{worker_key}:max_time", status)
-          average_time = hget_time(redis, "#{worker_key}:average_time", status)
+          min_time, max_time, average_time =
+            redis.hmget(REDIS_HASH, time_keys).map{ |v| (v || status[:time]).to_f }
+          min_time, max_time = [min_time, max_time, status[:time]].minmax
 
           statistics = [
             "#{worker_key}:last_job_status", status[:last_job_status],
             "#{worker_key}:average_time", (average_time + status[:time]) / 2,
             "#{worker_key}:last_time", status[:last_runtime],
-            "#{worker_key}:min_time", [min_time, status[:time]].min,
-            "#{worker_key}:max_time", [max_time, status[:time]].max,
+            "#{worker_key}:min_time", min_time,
+            "#{worker_key}:max_time", max_time
           ]
 
           redis.hincrby REDIS_HASH, "#{worker_key}:passed", status[:passed]
@@ -59,10 +60,6 @@ module Sidekiq
 
           redis.hmset REDIS_HASH, statistics
         end
-      end
-
-      def hget_time(redis, key, status)
-        (redis.hget(REDIS_HASH, key) || status[:time]).to_f
       end
 
       # this methos already exist in Sidekiq::Middleware::Server::Logging class
