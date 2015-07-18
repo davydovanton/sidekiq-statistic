@@ -31,7 +31,11 @@ module Sidekiq
     private
 
       def to_number(value)
-        value.match('\.').nil? ? Integer(value) : Float(value) rescue value.to_s
+        case value
+        when /\A[\d.]+\z/ then value.to_f
+        when /\A\d+\z/ then value.to_i
+        else value
+        end
       end
     end
   end
