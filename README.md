@@ -39,6 +39,9 @@ Sidekiq::History.configure do |config|
 end
 ```
 
+## How it works
+![image](https://cloud.githubusercontent.com/assets/1147484/8802173/49216100-2fc8-11e5-9459-8d0dc87010f7.png)
+
 ## Contributing
 1. Fork it ( https://github.com/davydovanton/sidekiq-history/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
