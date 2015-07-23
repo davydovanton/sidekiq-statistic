@@ -9,6 +9,8 @@ Improved display of statistics for your sidekiq workers and jobs.
 **This not production version of gem**
 
 ## Screenshots
+
+Also you can check <a href="https://sidekiq-history-gem.herokuapp.com/sidekiq/history" target="_blank">heroku application</a> with this plugn 
 ### Index page:
 ![sidekiq-history_index](https://cloud.githubusercontent.com/assets/1147484/8071172/1708e3b0-0f10-11e5-84cf-86a910f5ecc2.png)
 
