@@ -10,53 +10,44 @@ module Sidekiq
       private
 
       def call_with_sidekiq_history(worker, msg, queue)
-        worker_status = new_status
+        worker_status = { last_job_status: 'passed'.freeze }
         start = Time.now.utc
 
         yield
       rescue StandardError => e
-        worker_status[:failed] = 1
-        worker_status[:passed] = 0
         worker_status[:last_job_status] = 'failed'.freeze
 
         raise e
       ensure
-        worker_status[:runtime] ||= [elapsed(start)]
+        worker_status[:time] = elapsed(start)
         worker_status[:last_runtime] = Time.now.utc
-        worker_status[:last_job_status] ||= 'passed'.freeze
         worker_status[:class] = msg['wrapped'.freeze] || worker.class.to_s
 
         save_entry_for_worker worker_status
       end
 
-      def new_status
-        {
-          failed: 0,
-          passed: 1
-        }
-      end
-
       def save_entry_for_worker(worker_status)
         status = worker_status.dup
-        worker = status.delete :class
+        worker_key = "#{Time.now.utc.to_date}:#{status.delete :class}"
+        time_keys = ["#{worker_key}:min_time", "#{worker_key}:max_time", "#{worker_key}:average_time"]
 
         Sidekiq.redis do |redis|
-          history = "sidekiq:history:#{Time.now.utc.to_date}"
+          min_time, max_time, average_time =
+            redis.hmget(REDIS_HASH, time_keys).map{ |v| (v || status[:time]).to_f }
+          min_time, max_time = [min_time, max_time, status[:time]].minmax
 
-          redis.watch(history) do
-            value = redis.get history
+          statistics = [
+            "#{worker_key}:last_job_status", status[:last_job_status],
+            "#{worker_key}:average_time", (average_time + status[:time]) / 2,
+            "#{worker_key}:last_time", status[:last_runtime],
+            "#{worker_key}:min_time", min_time,
+            "#{worker_key}:max_time", max_time
+          ]
 
-            redis.multi do |multi|
-              if value && summary = Sidekiq.load_json(value)[worker]
-                summary = summary.symbolize_keys
-                [:failed, :passed, :runtime].each do |stat|
-                  status[stat] = summary[stat] + status[stat]
-                end
-              end
+          redis.hincrby REDIS_HASH, "#{worker_key}:#{status[:last_job_status]}", 1
+          redis.hincrbyfloat REDIS_HASH, "#{worker_key}:total_time", status[:time]
 
-              multi.set history, Sidekiq.dump_json(worker => status)
-            end
-          end || save_entry_for_worker(worker_status)
+          redis.hmset REDIS_HASH, statistics
         end
       end
 

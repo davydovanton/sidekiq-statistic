@@ -18,38 +18,34 @@ module Sidekiq
       end
 
       def max_runtime
-        values.max || 0.0
+        values(:max_time).max || 0.0
       end
 
       def min_runtime
-        values.min || 0.0
+        values(:min_time).min || 0.0
       end
 
       def last_runtime
         @redis_statistic
-          .for_worker(@worker)
-          .map{ |s| s[:last_runtime] }
-          .compact.last
+          .for_worker(@worker).last[:last_time]
       end
 
       def total_runtime
-        values.inject(:+) || 0.0
+        values(:total_time).inject(:+) || 0.0
       end
 
       def average_runtime
-        count = values.count
+        averages = values(:average_time)
+        count = averages.count
         return 0.0 if count == 0
-        total_runtime / count
+        averages.inject(:+) / count
       end
 
     private
 
-      def values
-        @values ||=
-          @redis_statistic
-            .for_worker(@worker)
-            .flat_map{ |s| s[:runtime] }
-            .compact
+      def values(key)
+        @values ||= @redis_statistic.for_worker(@worker)
+        @values.map{ |s| s[key] }.compact
       end
     end
   end

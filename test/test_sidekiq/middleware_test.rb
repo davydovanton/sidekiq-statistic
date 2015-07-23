@@ -3,25 +3,36 @@ require 'minitest_helper'
 module Sidekiq
   module History
     describe 'Middleware' do
-      before do
-        Sidekiq.redis { |c| c.flushdb }
+      def to_number(i)
+        i.match('\.').nil? ? Integer(i) : Float(i) rescue i.to_s
       end
 
-      let(:history) { "sidekiq:history:#{Time.now.utc.to_date}" }
+      before { Sidekiq.redis(&:flushdb) }
 
-      it 'records history json for passed worker' do
+      let(:date){ Time.now.utc.to_date }
+      let(:actual) do
+        Sidekiq.redis do |conn|
+          redis_hash = {}
+          conn
+            .hgetall(REDIS_HASH)
+            .each do |keys, value|
+              *keys, last = keys.split(":")
+              keys.inject(redis_hash){ |hash, key| hash[key] || hash[key] = {} }[last.to_sym] = to_number(value)
+            end
+
+          redis_hash.values.last
+        end
+
+      end
+
+      it 'records statistic for passed worker' do
         middlewared {}
 
-        entry = Sidekiq.redis do |redis|
-          redis.get(history)
-        end
-        actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
-
-        assert_equal 1, actual[:passed]
-        assert_equal 0, actual[:failed]
+        assert_equal 1, actual['HistoryWorker'][:passed]
+        assert_equal nil, actual['HistoryWorker'][:failed]
       end
 
-      it 'records history json for passed worker' do
+      it 'records statistic for failed worker' do
         begin
           middlewared do
             raise StandardError.new('failed')
@@ -29,16 +40,11 @@ module Sidekiq
         rescue
         end
 
-        entry = Sidekiq.redis do |redis|
-          redis.get(history)
-        end
-        actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
-
-        assert_equal 0, actual[:passed]
-        assert_equal 1, actual[:failed]
+        assert_equal nil, actual['HistoryWorker'][:passed]
+        assert_equal 1, actual['HistoryWorker'][:failed]
       end
 
-      it 'records history for any workers' do
+      it 'records statistic for any workers' do
         middlewared { sleep 0.001 }
         begin
           middlewared do
@@ -49,28 +55,44 @@ module Sidekiq
         end
         middlewared { sleep 0.001 }
 
-        entry  = Sidekiq.redis { |redis| redis.get(history) }
-        actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
-
-        assert_equal 2, actual[:passed]
-        assert_equal 1, actual[:failed]
-        assert_equal 3, actual[:runtime].count
+        assert_equal 2, actual['HistoryWorker'][:passed]
+        assert_equal 1, actual['HistoryWorker'][:failed]
       end
 
       it 'support multithreaded calculations' do
         workers = []
-        25.times do
+        20.times do
           workers << Thread.new do
-            10.times { middlewared {} }
+            25.times { middlewared {} }
           end
         end
 
         workers.each(&:join)
 
-        entry  = Sidekiq.redis { |redis| redis.get(history) }
-        actual = Sidekiq.load_json(entry)['HistoryWorker'].symbolize_keys
+        assert_equal 500, actual['HistoryWorker'][:passed]
+      end
 
-        assert_equal 250, actual[:passed]
+      it 'support ActiveJob workers' do
+        message = {
+          'class'   => 'ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper',
+          'wrapped' => 'RealWorkerClassName'
+        }
+
+        middlewared(ActiveJobWrapper, message) {}
+
+        assert_equal actual.keys, ['RealWorkerClassName']
+        assert_equal 1, actual['RealWorkerClassName'][:passed]
+        assert_equal nil, actual['RealWorkerClassName'][:failed]
+      end
+
+      it 'records statistic for more than one worker' do
+        middlewared{}
+        middlewared(OtherHistoryWorker){}
+
+        assert_equal 1, actual['HistoryWorker'][:passed]
+        assert_equal nil, actual['HistoryWorker'][:failed]
+        assert_equal 1, actual['OtherHistoryWorker'][:passed]
+        assert_equal nil, actual['OtherHistoryWorker'][:failed]
       end
     end
   end

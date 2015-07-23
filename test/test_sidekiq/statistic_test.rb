@@ -69,6 +69,7 @@ module Sidekiq
           end
 
           count = statistic.number_of_calls('HistoryWorker')
+
           assert_equal 20, count[:total]
         end
 
