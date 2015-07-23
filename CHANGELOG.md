@@ -1,3 +1,12 @@
+* 23.07.2015: Use native redis hash instead json serialization
+
+  *Anton Davydov*
+* 15.07.2015: Improve integration with active job
+
+  *Anton Davydov*
+* 01.07.2015: New realisation for thread safe history middleware
+
+  *Anton Davydov*
 * 13.05.2015: Add ability to change any date range on any history page
 
   *Anton Davydov*
