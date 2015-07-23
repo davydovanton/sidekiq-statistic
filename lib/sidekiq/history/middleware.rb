@@ -28,7 +28,8 @@ module Sidekiq
 
       def save_entry_for_worker(worker_status)
         status = worker_status.dup
-        worker_key = "#{Time.now.utc.to_date}:#{status.delete :class}"
+        time = (Time.now.utc - (rand(90) * 24 * 60 * 60)).to_date # current date minus rand days
+        worker_key = "#{time}:#{status.delete :class}"
         time_keys = ["#{worker_key}:min_time", "#{worker_key}:max_time", "#{worker_key}:average_time"]
 
         Sidekiq.redis do |redis|
