@@ -10,6 +10,7 @@ module Sidekiq
 
         app.helpers do
           def formate_date(string, format = nil)
+            string ||= Time.now.utc.to_date.to_s
             Time.parse(string).strftime(format || '%T, %e %B %Y')
           end
 
