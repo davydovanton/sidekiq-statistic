@@ -1,5 +1,5 @@
 module Sidekiq
-  module History
+  module Statistic
     # Heroku have read only file system. See more in this link:
     # https://devcenter.heroku.com/articles/read-only-filesystem
     class LogParser
@@ -32,7 +32,7 @@ module Sidekiq
       def log_file
         Sidekiq.options[:logfile] ||
           Sidekiq.logger.instance_variable_get(:@logdev).filename ||
-          Sidekiq::History.configuration.log_file
+          Sidekiq::Statistic.configuration.log_file
       end
     end
   end

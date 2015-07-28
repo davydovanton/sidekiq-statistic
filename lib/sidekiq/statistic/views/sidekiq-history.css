@@ -1,6 +1,6 @@
-.history {
+.statistic {
   }
-  .history__datepicker {
+  .statistic__datepicker {
     margin-top: 10px;
     border-bottom: 1px solid rgb(236, 236, 236);
     text-align: center;
@@ -9,7 +9,7 @@
     #datepicker_from {
       margin-right: 25px;
       }
-  #history__search {
+  #statistic__search {
     float: right;
     margin: -39px 0 0;
     width: 200px;
@@ -17,7 +17,7 @@
   .nav-tabs {
     margin-left: -1px;
     }
-  .history__container {
+  .statistic__container {
     background-color: #fff;
     -webkit-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
        -moz-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
@@ -32,10 +32,10 @@
     margin-bottom: 10px;
     border-width: 0;
     }
-    .history__log {
+    .statistic__log {
       display: none;
       }
-    .history__table {
+    .statistic__table {
       margin-top: 25px;
       }
 

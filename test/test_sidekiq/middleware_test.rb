@@ -1,7 +1,7 @@
 require 'minitest_helper'
 
 module Sidekiq
-  module History
+  module Statistic
     describe 'Middleware' do
       def to_number(i)
         i.match('\.').nil? ? Integer(i) : Float(i) rescue i.to_s

@@ -1,21 +1,21 @@
 require 'minitest_helper'
 
 module Sidekiq
-  module History
+  module Statistic
     describe 'Statistic' do
       before do
         Sidekiq.redis(&:flushdb)
       end
 
-      let(:base_statistic) { Sidekiq::History::Statistic.new(1) }
+      let(:base_statistic) { Sidekiq::Statistic::Statistic.new(1) }
 
       describe '#redis_hash' do
         it 'returns hash for each day' do
-          history = base_statistic.hash
-          assert_equal 2, history.size
+          statistic = base_statistic.hash
+          assert_equal 2, statistic.size
         end
 
-        it 'returns array with history hash for each worker' do
+        it 'returns array with statistic hash for each worker' do
           begin
             middlewared do
               raise StandardError.new('failed')
@@ -24,8 +24,8 @@ module Sidekiq
           end
           middlewared {}
 
-          history = base_statistic.hash
-          worker_hash = history.last[Time.now.utc.to_date.to_s]
+          statistic = base_statistic.hash
+          worker_hash = statistic.last[Time.now.utc.to_date.to_s]
 
           assert_equal 1, worker_hash['HistoryWorker'][:failed]
           assert_equal 1, worker_hash['HistoryWorker'][:passed]

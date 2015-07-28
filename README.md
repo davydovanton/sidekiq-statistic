@@ -1,4 +1,4 @@
-# Sidekiq::History
+# Sidekiq::Statistic
 
 [![Build Status](https://travis-ci.org/davydovanton/sidekiq-history.svg?branch=master)](https://travis-ci.org/davydovanton/sidekiq-history) [![Code Climate](https://codeclimate.com/github/davydovanton/sidekiq-history/badges/gpa.svg)](https://codeclimate.com/github/davydovanton/sidekiq-history) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/davydovanton/sidekiq-history?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
@@ -10,7 +10,7 @@ Improved display of statistics for your sidekiq workers and jobs.
 
 ## Screenshots
 
-Also you can check <a href="https://sidekiq-history-gem.herokuapp.com/sidekiq/history" target="_blank">heroku application</a> with this plugn 
+Also you can check <a href="https://sidekiq-history-gem.herokuapp.com/sidekiq/statistic" target="_blank">heroku application</a> with this plugn 
 ### Index page:
 ![sidekiq-history_index](https://cloud.githubusercontent.com/assets/1147484/8071172/1708e3b0-0f10-11e5-84cf-86a910f5ecc2.png)
 
@@ -23,20 +23,20 @@ Also you can check <a href="https://sidekiq-history-gem.herokuapp.com/sidekiq/hi
 ## Installation
 Add this line to your application's Gemfile:
 
-    gem 'sidekiq-history', github: 'davydovanton/sidekiq-history'
+    gem 'sidekiq-statistic', github: 'davydovanton/sidekiq-history'
 
 And then execute:
 
     $ bundle
 
 ## Usage
-Open in your browser `/sidekiq/history` page.
+Open in your browser `/sidekiq/statistic` page.
 
 ## Configuration
-Sidekiq history gem have `log_file` option. This option lets you specify a custom path to sidekiq log file. By default this option equal `log/sidekiq.log`
+Sidekiq statistic gem have `log_file` option. This option lets you specify a custom path to sidekiq log file. By default this option equal `log/sidekiq.log`
 
 ``` ruby
-Sidekiq::History.configure do |config|
+Sidekiq::Statistic.configure do |config|
   config.log_file = 'test/helpers/logfile.log'
 end
 ```
@@ -45,7 +45,7 @@ end
 ![how-it-works](https://cloud.githubusercontent.com/assets/1147484/8802272/fc0a1302-2fc8-11e5-86a5-817409259338.png)
 
 ## Contributing
-1. Fork it ( https://github.com/davydovanton/sidekiq-history/fork )
+1. Fork it ( https://github.com/davydovanton/sidekiq-statistic/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

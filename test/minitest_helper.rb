@@ -10,8 +10,8 @@ require 'minitest/mock'
 require 'rack/test'
 
 require 'sidekiq'
-require 'sidekiq-history'
-require 'sidekiq/history'
+require 'sidekiq-statistic'
+require 'sidekiq/statistic'
 
 Sidekiq.logger.level = Logger::ERROR
 
@@ -28,7 +28,7 @@ class ActiveJobWrapper
 end
 
 def middlewared(worker_class = HistoryWorker, msg = {})
-  middleware = Sidekiq::History::Middleware.new
+  middleware = Sidekiq::Statistic::Middleware.new
   middleware.call worker_class.new, msg, 'default' do
     yield
   end

@@ -1,5 +1,5 @@
 module Sidekiq
-  module History
+  module Statistic
     class Charts < Statistic
       def information_for(type)
         worker_names.map do |worker|

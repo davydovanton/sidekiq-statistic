@@ -1,7 +1,7 @@
 require 'minitest_helper'
 
 module Sidekiq
-  module History
+  module Statistic
     describe 'Configuration' do
       describe '#log_file' do
         it "default value is 'log/sidekiq.log'" do

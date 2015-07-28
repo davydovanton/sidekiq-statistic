@@ -1,5 +1,5 @@
 module Sidekiq
-  module History
+  module Statistic
     class Statistic
       def initialize(days_previous, start_date = nil)
         @start_date = start_date || Time.now.utc.to_date

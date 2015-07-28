@@ -1,15 +1,15 @@
 module Sidekiq
-  module History
+  module Statistic
     class Middleware
       attr_accessor :msg
 
       def call(worker, msg, queue, &block)
-        call_with_sidekiq_history(worker, msg, queue, &block)
+        call_with_sidekiq_Statistic(worker, msg, queue, &block)
       end
 
       private
 
-      def call_with_sidekiq_history(worker, msg, queue)
+      def call_with_sidekiq_Statistic(worker, msg, queue)
         worker_status = { last_job_status: 'passed'.freeze }
         start = Time.now.utc
 

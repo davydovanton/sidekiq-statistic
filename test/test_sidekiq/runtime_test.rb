@@ -1,14 +1,14 @@
 require 'minitest_helper'
 
 module Sidekiq
-  module History
+  module Statistic
     describe 'Runtime' do
       before do
         Sidekiq.redis(&:flushdb)
       end
 
-      let(:statistic)      { Sidekiq::History::Statistic.new(1) }
-      let(:runtime_statistic) { Sidekiq::History::Runtime.new(statistic, 'HistoryWorker') }
+      let(:statistic)      { Sidekiq::Statistic::Statistic.new(1) }
+      let(:runtime_statistic) { Sidekiq::Statistic::Runtime.new(statistic, 'HistoryWorker') }
 
       describe '#last_runtime' do
         it 'returns last runtime for worker' do

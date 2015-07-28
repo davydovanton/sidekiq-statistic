@@ -1,7 +1,7 @@
 require 'json'
 
 module Sidekiq
-  module History
+  module Statistic
     module WebExtension
       DAFAULT_DAYS = 20
 
@@ -25,9 +25,9 @@ module Sidekiq
           end
         end
 
-        app.get '/history.js' do
+        app.get '/statistic.js' do
           content_type 'text/javascript'
-          File.read(File.join(view_path, 'history.js'))
+          File.read(File.join(view_path, 'statistic.js'))
         end
 
         app.get '/sidekiq-history.css' do
@@ -35,15 +35,15 @@ module Sidekiq
           File.read(File.join(view_path, 'sidekiq-history.css'))
         end
 
-        app.get '/history' do
-          statistic = Sidekiq::History::Workers.new(*calculate_date_range(params))
+        app.get '/statistic' do
+          statistic = Sidekiq::Statistic::Workers.new(*calculate_date_range(params))
           @workers = statistic.display
-          render(:erb, File.read(File.join(view_path, 'history.erb')))
+          render(:erb, File.read(File.join(view_path, 'statistic.erb')))
         end
 
-        app.get '/history/charts.json' do
+        app.get '/statistic/charts.json' do
           content_type :json
-          charts = Sidekiq::History::Charts.new(*calculate_date_range(params))
+          charts = Sidekiq::Statistic::Charts.new(*calculate_date_range(params))
 
           {
             tooltip_template: '<%= datasetLabel %> - <%= value %>',
@@ -53,13 +53,13 @@ module Sidekiq
           }.to_json
         end
 
-        app.get '/history/:worker' do
+        app.get '/statistic/:worker' do
           @name = params[:worker]
 
           @worker_statistic =
-            Sidekiq::History::Workers.new(*calculate_date_range(params)).display_pre_day(@name)
+            Sidekiq::Statistic::Workers.new(*calculate_date_range(params)).display_pre_day(@name)
           @worker_log =
-            Sidekiq::History::LogParser.new(@name).parse
+            Sidekiq::Statistic::LogParser.new(@name).parse
 
           render(:erb, File.read(File.join(view_path, 'worker.erb')))
         end

@@ -2,18 +2,18 @@
   <link href="<%= root_path %>sidekiq-history.css" media="screen" rel="stylesheet" type="text/css" />
 <% end %>
 
-<script type="text/javascript" src="<%= root_path %>history.js"></script>
+<script type="text/javascript" src="<%= root_path %>statistic.js"></script>
 
-<div class='history'>
-  <h2>History</h2>
+<div class='statistic'>
+  <h2>Statistic</h2>
 
-  <div class='history__container'>
-    <div class='history__datepicker'>
+  <div class='statistic__container'>
+    <div class='statistic__datepicker'>
       Start: <input id='datepicker_from' />
       End: <input id='datepicker_to' />
     </div>
 
-    <div class="history__charts">
+    <div class="statistic__charts">
       <h2>Failed</h2>
       <canvas id="js-failed-chart" width="800" height="200"></canvas>
       <h2>Passed</h2>
@@ -22,7 +22,7 @@
 
     <h2>Workers table</h2>
     <div class="table_container">
-      <table class="history__table table table-hover table-bordered table-striped table-white live-reload">
+      <table class="statistic__table table table-hover table-bordered table-striped table-white live-reload">
         <thead>
           <th>Worker</th>
           <th>Date</th>
@@ -37,7 +37,7 @@
         </thead>
         <% @workers.each do |worker| %>
           <tr>
-            <td class="worker"><a href="<%= root_path %>history/<%= worker[:name] %>"><%= worker[:name] %></a></td>
+            <td class="worker"><a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a></td>
             <td class="worker"><%= formate_date worker[:runtime][:last] %></td>
             <td class="worker"><%= worker[:number_of_calls][:success] %></td>
             <td class="worker"><%= worker[:number_of_calls][:failure] %></td>

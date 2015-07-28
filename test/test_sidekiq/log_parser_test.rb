@@ -1,12 +1,12 @@
 require 'minitest_helper'
 
 module Sidekiq
-  module History
+  module Statistic
     describe 'LogParser' do
-      let(:log_parser) { Sidekiq::History::LogParser.new('HistoryWorker') }
+      let(:log_parser) { Sidekiq::Statistic::LogParser.new('HistoryWorker') }
 
       before do
-        Sidekiq::History.configure do |config|
+        Sidekiq::Statistic.configure do |config|
           config.log_file = 'test/helpers/logfile.log'
         end
       end
@@ -26,7 +26,7 @@ module Sidekiq
 
         describe 'when worker don\'t called' do
           it 'returns empty array' do
-            other_log_parse = Sidekiq::History::LogParser.new('FailedHistoryWorker')
+            other_log_parse = Sidekiq::Statistic::LogParser.new('FailedHistoryWorker')
             assert_equal [], other_log_parse.parse
           end
         end

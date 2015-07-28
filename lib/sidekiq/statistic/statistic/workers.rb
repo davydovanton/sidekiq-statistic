@@ -1,5 +1,5 @@
 module Sidekiq
-  module History
+  module Statistic
     class Workers < Statistic
       JOB_STATES = [:passed, :failed]
 

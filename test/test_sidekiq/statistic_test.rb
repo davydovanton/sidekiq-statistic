@@ -1,13 +1,13 @@
 require 'minitest_helper'
 
 module Sidekiq
-  module History
+  module Statistic
     describe 'Workers' do
       before do
         Sidekiq.redis(&:flushdb)
       end
 
-      let(:statistic) { Sidekiq::History::Workers.new(1) }
+      let(:statistic) { Sidekiq::Statistic::Workers.new(1) }
 
       describe '#number_of_calls' do
         it 'returns success jobs count for worker' do

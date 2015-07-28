@@ -1,13 +1,13 @@
 require 'minitest_helper'
 
 module Sidekiq
-  module History
+  module Statistic
     describe 'Charts' do
       before do
         Sidekiq.redis(&:flushdb)
       end
 
-      let(:chart) { Sidekiq::History::Charts.new(1) }
+      let(:chart) { Sidekiq::Statistic::Charts.new(1) }
 
       describe '#dates' do
         it 'returns array with all days' do

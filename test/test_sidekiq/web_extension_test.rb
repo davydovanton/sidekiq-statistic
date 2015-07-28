@@ -15,24 +15,24 @@ module Sidekiq
         get '/'
       end
 
-      it 'can display home with history tab' do
+      it 'can display home with statistic tab' do
         last_response.status.must_equal 200
         last_response.body.must_match /Sidekiq/
-        last_response.body.must_match /History/
+        last_response.body.must_match /Statistic/
       end
     end
 
-    describe 'GET /sidekiq/history' do
+    describe 'GET /sidekiq/statistic' do
       before do
-        get '/history'
+        get '/statistic'
       end
 
-      it 'can display history page without any failures' do
+      it 'can display statistic page without any failures' do
         last_response.status.must_equal 200
-        last_response.body.must_match /History/
+        last_response.body.must_match /statistic/
       end
 
-      describe 'when there are history' do
+      describe 'when there are statistic' do
         it 'should be successful' do
           last_response.status.must_equal 200
         end
@@ -49,12 +49,12 @@ module Sidekiq
       end
     end
 
-    describe 'GET /sidekiq/history/charts.json' do
+    describe 'GET /sidekiq/statistic/charts.json' do
       before do
-        get '/history/charts.json'
+        get '/statistic/charts.json'
       end
 
-      it 'can display history page without any failures' do
+      it 'can display statistic page without any failures' do
         last_response.status.must_equal 200
         response = JSON.parse(last_response.body)
 
@@ -62,7 +62,7 @@ module Sidekiq
         response['labels'].wont_be_empty
       end
 
-      describe 'when there are history' do
+      describe 'when there are statistic' do
         it 'should be successful' do
           last_response.status.must_equal 200
         end
