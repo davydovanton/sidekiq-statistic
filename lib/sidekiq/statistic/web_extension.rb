@@ -30,9 +30,9 @@ module Sidekiq
           File.read(File.join(view_path, 'statistic.js'))
         end
 
-        app.get '/sidekiq-history.css' do
+        app.get '/sidekiq-statistic.css' do
           content_type 'text/css'
-          File.read(File.join(view_path, 'sidekiq-history.css'))
+          File.read(File.join(view_path, 'sidekiq-statistic.css'))
         end
 
         app.get '/statistic' do
