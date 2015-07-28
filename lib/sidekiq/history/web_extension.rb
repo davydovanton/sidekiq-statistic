@@ -36,7 +36,7 @@ module Sidekiq
         end
 
         app.get '/history' do
-          statistic = Sidekiq::History::Statistic.new(*calculate_date_range(params))
+          statistic = Sidekiq::History::Workers.new(*calculate_date_range(params))
           @workers = statistic.display
           render(:erb, File.read(File.join(view_path, 'history.erb')))
         end
@@ -57,7 +57,7 @@ module Sidekiq
           @name = params[:worker]
 
           @worker_statistic =
-            Sidekiq::History::Statistic.new(*calculate_date_range(params)).display_pre_day(@name)
+            Sidekiq::History::Workers.new(*calculate_date_range(params)).display_pre_day(@name)
           @worker_log =
             Sidekiq::History::LogParser.new(@name).parse
 

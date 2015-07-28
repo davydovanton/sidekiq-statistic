@@ -1,77 +1,59 @@
 module Sidekiq
   module History
     class Statistic
-      JOB_STATES = [:passed, :failed]
-
       def initialize(days_previous, start_date = nil)
         @start_date = start_date || Time.now.utc.to_date
         @end_date = @start_date - days_previous
       end
 
-      def display
-        redis_statistic.worker_names.map do |worker|
-          {
-            name: worker,
-            last_job_status: last_job_status_for(worker),
-            number_of_calls: number_of_calls(worker),
-            runtime: runtime_statistic(worker).values_hash
-          }
+      def for_worker(worker)
+        hash.map{ |h| h.values.first[worker] || {} }
+      end
+
+      def worker_names
+        @worker_names ||= hash.flat_map{ |h| h.values.first.keys }.uniq
+      end
+
+      def hash
+        @redis_hash = Sidekiq.redis do |conn|
+          redis_hash = {}
+          conn
+            .hgetall(REDIS_HASH)
+            .each do |keys, value|
+              *keys, last = keys.split(':'.freeze)
+              keys.inject(redis_hash, &key_or_empty_hash)[last.to_sym] = to_number(value)
+            end
+
+          desired_dates.map { |key| result_hash(redis_hash, key) }
         end
       end
 
-      def display_pre_day(worker_name)
-        redis_statistic.hash.flat_map do |day|
-          day.reject{ |_, workers| workers.empty? }.map do |date, workers|
-            worker_data = workers[worker_name]
-            next unless worker_data
+    private
 
-            {
-              date: date,
-              failure: worker_data[:failed],
-              success: worker_data[:passed],
-              total: worker_data[:failed] + worker_data[:passed],
-              last_job_status: worker_data[:last_job_status],
-              runtime: runtime_for_day(worker_name, worker_data)
-            }
-          end
-        end.compact.reverse
+      def key_or_empty_hash
+        ->(h, k) { h[k] || h[k] = {} }
       end
 
-      def runtime_for_day(worker_name, worker_data)
-        runtime_statistic(worker_name, worker_data[:runtime])
-          .values_hash
-          .merge!(last: worker_data[:last_runtime])
+      def desired_dates
+        (@end_date..@start_date).map(&:to_s)
       end
 
-      def number_of_calls(worker)
-        number_of_calls = JOB_STATES.map{ |state| number_of_calls_for state, worker }
-
-        {
-          success: number_of_calls.first,
-          failure: number_of_calls.last,
-          total: number_of_calls.inject(:+)
-        }
+      def result_hash(redis_hash, key)
+        redis_hash.fetch(key, {}).each { |_, v| update_hash_statments v }
+        { key => (redis_hash[key] || {}) }
       end
 
-      def number_of_calls_for(state, worker)
-        redis_statistic.for_worker(worker)
-          .select(&:any?)
-          .map{ |hash| hash[state] }.inject(:+) || 0
+      def update_hash_statments(hash)
+        hash[:passed] ||= 0
+        hash[:failed] ||= 0
       end
 
-      def last_job_status_for(worker)
-        redis_statistic
-          .for_worker(worker)
-          .select(&:any?)
-          .last[:last_job_status]
-      end
-
-      def runtime_statistic(worker, values = nil)
-        RuntimeStatistic.new(redis_statistic, worker, values)
-      end
-
-      def redis_statistic
-        RedisStatistic.new(@start_date, @end_date)
+      def to_number(value)
+        case value
+        when /\A[\d.]+\z/ then value.to_f
+        when /\A\d+\z/ then value.to_i
+        else value
+        end
       end
     end
   end

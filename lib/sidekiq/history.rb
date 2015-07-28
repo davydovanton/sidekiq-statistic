@@ -5,13 +5,13 @@ rescue LoadError
 end
 
 require 'sidekiq/api'
-require 'sidekiq/history/charts'
 require 'sidekiq/history/configuration'
 require 'sidekiq/history/log_parser'
 require 'sidekiq/history/middleware'
-require 'sidekiq/history/statistic/redis_statistic'
-require 'sidekiq/history/statistic/runtime_statistic'
 require 'sidekiq/history/statistic'
+require 'sidekiq/history/statistic/charts'
+require 'sidekiq/history/statistic/runtime'
+require 'sidekiq/history/statistic/workers'
 require 'sidekiq/history/version'
 require 'sidekiq/history/web_extension'
 
