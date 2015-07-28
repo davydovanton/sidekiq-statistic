@@ -1,3 +1,6 @@
+* 28.07.2015: Rename plugin to sidekiq-statistic
+
+  *Anton Davydov*
 * 23.07.2015: Use native redis hash instead json serialization
 
   *Anton Davydov*
