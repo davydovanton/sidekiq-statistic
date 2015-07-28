@@ -1,9 +1,9 @@
 module Sidekiq
-  module History
-    class RedisStatistic
-      def initialize(start_date, end_date)
-        @start_date = start_date
-        @end_date = end_date
+  module Statistic
+    class Statistic
+      def initialize(days_previous, start_date = nil)
+        @start_date = start_date || Time.now.utc.to_date
+        @end_date = @start_date - days_previous
       end
 
       def for_worker(worker)

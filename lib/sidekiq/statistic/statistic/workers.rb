@@ -1,15 +1,10 @@
 module Sidekiq
-  module History
-    class Statistic
+  module Statistic
+    class Workers < Statistic
       JOB_STATES = [:passed, :failed]
 
-      def initialize(days_previous, start_date = nil)
-        @start_date = start_date || Time.now.utc.to_date
-        @end_date = @start_date - days_previous
-      end
-
       def display
-        redis_statistic.worker_names.map do |worker|
+        worker_names.map do |worker|
           {
             name: worker,
             last_job_status: last_job_status_for(worker),
@@ -20,7 +15,7 @@ module Sidekiq
       end
 
       def display_pre_day(worker_name)
-        redis_statistic.hash.flat_map do |day|
+        hash.flat_map do |day|
           day.reject{ |_, workers| workers.empty? }.map do |date, workers|
             worker_data = workers[worker_name]
             next unless worker_data
@@ -54,24 +49,19 @@ module Sidekiq
       end
 
       def number_of_calls_for(state, worker)
-        redis_statistic.for_worker(worker)
+        for_worker(worker)
           .select(&:any?)
           .map{ |hash| hash[state] }.inject(:+) || 0
       end
 
       def last_job_status_for(worker)
-        redis_statistic
-          .for_worker(worker)
+        for_worker(worker)
           .select(&:any?)
           .last[:last_job_status]
       end
 
       def runtime_statistic(worker, values = nil)
-        RuntimeStatistic.new(redis_statistic, worker, values)
-      end
-
-      def redis_statistic
-        RedisStatistic.new(@start_date, @end_date)
+        Runtime.new(self, worker, values)
       end
     end
   end

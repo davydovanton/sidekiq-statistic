@@ -1,16 +1,14 @@
 require 'minitest_helper'
 
 module Sidekiq
-  module History
-    describe 'RuntimeStatistic' do
+  module Statistic
+    describe 'Runtime' do
       before do
         Sidekiq.redis(&:flushdb)
       end
 
-      let(:start_date)     { Time.now.utc.to_date }
-      let(:end_date)       { start_date - 1 }
-      let(:redis_static)   { Sidekiq::History::RedisStatistic.new(start_date, end_date) }
-      let(:runtime_static) { Sidekiq::History::RuntimeStatistic.new(redis_static, 'HistoryWorker') }
+      let(:statistic)      { Sidekiq::Statistic::Statistic.new(1) }
+      let(:runtime_statistic) { Sidekiq::Statistic::Runtime.new(statistic, 'HistoryWorker') }
 
       describe '#last_runtime' do
         it 'returns last runtime for worker' do
@@ -18,13 +16,13 @@ module Sidekiq
 
           time = Time.now.utc
           Time.stub :now, time do
-            assert_equal time.to_s, runtime_static.last_runtime
+            assert_equal time.to_s, runtime_statistic.last_runtime
           end
         end
 
         describe 'when jobs were not call' do
           it 'returns nil' do
-            assert_equal nil, runtime_static.last_runtime
+            assert_equal nil, runtime_statistic.last_runtime
           end
         end
       end
@@ -33,14 +31,13 @@ module Sidekiq
         it 'returns totle runtime HistoryWorker' do
           middlewared { sleep 0.2 }
 
-          $debugger = true
-          values = runtime_static.total_runtime
+          values = runtime_statistic.total_runtime
           assert_equal 0.2, values.round(1)
         end
 
         describe 'when jobs were not call' do
           it 'returns array with empty values' do
-            values = runtime_static.total_runtime
+            values = runtime_statistic.total_runtime
             assert_equal 0.0, values
           end
         end
@@ -52,13 +49,13 @@ module Sidekiq
           middlewared { sleep 0.1 }
           middlewared { sleep 0.3 }
 
-          values = runtime_static.average_runtime
+          values = runtime_statistic.average_runtime
           assert_equal 0.2, values.round(1)
         end
 
         describe 'when jobs were not call' do
           it 'returns array with empty values' do
-            values = runtime_static.average_runtime
+            values = runtime_statistic.average_runtime
             assert_equal 0.0, values
           end
         end
@@ -70,13 +67,13 @@ module Sidekiq
           middlewared { sleep 0.3 }
           middlewared { sleep 0.1 }
 
-          values = runtime_static.max_runtime
+          values = runtime_statistic.max_runtime
           assert_equal 0.3, values.round(1)
         end
 
         describe 'when jobs were not call' do
           it 'returns zero' do
-            values = runtime_static.max_runtime
+            values = runtime_statistic.max_runtime
             assert_equal 0.0, values
           end
         end
@@ -88,13 +85,13 @@ module Sidekiq
           middlewared { sleep 0.3 }
           middlewared { sleep 0.1 }
 
-          values = runtime_static.min_runtime
+          values = runtime_statistic.min_runtime
           assert_equal 0.1, values.round(1)
         end
 
         describe 'when jobs were not call' do
           it 'returns zero' do
-            values = runtime_static.min_runtime
+            values = runtime_statistic.min_runtime
             assert_equal 0.0, values
           end
         end

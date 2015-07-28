@@ -1,6 +1,6 @@
 module Sidekiq
-  module History
-    class RuntimeStatistic
+  module Statistic
+    class Runtime
       def initialize(redis_statistic, worker, values = nil)
         @redis_statistic = redis_statistic
         @worker = worker

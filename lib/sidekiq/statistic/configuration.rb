@@ -1,5 +1,5 @@
 module Sidekiq
-  module History
+  module Statistic
     class Configuration
       attr_accessor :log_file
 
