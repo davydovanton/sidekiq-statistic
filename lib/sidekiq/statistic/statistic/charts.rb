@@ -12,7 +12,7 @@ module Sidekiq
             pointStrokeColor: '#fff',
             pointHighlightFill: '#fff',
             pointHighlightStroke: 'rgba(220,220,220,1)',
-            data: for_worker(worker).map{ |val| val.fetch(type, 0) }
+            data: statistic_for(worker).map{ |val| val.fetch(type, 0) }
           }
         end
       end
@@ -25,7 +25,7 @@ module Sidekiq
       end
 
       def dates
-        @dates ||= hash.flat_map(&:keys)
+        @dates ||= statistic_hash.flat_map(&:keys)
       end
     end
   end

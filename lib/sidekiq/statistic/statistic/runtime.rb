@@ -27,7 +27,7 @@ module Sidekiq
 
       def last_runtime
         @redis_statistic
-          .for_worker(@worker).last[:last_time]
+          .statistic_for(@worker).last[:last_time]
       end
 
       def total_runtime
@@ -44,7 +44,7 @@ module Sidekiq
     private
 
       def values(key)
-        @values ||= @redis_statistic.for_worker(@worker)
+        @values ||= @redis_statistic.statistic_for(@worker)
         @values.map{ |s| s[key] }.compact
       end
     end

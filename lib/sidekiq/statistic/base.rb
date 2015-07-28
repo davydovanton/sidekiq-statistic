@@ -6,15 +6,15 @@ module Sidekiq
         @end_date = @start_date - days_previous
       end
 
-      def for_worker(worker)
-        hash.map{ |h| h.values.first[worker] || {} }
+      def statistic_for(worker)
+        statistic_hash.map{ |h| h.values.first[worker] || {} }
       end
 
       def worker_names
-        @worker_names ||= hash.flat_map{ |h| h.values.first.keys }.uniq
+        @worker_names ||= statistic_hash.flat_map{ |h| h.values.first.keys }.uniq
       end
 
-      def hash
+      def statistic_hash
         @redis_hash = Sidekiq.redis do |conn|
           redis_hash = {}
           conn

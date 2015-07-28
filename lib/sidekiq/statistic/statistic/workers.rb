@@ -15,7 +15,7 @@ module Sidekiq
       end
 
       def display_pre_day(worker_name)
-        hash.flat_map do |day|
+        statistic_hash.flat_map do |day|
           day.reject{ |_, workers| workers.empty? }.map do |date, workers|
             worker_data = workers[worker_name]
             next unless worker_data
@@ -49,13 +49,13 @@ module Sidekiq
       end
 
       def number_of_calls_for(state, worker)
-        for_worker(worker)
+        statistic_for(worker)
           .select(&:any?)
           .map{ |hash| hash[state] }.inject(:+) || 0
       end
 
       def last_job_status_for(worker)
-        for_worker(worker)
+        statistic_for(worker)
           .select(&:any?)
           .last[:last_job_status]
       end

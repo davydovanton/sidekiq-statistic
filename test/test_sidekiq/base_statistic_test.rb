@@ -11,7 +11,7 @@ module Sidekiq
 
       describe '#redis_hash' do
         it 'returns hash for each day' do
-          statistic = base_statistic.hash
+          statistic = base_statistic.statistic_hash
           assert_equal 2, statistic.size
         end
 
@@ -24,7 +24,7 @@ module Sidekiq
           end
           middlewared {}
 
-          statistic = base_statistic.hash
+          statistic = base_statistic.statistic_hash
           worker_hash = statistic.last[Time.now.utc.to_date.to_s]
 
           assert_equal 1, worker_hash['HistoryWorker'][:failed]
@@ -32,20 +32,20 @@ module Sidekiq
         end
       end
 
-      describe '#for_worker' do
+      describe '#statistic_for' do
         it 'returns array with values for HistoryWorker per day' do
           middlewared {}
           time = Time.now.utc
 
           Time.stub :now, time do
-            values = base_statistic.for_worker('HistoryWorker')
+            values = base_statistic.statistic_for('HistoryWorker')
             assert_equal [{}, { passed:1, failed:0, last_job_status: 'passed', average_time: 0.0, total_time: 0.0, last_time: time.to_s, min_time: 0.0, max_time: 0.0 }], values
           end
         end
 
         describe 'when jobs were not call' do
           it 'returns array with empty values' do
-            values = base_statistic.for_worker('HistoryWorker')
+            values = base_statistic.statistic_for('HistoryWorker')
             $debugger = true
             assert_equal [{}, {}], values
           end
@@ -62,7 +62,7 @@ module Sidekiq
           end
           middlewared {}
 
-          last_job_status = base_statistic.for_worker('HistoryWorker').last[:last_job_status]
+          last_job_status = base_statistic.statistic_for('HistoryWorker').last[:last_job_status]
           assert_equal "passed", last_job_status
         end
 
@@ -75,7 +75,7 @@ module Sidekiq
           rescue
           end
 
-          last_job_status = base_statistic.for_worker('HistoryWorker').last[:last_job_status]
+          last_job_status = base_statistic.statistic_for('HistoryWorker').last[:last_job_status]
           assert_equal "failed", last_job_status
         end
       end
