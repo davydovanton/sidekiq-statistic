@@ -14,7 +14,7 @@ module Sidekiq
         end
       end
 
-      def display_pre_day(worker_name)
+      def display_per_day(worker_name)
         statistic_hash.flat_map do |day|
           day.reject{ |_, workers| workers.empty? }.map do |date, workers|
             worker_data = workers[worker_name]

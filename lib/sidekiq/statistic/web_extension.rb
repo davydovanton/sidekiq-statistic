@@ -30,9 +30,9 @@ module Sidekiq
           File.read(File.join(view_path, 'statistic.js'))
         end
 
-        app.get '/sidekiq-history.css' do
+        app.get '/sidekiq-statistic.css' do
           content_type 'text/css'
-          File.read(File.join(view_path, 'sidekiq-history.css'))
+          File.read(File.join(view_path, 'sidekiq-statistic.css'))
         end
 
         app.get '/statistic' do
@@ -57,7 +57,7 @@ module Sidekiq
           @name = params[:worker]
 
           @worker_statistic =
-            Sidekiq::Statistic::Workers.new(*calculate_date_range(params)).display_pre_day(@name)
+            Sidekiq::Statistic::Workers.new(*calculate_date_range(params)).display_per_day(@name)
           @worker_log =
             Sidekiq::Statistic::LogParser.new(@name).parse
 
