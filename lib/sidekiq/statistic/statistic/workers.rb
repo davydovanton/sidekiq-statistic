@@ -1,6 +1,6 @@
 module Sidekiq
   module Statistic
-    class Workers < Statistic
+    class Workers < Base
       JOB_STATES = [:passed, :failed]
 
       def display

@@ -2,12 +2,12 @@ require 'minitest_helper'
 
 module Sidekiq
   module Statistic
-    describe 'Statistic' do
+    describe 'Base' do
       before do
         Sidekiq.redis(&:flushdb)
       end
 
-      let(:base_statistic) { Sidekiq::Statistic::Statistic.new(1) }
+      let(:base_statistic) { Sidekiq::Statistic::Base.new(1) }
 
       describe '#redis_hash' do
         it 'returns hash for each day' do

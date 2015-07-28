@@ -7,7 +7,7 @@ module Sidekiq
         Sidekiq.redis(&:flushdb)
       end
 
-      let(:statistic)      { Sidekiq::Statistic::Statistic.new(1) }
+      let(:statistic)         { Sidekiq::Statistic::Base.new(1) }
       let(:runtime_statistic) { Sidekiq::Statistic::Runtime.new(statistic, 'HistoryWorker') }
 
       describe '#last_runtime' do

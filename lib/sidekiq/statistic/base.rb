@@ -1,6 +1,6 @@
 module Sidekiq
   module Statistic
-    class Statistic
+    class Base
       def initialize(days_previous, start_date = nil)
         @start_date = start_date || Time.now.utc.to_date
         @end_date = @start_date - days_previous

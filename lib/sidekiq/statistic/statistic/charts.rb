@@ -1,6 +1,6 @@
 module Sidekiq
   module Statistic
-    class Charts < Statistic
+    class Charts < Base
       def information_for(type)
         worker_names.map do |worker|
           color = color_for(worker)
