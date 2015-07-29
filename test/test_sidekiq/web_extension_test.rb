@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'minitest_helper'
 require 'sidekiq/web'
 require 'json'
@@ -8,6 +10,15 @@ module Sidekiq
 
     def app
       Sidekiq::Web
+    end
+
+    it 'can show text with any locales' do
+      rackenv = {'HTTP_ACCEPT_LANGUAGE' => 'ru,en'}
+      get '/', {}, rackenv
+      assert_match(/Статистика/, last_response.body)
+      rackenv = {'HTTP_ACCEPT_LANGUAGE' => 'en-us'}
+      get '/', {}, rackenv
+      assert_match(/Statistic/, last_response.body)
     end
 
     describe 'GET /sidekiq' do
