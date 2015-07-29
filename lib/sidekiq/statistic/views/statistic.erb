@@ -5,35 +5,35 @@
 <script type="text/javascript" src="<%= root_path %>statistic.js"></script>
 
 <div class='statistic'>
-  <h2>Statistic</h2>
+  <h2><%= t('Statistic') %></h2>
 
   <div class='statistic__container'>
     <div class='statistic__datepicker'>
-      Start: <input id='datepicker_from' />
-      End: <input id='datepicker_to' />
+      <%= t('Start') %>: <input id='datepicker_from' />
+      <%= t('End') %>: <input id='datepicker_to' />
     </div>
 
     <div class="statistic__charts">
-      <h2>Failed</h2>
+      <h2><%= t('Failed') %></h2>
       <canvas id="js-failed-chart" width="800" height="200"></canvas>
-      <h2>Passed</h2>
+      <h2><%= t('Passed') %></h2>
       <canvas id="js-passed-chart" width="800" height="200"></canvas>
     </div>
 
-    <h2>Workers table</h2>
+    <h2><%= t('WorkersTable') %></h2>
     <div class="table_container">
       <table class="statistic__table table table-hover table-bordered table-striped table-white live-reload">
         <thead>
-          <th>Worker</th>
-          <th>Date</th>
-          <th>Success</th>
-          <th>Failure</th>
-          <th>Total</th>
-          <th>Time(sec)</th>
-          <th>Average(sec)</th>
-          <th>Min time(sec)</th>
-          <th>Max time(sec)</th>
-          <th>Last Job Status</th>
+          <th><%= t('Worker') %></th>
+          <th><%= t('Date') %></th>
+          <th><%= t('Success') %></th>
+          <th><%= t('Failure') %></th>
+          <th><%= t('Total') %></th>
+          <th><%= t('TimeSec') %></th>
+          <th><%= t('AverageSec') %></th>
+          <th><%= t('MinTimeSec') %></th>
+          <th><%= t('MaxTimeSec') %></th>
+          <th><%= t('LastJobStatus') %></th>
         </thead>
         <% @workers.each do |worker| %>
           <tr>

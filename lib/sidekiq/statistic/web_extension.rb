@@ -6,7 +6,10 @@ module Sidekiq
       DAFAULT_DAYS = 20
 
       def self.registered(app)
-        view_path = File.join(File.expand_path('..', __FILE__), 'views')
+        view_path   = File.join(File.expand_path('..', __FILE__), 'views')
+        locale_path = File.expand_path(File.dirname(__FILE__) + "/locales")
+
+        Sidekiq::Web.settings.locales << locale_path
 
         app.helpers do
           def formate_date(string, format = nil)
