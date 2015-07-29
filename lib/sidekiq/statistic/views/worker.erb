@@ -5,34 +5,34 @@
 <script type="text/javascript" src="<%= root_path %>statistic.js"></script>
 
 <div class='statistic'>
-  <h2><%= @name %> information</h2>
+  <h2><%= t('WorkerInformation', worker: @name) %></h2>
 
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#" class="statistic__tab" data-target=".statistic__table">Information table</a></li>
-    <li><a href="#" class="statistic__tab" data-target=".statistic__log">Worker log</a></li>
+    <li class="active"><a href="#" class="statistic__tab" data-target=".statistic__table"><%= t('InformationTable') %></a></li>
+    <li><a href="#" class="statistic__tab" data-target=".statistic__log"><%= t('WorkerLog') %></a></li>
   </ul>
 
   <div class="statistic__container live-reload">
     <div class="statistic__table">
       <div class='statistic__datepicker'>
-        Start: <input id='datepicker_from' />
-        End: <input id='datepicker_to' />
+      <%= t('InformationTable') %>: <input id='datepicker_from' />
+      <%= t('End') %>: <input id='datepicker_to' />
       </div>
 
-      <h2>Worker table (per day)</h2>
+      <h2><%= t('WorkerTablePerDay') %></h2>
       <div class="table_container">
         <table class="statistic__table table table-hover table-bordered table-striped table-white">
           <thead>
-            <th>Date</th>
-            <th>Last run</th>
-            <th>Success</th>
-            <th>Failure</th>
-            <th>Total</th>
-            <th>Time(sec)</th>
-            <th>Average(sec)</th>
-            <th>Min time(sec)</th>
-            <th>Max time(sec)</th>
-            <th>Last Job Status</th>
+            <th><%= t('Date') %></th>
+            <th><%= t('LastRun') %></th>
+            <th><%= t('Success') %></th>
+            <th><%= t('Failure') %></th>
+            <th><%= t('Total') %></th>
+            <th><%= t('TimeSec') %></th>
+            <th><%= t('Average_Sec') %></th>
+            <th><%= t('MinTimeSec') %></th>
+            <th><%= t('MaxTimeSec') %></th>
+            <th><%= t('LastJobStatus') %></th>
           </thead>
           <% @worker_statistic.each do |worker| %>
             <tr>
