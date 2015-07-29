@@ -1,3 +1,6 @@
+* 29.07.2015: Add localizations for plugin
+
+  *Anton Davydov*
 * 28.07.2015: Read first 1_000 lines from changelog
 
   *Anton Davydov*
