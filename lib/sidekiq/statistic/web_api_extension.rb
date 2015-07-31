@@ -6,21 +6,20 @@ module Sidekiq
       def self.registered(app)
         app.helpers WebExtensionHelper
 
-        app.get '/api/statistic.json' do
+        app.before '/api/*' do
           content_type :json
+        end
 
+        app.get '/api/statistic.json' do
           statistic = Sidekiq::Statistic::Workers.new(*calculate_date_range(params))
           { workers: statistic.display }.to_json
         end
 
         app.get '/api/statistic/:worker.json' do
-          content_type :json
-
-          @name = params[:worker]
           worker_statistic =
             Sidekiq::Statistic::Workers
               .new(*calculate_date_range(params))
-              .display_per_day(@name)
+              .display_per_day(params[:worker])
 
           { days: worker_statistic }.to_json
         end
