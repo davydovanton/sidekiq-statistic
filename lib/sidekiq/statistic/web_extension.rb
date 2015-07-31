@@ -1,3 +1,4 @@
+require 'tilt/erb'
 require 'json'
 
 module Sidekiq
@@ -5,7 +6,7 @@ module Sidekiq
     module WebExtension
       def self.registered(app)
         view_path   = File.join(File.expand_path('..', __FILE__), 'views')
-        locale_path = File.expand_path(File.dirname(__FILE__) + "/locales")
+        locale_path = File.expand_path(File.dirname(__FILE__) + '/locales')
 
         Sidekiq::Web.settings.locales << locale_path
 

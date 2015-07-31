@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 require 'minitest_helper'
-require 'sidekiq/web'
 require 'json'
 
 module Sidekiq

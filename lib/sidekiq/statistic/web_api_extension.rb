@@ -4,7 +4,7 @@ module Sidekiq
   module Statistic
     module WebApiExtension
       def self.registered(app)
-        app.helpers Sidekiq::Statistic::WebExtensionHelper
+        app.helpers WebExtensionHelper
 
         app.get '/api/statistic.json' do
           content_type :json
