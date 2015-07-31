@@ -41,6 +41,44 @@ Sidekiq::Statistic.configure do |config|
 end
 ```
 
+## JSON API
+### sidekiq/api/statistic.json
+Returns statistic for each worker.
+
+Params:
+  * `dateFrom` - Date start (format: `yyyy-mm-dd`)
+  * `dateTo` - Date end (format: `yyyy-mm-dd`)
+
+Example:
+```
+$ curl http://example.com/sidekiq/api/statistic.json?dateFrom=2015-07-30&dateTo=2015-07-31
+
+# =>
+  {
+    "workers": [
+      {
+        "name": "Worker",
+        "last_job_status": "passed",
+        "number_of_calls": {
+          "success": 1,
+          "failure": 0,
+          "total": 1
+        },
+        "runtime": {
+          "last": "2015-07-31 10:42:13 UTC",
+          "max": 4.002,
+          "min": 4.002,
+          "average": 4.002,
+          "total": 4.002
+        }
+      },
+
+      ...
+    ]
+  }
+
+```
+
 ## How it works
 ![how-it-works](https://cloud.githubusercontent.com/assets/1147484/8802272/fc0a1302-2fc8-11e5-86a5-817409259338.png)
 

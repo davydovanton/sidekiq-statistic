@@ -7,18 +7,30 @@ module Sidekiq
 
       def self.registered(app)
         app.helpers do
+          def calculate_date_range(params)
+            if params['dateFrom'] && params['dateTo']
+              from = Date.parse(params['dateFrom'])
+              to   = Date.parse(params['dateTo'])
+
+              [(to - from).to_i, to]
+            else
+              [DAFAULT_DAYS]
+            end
+          end
         end
 
         app.get '/api/statistic.json' do
           content_type :json
-          { hello: :world }.to_json
+
+          statistic = Sidekiq::Statistic::Workers.new(*calculate_date_range(params))
+          { workers: statistic.display }.to_json
         end
 
         app.get '/api/statistic/:worker.json' do
           content_type :json
 
           @name = params[:worker]
-          { hello: "@name world" }.to_json
+          { hello: "#@name world" }.to_json
         end
       end
     end

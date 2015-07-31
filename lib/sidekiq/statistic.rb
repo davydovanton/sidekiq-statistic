@@ -40,8 +40,8 @@ Sidekiq.configure_server do |config|
   end
 end
 
-
 if defined?(Sidekiq::Web)
+  Sidekiq::Web.register Sidekiq::Statistic::WebApiExtension
   Sidekiq::Web.register Sidekiq::Statistic::WebExtension
   Sidekiq::Web.tabs['Statistic'] = 'statistic'
 end
