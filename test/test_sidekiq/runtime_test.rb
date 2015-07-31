@@ -3,9 +3,7 @@ require 'minitest_helper'
 module Sidekiq
   module Statistic
     describe 'Runtime' do
-      before do
-        Sidekiq.redis(&:flushdb)
-      end
+      before { Sidekiq.redis(&:flushdb) }
 
       let(:statistic)         { Sidekiq::Statistic::Base.new(1) }
       let(:runtime_statistic) { Sidekiq::Statistic::Runtime.new(statistic, 'HistoryWorker') }

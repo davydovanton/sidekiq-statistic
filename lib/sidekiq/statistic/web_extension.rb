@@ -1,32 +1,16 @@
+require 'tilt/erb'
 require 'json'
 
 module Sidekiq
   module Statistic
     module WebExtension
-      DAFAULT_DAYS = 20
-
       def self.registered(app)
         view_path   = File.join(File.expand_path('..', __FILE__), 'views')
-        locale_path = File.expand_path(File.dirname(__FILE__) + "/locales")
+        locale_path = File.expand_path(File.dirname(__FILE__) + '/locales')
 
         Sidekiq::Web.settings.locales << locale_path
 
-        app.helpers do
-          def formate_date(string, format = nil)
-            Time.parse(string).strftime(format || '%T, %e %B %Y')
-          end
-
-          def calculate_date_range(params)
-            if params['dateFrom'] && params['dateTo']
-              from = Date.parse(params['dateFrom'])
-              to   = Date.parse(params['dateTo'])
-
-              [(to - from).to_i, to]
-            else
-              [DAFAULT_DAYS]
-            end
-          end
-        end
+        app.helpers WebExtensionHelper
 
         app.get '/statistic.js' do
           content_type 'text/javascript'

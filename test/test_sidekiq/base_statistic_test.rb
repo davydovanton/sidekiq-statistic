@@ -3,9 +3,7 @@ require 'minitest_helper'
 module Sidekiq
   module Statistic
     describe 'Base' do
-      before do
-        Sidekiq.redis(&:flushdb)
-      end
+      before { Sidekiq.redis(&:flushdb) }
 
       let(:base_statistic) { Sidekiq::Statistic::Base.new(1) }
 
