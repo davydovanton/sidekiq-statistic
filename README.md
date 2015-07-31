@@ -42,7 +42,7 @@ end
 ```
 
 ## JSON API
-### sidekiq/api/statistic.json
+### /api/statistic.json
 Returns statistic for each worker.
 
 Params:
