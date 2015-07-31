@@ -3,9 +3,7 @@ require 'minitest_helper'
 module Sidekiq
   module Statistic
     describe 'Workers' do
-      before do
-        Sidekiq.redis(&:flushdb)
-      end
+      before { Sidekiq.redis(&:flushdb) }
 
       let(:statistic) { Sidekiq::Statistic::Workers.new(1) }
 

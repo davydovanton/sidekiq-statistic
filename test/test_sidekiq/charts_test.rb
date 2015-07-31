@@ -3,9 +3,7 @@ require 'minitest_helper'
 module Sidekiq
   module Statistic
     describe 'Charts' do
-      before do
-        Sidekiq.redis(&:flushdb)
-      end
+      before { Sidekiq.redis(&:flushdb) }
 
       let(:chart) { Sidekiq::Statistic::Charts.new(1) }
 
