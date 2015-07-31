@@ -14,6 +14,7 @@ require 'sidekiq/statistic/statistic/runtime'
 require 'sidekiq/statistic/statistic/workers'
 require 'sidekiq/statistic/version'
 require 'sidekiq/statistic/web_extension'
+require 'sidekiq/statistic/web_api_extension'
 
 module Sidekiq
   module Statistic
@@ -38,6 +39,7 @@ Sidekiq.configure_server do |config|
     chain.add Sidekiq::Statistic::Middleware
   end
 end
+
 
 if defined?(Sidekiq::Web)
   Sidekiq::Web.register Sidekiq::Statistic::WebExtension
