@@ -1,3 +1,6 @@
+* 31.07.2015: Add JSON API
+
+  *Anton Davydov*
 * 29.07.2015: Add localizations for plugin
 
   *Anton Davydov*
