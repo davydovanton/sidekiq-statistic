@@ -30,7 +30,12 @@ module Sidekiq
           content_type :json
 
           @name = params[:worker]
-          { hello: "#@name world" }.to_json
+          worker_statistic =
+            Sidekiq::Statistic::Workers
+              .new(*calculate_date_range(params))
+              .display_per_day(@name)
+
+          { days: worker_statistic }.to_json
         end
       end
     end

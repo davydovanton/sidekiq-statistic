@@ -76,7 +76,40 @@ $ curl http://example.com/sidekiq/api/statistic.json?dateFrom=2015-07-30&dateTo=
       ...
     ]
   }
+```
 
+### /api/statistic/:worker_name.json
+Returns worker statistic for each day in range.
+
+Params:
+  * `dateFrom` - Date start (format: `yyyy-mm-dd`)
+  * `dateTo` - Date end (format: `yyyy-mm-dd`)
+
+Example:
+```
+$ curl http://example.com/sidekiq/api/statistic/Worker.json?dateFrom=2015-07-30&dateTo=2015-07-31
+
+# =>
+{
+  "days": [
+    {
+      "date": "2015-07-31",
+      "failure": 0,
+      "success": 1,
+      "total": 1,
+      "last_job_status": "passed",
+      "runtime": {
+        "last": null,
+        "max": 0,
+        "min": 0,
+        "average": 0,
+        "total": 0
+      }
+    },
+
+    ...
+  ]
+}
 ```
 
 ## How it works

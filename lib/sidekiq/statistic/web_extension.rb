@@ -13,7 +13,8 @@ module Sidekiq
 
         app.helpers do
           def formate_date(string, format = nil)
-            Time.parse(string).strftime(format || '%T, %e %B %Y')
+            time = string ? Time.parse(string) : Time.now
+            time.strftime(format || '%T, %e %B %Y')
           end
 
           def calculate_date_range(params)
