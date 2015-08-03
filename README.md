@@ -23,7 +23,7 @@ Also you can check <a href="https://sidekiq-history-gem.herokuapp.com/sidekiq/st
 ## Installation
 Add this line to your application's Gemfile:
 
-    gem 'sidekiq-statistic', github: 'davydovanton/sidekiq-history'
+    gem 'sidekiq-statistic', github: 'davydovanton/sidekiq-statistic'
 
 And then execute:
 
