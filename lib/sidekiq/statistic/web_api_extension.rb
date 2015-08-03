@@ -12,7 +12,7 @@ module Sidekiq
 
         app.get '/api/statistic.json' do
           statistic = Sidekiq::Statistic::Workers.new(*calculate_date_range(params))
-          { workers: statistic.display }.to_json
+          Sidekiq.dump_json(workers: statistic.display)
         end
 
         app.get '/api/statistic/:worker.json' do
@@ -21,7 +21,7 @@ module Sidekiq
               .new(*calculate_date_range(params))
               .display_per_day(params[:worker])
 
-          { days: worker_statistic }.to_json
+          Sidekiq.dump_json(days: worker_statistic)
         end
       end
     end
