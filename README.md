@@ -32,6 +32,18 @@ And then execute:
 ## Usage
 Open in your browser `/sidekiq/statistic` page.
 
+### Standalone applications
+First step: read [sidekiq documentation](https://github.com/mperham/sidekiq/wiki/Monitoring#standalone)
+Second step: add `require 'sidekiq-statistic'` to you `config.ru`. For example:
+``` ruby
+# config.ru
+require 'sidekiq/web'
+require 'sidekiq-statistic'
+
+use Rack::Session::Cookie, :secret => "some unique secret string here"
+run Sidekiq::Web
+```
+
 ## Configuration
 Sidekiq statistic gem have `log_file` option. This option lets you specify a custom path to sidekiq log file. By default this option equal `log/sidekiq.log`
 
