@@ -30,10 +30,11 @@ And then execute:
     $ bundle
 
 ## Usage
-Open in your browser `/sidekiq/statistic` page.
+Open in your browser `<sidekiq-path>/statistic` page.
 
-### Standalone applications
-First step: read [sidekiq documentation](https://github.com/mperham/sidekiq/wiki/Monitoring#standalone)
+### Not rails application
+First step: read [sidekiq documentation](https://github.com/mperham/sidekiq/wiki/Monitoring#standalone).
+
 Second step: add `require 'sidekiq-statistic'` to you `config.ru`. For example:
 ``` ruby
 # config.ru
