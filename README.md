@@ -6,11 +6,9 @@ Improved display of statistics for your sidekiq workers and jobs.
 
 **This gem work only with sidekiq version more than [3.3.4](https://github.com/mperham/sidekiq/releases/tag/v3.3.4)**
 
-**This not production version of gem**
-
 ## Screenshots
+Also you can check <a href="https://sidekiq-history-gem.herokuapp.com/sidekiq/statistic" target="_blank">heroku application</a> with rails app with this sidekiq plugin
 
-Also you can check <a href="https://sidekiq-history-gem.herokuapp.com/sidekiq/statistic" target="_blank">heroku application</a> with this plugn 
 ### Index page:
 ![sidekiq-history_index](https://cloud.githubusercontent.com/assets/1147484/8071172/1708e3b0-0f10-11e5-84cf-86a910f5ecc2.png)
 
@@ -41,7 +39,7 @@ Second step: add `require 'sidekiq-statistic'` to you `config.ru`. For example:
 require 'sidekiq/web'
 require 'sidekiq-statistic'
 
-use Rack::Session::Cookie, :secret => "some unique secret string here"
+use Rack::Session::Cookie, secret: 'some unique secret string here'
 run Sidekiq::Web
 ```
 
