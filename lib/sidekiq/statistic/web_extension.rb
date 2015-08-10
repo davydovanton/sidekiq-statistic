@@ -32,12 +32,18 @@ module Sidekiq
           content_type :json
           charts = Sidekiq::Statistic::Charts.new(*calculate_date_range(params))
 
-          {
+          Sidekiq.dump_json(
             tooltip_template: '<%= datasetLabel %> - <%= value %>',
             labels: charts.dates,
             failed_datasets: charts.information_for(:failed),
-            passed_datasets: charts.information_for(:passed)
-          }.to_json
+            passed_datasets: charts.information_for(:passed))
+        end
+
+        app.get '/statistic/realtime.json' do
+          content_type :json
+
+          statistic = Sidekiq::Statistic::Realtime.new
+          Sidekiq.dump_json(realtime: statistic.realtime_hash.to_s)
         end
 
         app.get '/statistic/:worker' do

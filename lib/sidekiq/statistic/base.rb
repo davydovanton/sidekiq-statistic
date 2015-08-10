@@ -15,7 +15,7 @@ module Sidekiq
       end
 
       def statistic_hash
-        @redis_hash = Sidekiq.redis do |conn|
+        @redis_hash ||= Sidekiq.redis do |conn|
           redis_hash = {}
           conn
             .hgetall(REDIS_HASH)
