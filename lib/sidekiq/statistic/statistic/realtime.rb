@@ -5,7 +5,7 @@ module Sidekiq
 
       def self.charts_initializer
         workers = new.worker_names.map{ |w| Array.new(12, 0).unshift(w) }
-        workers << Array.new(12) { |i| (Time.now - i).strftime('%T') }.unshift('x')
+        workers << Array.new(12) { |i| (Time.now - i).strftime('%T'.freeze) }.unshift('x'.freeze)
         workers
       end
 
@@ -30,8 +30,8 @@ module Sidekiq
 
       def statistic
         {
-          failed: { columns: columns_for('failed') },
-          passed: { columns: columns_for('passed') }
+          failed: { columns: columns_for('failed'.freeze) },
+          passed: { columns: columns_for('passed'.freeze) }
         }
       end
 
@@ -48,7 +48,7 @@ module Sidekiq
       end
 
       def axis_array
-        @array ||= ['x', Time.now.strftime('%T')]
+        @array ||= ['x', Time.now.strftime('%T'.freeze)]
       end
     end
   end
