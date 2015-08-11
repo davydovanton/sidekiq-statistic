@@ -28,6 +28,7 @@ module Sidekiq
 
       def save_entry_for_worker(worker_status)
         status = worker_status.dup
+        realtime_hash = "#{REDIS_HASH}:realtime:#{Time.now.sec}"
         worker_key = "#{Time.now.utc.to_date}:#{status.delete :class}"
         time_keys = ["#{worker_key}:min_time", "#{worker_key}:max_time", "#{worker_key}:average_time"]
 
@@ -48,6 +49,9 @@ module Sidekiq
           redis.hincrbyfloat REDIS_HASH, "#{worker_key}:total_time", status[:time]
 
           redis.hmset REDIS_HASH, statistics
+
+          redis.hincrby realtime_hash, "#{status[:last_job_status]}:#{worker_status[:class]}", 1
+          redis.expire realtime_hash, 2
         end
       end
 

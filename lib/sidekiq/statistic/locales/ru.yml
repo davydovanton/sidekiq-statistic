@@ -1,5 +1,7 @@
 # elements like %{queue} are variables and should not be translated
 ru: # <---- change this to your locale code
+  Index: Главная
+  RealtimeStatistic: Статистика в реальном времени
   Statistic: Статистика
   Start: Начало
   End: Конец

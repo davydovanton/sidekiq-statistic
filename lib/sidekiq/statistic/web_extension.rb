@@ -12,6 +12,11 @@ module Sidekiq
 
         app.helpers WebExtensionHelper
 
+        app.get '/realtime_statistic.js' do
+          content_type 'text/javascript'
+          File.read(File.join(view_path, 'realtime_statistic.js'))
+        end
+
         app.get '/statistic.js' do
           content_type 'text/javascript'
           File.read(File.join(view_path, 'statistic.js'))
@@ -32,12 +37,27 @@ module Sidekiq
           content_type :json
           charts = Sidekiq::Statistic::Charts.new(*calculate_date_range(params))
 
-          {
+          Sidekiq.dump_json(
             tooltip_template: '<%= datasetLabel %> - <%= value %>',
             labels: charts.dates,
             failed_datasets: charts.information_for(:failed),
-            passed_datasets: charts.information_for(:passed)
-          }.to_json
+            passed_datasets: charts.information_for(:passed))
+        end
+
+        app.get '/statistic/realtime' do
+          render(:erb, File.read(File.join(view_path, 'realtime.erb')))
+        end
+
+        app.get '/statistic/realtime_charts.json' do
+          content_type :json
+
+          realtime = Sidekiq::Statistic::Realtime.new
+          Sidekiq.dump_json realtime.statistic
+        end
+
+        app.get '/statistic/realtime_charts_initializer.json' do
+          content_type :json
+          Sidekiq.dump_json Sidekiq::Statistic::Realtime.charts_initializer
         end
 
         app.get '/statistic/:worker' do
