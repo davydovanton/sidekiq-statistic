@@ -3,6 +3,12 @@ module Sidekiq
     class Realtime < Base
       DAYS_PREVIOUS = 30
 
+      def self.charts_initializer
+        workers = new.worker_names.map{ |w| Array.new(12, 0).unshift(w) }
+        workers << Array.new(12) { |i| (Time.now - i).strftime('%T') }.unshift('x')
+        workers
+      end
+
       def initialize
         @start_date = Time.now.utc.to_date
         @end_date = @start_date - DAYS_PREVIOUS
@@ -20,6 +26,29 @@ module Sidekiq
 
           redis_hash
         end
+      end
+
+      def statistic
+        {
+          failed: { columns: columns_for('failed') },
+          passed: { columns: columns_for('passed') }
+        }
+      end
+
+    private
+
+      def columns_for(status)
+        worker_names.map do |worker|
+          [worker, realtime.fetch(status, {})[worker] || 0]
+        end << axis_array
+      end
+
+      def realtime
+        @realtime_hash ||= realtime_hash
+      end
+
+      def axis_array
+        @array ||= ['x', Time.now.strftime('%T')]
       end
     end
   end
