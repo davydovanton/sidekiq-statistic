@@ -7,6 +7,11 @@
 <div class='statistic'>
   <h2><%= t('RealtimeStatistic') %></h2>
 
+  <ul class="nav nav-tabs">
+    <li><a href="<%= root_path %>statistic" class="statistic__tab"><%= t('Index') %></a></li>
+    <li class="active"><a href="<%= root_path %>statistic/realtime" class="statistic__tab"><%= t('Realtime') %></a></li>
+  </ul>
+
   <div class='statistic__container'>
     <div class="realtime">
       <h2><%= t('Failed') %></h2>
