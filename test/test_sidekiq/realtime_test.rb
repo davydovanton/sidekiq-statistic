@@ -6,14 +6,14 @@ module Sidekiq
       before { Sidekiq.redis(&:flushdb) }
 
       let(:realtime){ Sidekiq::Statistic::Realtime.new }
-      let(:current_time){ Time.new(2015, 8, 11, 23, 22, 21).utc }
+      let(:current_time){ Time.new(2015, 8, 11, 23, 22, 21, "+00:00").utc }
 
       describe '::charts_initializer' do
         describe 'before any jobs' do
           it 'returns initialize array for realtime chart' do
             Time.stub :now, current_time do
               initialize_array = Sidekiq::Statistic::Realtime.charts_initializer
-              assert_equal [['x', '20:22:21', '20:22:20', '20:22:19', '20:22:18', '20:22:17', '20:22:16', '20:22:15', '20:22:14', '20:22:13', '20:22:12', '20:22:11', '20:22:10']], initialize_array
+              assert_equal [['x', '23:22:21', '23:22:20', '23:22:19', '23:22:18', '23:22:17', '23:22:16', '23:22:15', '23:22:14', '23:22:13', '23:22:12', '23:22:11', '23:22:10']], initialize_array
             end
           end
         end
@@ -24,7 +24,7 @@ module Sidekiq
 
             Time.stub :now, current_time do
               initialize_array = Sidekiq::Statistic::Realtime.charts_initializer
-              assert_equal [['HistoryWorker', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ['x', '20:22:21', '20:22:20', '20:22:19', '20:22:18', '20:22:17', '20:22:16', '20:22:15', '20:22:14', '20:22:13', '20:22:12', '20:22:11', '20:22:10']], initialize_array
+              assert_equal [['HistoryWorker', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ['x', '23:22:21', '23:22:20', '23:22:19', '23:22:18', '23:22:17', '23:22:16', '23:22:15', '23:22:14', '23:22:13', '23:22:12', '23:22:11', '23:22:10']], initialize_array
             end
           end
         end
@@ -61,7 +61,7 @@ module Sidekiq
         describe 'before any jobs' do
           it 'returns hash with empty values' do
             Time.stub :now, current_time do
-              assert_equal({failed: {columns: [['x', '20:22:21']]}, passed: {columns: [['x', '20:22:21']]}}, realtime.statistic)
+              assert_equal({failed: {columns: [['x', '23:22:21']]}, passed: {columns: [['x', '23:22:21']]}}, realtime.statistic)
             end
           end
         end
@@ -80,7 +80,7 @@ module Sidekiq
             end
 
             Time.stub :now, current_time do
-              assert_equal({failed: {columns: [['HistoryWorker', 1], ['x', '20:22:21']]}, passed: {columns: [['HistoryWorker', 1], ['x', '20:22:21']]}}, realtime.statistic)
+              assert_equal({failed: {columns: [['HistoryWorker', 1], ['x', '23:22:21']]}, passed: {columns: [['HistoryWorker', 1], ['x', '23:22:21']]}}, realtime.statistic)
             end
           end
         end
