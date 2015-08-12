@@ -28,17 +28,19 @@ module Sidekiq
         end
       end
 
-      def statistic
+      def statistic(params = {})
         {
-          failed: { columns: columns_for('failed'.freeze) },
-          passed: { columns: columns_for('passed'.freeze) }
+          failed: { columns: columns_for('failed'.freeze, params) },
+          passed: { columns: columns_for('passed'.freeze, params) }
         }
       end
 
     private
 
-      def columns_for(status)
-        worker_names.map do |worker|
+      def columns_for(status, params = {})
+        workers = params['excluded'] ? worker_names - Array(params['excluded']) : worker_names
+
+        workers.map do |worker|
           [worker, realtime.fetch(status, {})[worker] || 0]
         end << axis_array
       end

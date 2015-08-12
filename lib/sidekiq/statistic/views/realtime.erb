@@ -19,5 +19,11 @@
       <h2><%= t('Passed') %></h2>
       <div class="realtime__passed-chart"></div>
     </div>
+
+    <div class="workers">
+      <% @workers.each do |worker| %>
+        <div><input class="worker__checkbox" type="checkbox" name="<%= worker %>" value="<%= worker %>"> <span><%= worker %></span></div>
+      <% end %>
+    </div>
   </div>
 </div>

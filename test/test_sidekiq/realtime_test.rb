@@ -20,7 +20,9 @@ module Sidekiq
 
         describe 'after job' do
           it 'returns initialize array for realtime chart' do
-            middlewared {}
+            Time.stub :now, current_time - 1 do
+              middlewared {}
+            end
 
             Time.stub :now, current_time do
               initialize_array = Sidekiq::Statistic::Realtime.charts_initializer
