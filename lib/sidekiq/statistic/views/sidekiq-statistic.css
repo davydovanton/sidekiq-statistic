@@ -39,6 +39,10 @@
       margin-top: 25px;
       }
 
+.workers-table {
+  width: 300px;
+  }
+
 /*!
  * jQuery UI Datepicker @VERSION
  * http://jqueryui.com
