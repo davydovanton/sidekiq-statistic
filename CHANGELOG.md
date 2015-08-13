@@ -1,3 +1,9 @@
+* 12.08.2015: Add filters (by worker) for realtime charts
+
+  *Anton Davydov*
+* 11.08.2015: Realtime chart for each worker and job
+
+  *Anton Davydov*
 * 31.07.2015: Add JSON API
 
   *Anton Davydov*
