@@ -24,6 +24,12 @@ module Sidekiq
               keys.inject(redis_hash, &key_or_empty_hash)[last.to_sym] = to_number(value)
             end
 
+          redis_hash.each do |time, workers|
+            workers.each do |worker, _|
+              redis_hash[time][worker][:timeslist] = conn.lrange("#{time}:#{worker}:timeslist", 0, -1).map(&:to_f)
+            end
+          end
+
           desired_dates.map { |key| result_hash(redis_hash, key) }
         end
       end
