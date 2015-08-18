@@ -1,3 +1,10 @@
+## v1.0
+* 19.08.2015: Middleware refactoring (#45)
+
+  *Mike Perham*
+* 19.08.2015: Use redis lists for save all job runtimes
+
+  *Anton Davydov*
 * 12.08.2015: Add filters (by worker) for realtime charts
 
   *Anton Davydov*
