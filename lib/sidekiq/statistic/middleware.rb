@@ -30,25 +30,17 @@ module Sidekiq
         status = worker_status.dup
         realtime_hash = "#{REDIS_HASH}:realtime:#{Time.now.sec}"
         worker_key = "#{Time.now.utc.to_date}:#{status.delete :class}"
-        time_keys = ["#{worker_key}:min_time", "#{worker_key}:max_time", "#{worker_key}:average_time"]
 
         Sidekiq.redis do |redis|
-          min_time, max_time, average_time =
-            redis.hmget(REDIS_HASH, time_keys).map{ |v| (v || status[:time]).to_f }
-          min_time, max_time = [min_time, max_time, status[:time]].minmax
-
           statistics = [
             "#{worker_key}:last_job_status", status[:last_job_status],
-            "#{worker_key}:average_time", (average_time + status[:time]) / 2,
-            "#{worker_key}:last_time", status[:last_runtime],
-            "#{worker_key}:min_time", min_time,
-            "#{worker_key}:max_time", max_time
+            "#{worker_key}:last_time", status[:last_runtime]
           ]
 
           redis.hincrby REDIS_HASH, "#{worker_key}:#{status[:last_job_status]}", 1
-          redis.hincrbyfloat REDIS_HASH, "#{worker_key}:total_time", status[:time]
 
           redis.hmset REDIS_HASH, statistics
+          redis.lpush "#{worker_key}:timeslist", status[:time]
 
           redis.hincrby realtime_hash, "#{status[:last_job_status]}:#{worker_status[:class]}", 1
           redis.expire realtime_hash, 2

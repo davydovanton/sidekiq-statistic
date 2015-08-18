@@ -26,8 +26,7 @@ module Sidekiq
       end
 
       def last_runtime
-        @redis_statistic
-          .statistic_for(@worker).last[:last_time]
+        @redis_statistic.statistic_for(@worker).last[:last_time]
       end
 
       def total_runtime

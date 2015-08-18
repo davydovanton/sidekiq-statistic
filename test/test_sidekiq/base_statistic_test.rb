@@ -28,6 +28,24 @@ module Sidekiq
           assert_equal 1, worker_hash['HistoryWorker'][:failed]
           assert_equal 1, worker_hash['HistoryWorker'][:passed]
         end
+
+        describe 'after call' do
+          it 'deletes timeslist list from redis' do
+            middlewared {}
+
+            Sidekiq.redis do |conn|
+              assert_equal true, conn.hget(REDIS_HASH, "#{Time.now.utc.to_date}:HistoryWorker:total_time").nil?
+              assert_equal 1, conn.lrange("#{Time.now.utc.to_date}:HistoryWorker:timeslist", 0, -1).size
+            end
+
+            base_statistic.statistic_hash
+
+            Sidekiq.redis do |conn|
+              assert_equal false, conn.hget(REDIS_HASH, "#{Time.now.utc.to_date}:HistoryWorker:total_time").nil?
+              assert_equal 0, conn.lrange("#{Time.now.utc.to_date}:HistoryWorker:timeslist", 0, -1).size
+            end
+          end
+        end
       end
 
       describe '#statistic_for' do
@@ -37,14 +55,13 @@ module Sidekiq
 
           Time.stub :now, time do
             values = base_statistic.statistic_for('HistoryWorker')
-            assert_equal [{}, { passed:1, failed:0, last_job_status: 'passed', average_time: 0.0, total_time: 0.0, last_time: time.to_s, min_time: 0.0, max_time: 0.0 }], values
+            assert_equal [{}, { passed: 1.0, last_job_status: "passed", last_time: time.to_s, average_time: 0.0, min_time: 0.0, max_time: 0.0, total_time: 0.0, failed: 0 }], values
           end
         end
 
         describe 'when jobs were not call' do
           it 'returns array with empty values' do
             values = base_statistic.statistic_for('HistoryWorker')
-            $debugger = true
             assert_equal [{}, {}], values
           end
         end
