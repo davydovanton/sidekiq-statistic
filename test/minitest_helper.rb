@@ -11,7 +11,6 @@ require 'rack/test'
 
 require 'sidekiq'
 require 'sidekiq-statistic'
-require 'sidekiq/statistic'
 
 Sidekiq.logger.level = Logger::ERROR
 
