@@ -1,5 +1,5 @@
 module Sidekiq
   module Statistic
-    VERSION = '0.2.0'
+    VERSION = '1.0.0'
   end
 end
