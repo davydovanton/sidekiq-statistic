@@ -29,7 +29,7 @@ module Sidekiq
         conn
           .hgetall(REDIS_HASH)
           .each do |keys, value|
-            *keys, last = keys.split(':'.freeze)
+            *keys, last = keys.gsub("::","_").split(':'.freeze)
             keys.inject(redis_hash, &key_or_empty_hash)[last.to_sym] = to_number(value)
           end
       end
