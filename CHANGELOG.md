@@ -1,3 +1,11 @@
+* 20.08.2015: Add German Localization (#54)
+
+  *Felix Bünemann*
+
+* 20.08.2015: Fix statistics display for nested worker classes (#48)
+
+  *Felix Bünemann*
+
 ## v1.0
 * 19.08.2015: Middleware refactoring (#45)
 
