@@ -26,6 +26,12 @@ class ActiveJobWrapper
   include Sidekiq::Worker
 end
 
+module Nested
+  class HistoryWorker
+    include Sidekiq::Worker
+  end
+end
+
 def middlewared(worker_class = HistoryWorker, msg = {})
   middleware = Sidekiq::Statistic::Middleware.new
   middleware.call worker_class.new, msg, 'default' do

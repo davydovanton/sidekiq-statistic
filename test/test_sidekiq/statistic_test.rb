@@ -77,6 +77,13 @@ module Sidekiq
             assert_equal 0, count[:failure]
           end
         end
+
+        it 'returns proper stats for nested workers' do
+          middlewared(Nested::HistoryWorker) {}
+
+          count = statistic.number_of_calls('Nested::HistoryWorker')
+          assert_equal 1, count[:total]
+        end
       end
     end
   end

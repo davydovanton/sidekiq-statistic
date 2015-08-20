@@ -1,6 +1,8 @@
 module Sidekiq
   module Statistic
     class Base
+      KEY_SEPARATOR = /(?<!:):(?!:)/.freeze
+
       def initialize(days_previous, start_date = nil)
         @start_date = start_date || Time.now.utc.to_date
         @end_date = @start_date - days_previous
@@ -29,7 +31,7 @@ module Sidekiq
         conn
           .hgetall(REDIS_HASH)
           .each do |keys, value|
-            *keys, last = keys.split(':'.freeze)
+            *keys, last = keys.split(KEY_SEPARATOR)
             keys.inject(redis_hash, &key_or_empty_hash)[last.to_sym] = to_number(value)
           end
       end
