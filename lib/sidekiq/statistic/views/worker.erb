@@ -55,7 +55,7 @@
     <div class="statistic__log">
       <input type='text' name='' id='statistic__search' value='' placeholder='Search text in log file'/>
       <% @worker_log.each do |line| %>
-        <p class="statistic__i statistic__<%= line[:color] %>"><%= line[:text] %></p>
+        <p class="statistic__i"><%= line %></p>
       <% end %>
     </div>
   </div>
