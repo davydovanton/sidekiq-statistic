@@ -49,14 +49,14 @@ module Sidekiq
           render(:erb, File.read(File.join(view_path, 'realtime.erb')))
         end
 
-        app.get '/statistic/realtime_charts.json' do
+        app.get '/statistic/realtime/charts.json' do
           content_type :json
 
           realtime = Sidekiq::Statistic::Realtime.new
           Sidekiq.dump_json realtime.statistic(params)
         end
 
-        app.get '/statistic/realtime_charts_initializer.json' do
+        app.get '/statistic/realtime/charts_initializer.json' do
           content_type :json
           Sidekiq.dump_json Sidekiq::Statistic::Realtime.charts_initializer
         end
