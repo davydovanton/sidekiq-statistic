@@ -13,12 +13,10 @@ module Sidekiq
 
       describe '#parse' do
         describe 'when worker called' do
-          it 'returns array with line hashes' do
-            result = [
-              { color: 'green', text: 'HistoryWorker (done)' },
-              { color: 'yellow', text: 'HistoryWorker (start)' },
-              { color: 'red', text: 'HistoryWorker (fail)' }
-            ]
+          it 'returns array with lines' do
+            result = ["HistoryWorker (done) <span class=\"statistic__jid js-jid__36a2b8bd6a370834f979f5ee\"data-target=\".js-jid__36a2b8bd6a370834f979f5ee\" style=\"background-color: rgba(255,41,135,0.2);\">JID-36a2b8bd6a370834f979f5ee</span>",
+                      "HistoryWorker (start)",
+                      "HistoryWorker (fail) <span class=\"statistic__jid js-jid__219f4e9b9013bfec76faa270\"data-target=\".js-jid__219f4e9b9013bfec76faa270\" style=\"background-color: rgba(116,63,167,0.2);\">JID-219f4e9b9013bfec76faa270</span>"]
 
             assert_equal result, log_parser.parse
           end
@@ -32,28 +30,11 @@ module Sidekiq
         end
       end
 
-      describe '#line_hash' do
-        it 'returns hash with string color and text' do
-          hash = { color: 'green', text: 'HistoryWorker (done)' }
-          assert_equal hash, log_parser.line_hash('HistoryWorker (done)')
-        end
-      end
-
-      describe '#color' do
-        it 'returns green for string contain "done"' do
-          assert_equal 'green', log_parser.color('HistoryWorker (done)')
-        end
-
-        it 'returns yellow for string contain "start"' do
-          assert_equal 'yellow', log_parser.color('HistoryWorker (start)')
-        end
-
-        it 'returns red for string contain "fail"' do
-          assert_equal 'red', log_parser.color('HistoryWorker (fail)')
-        end
-
-        it 'returns nothing for others case' do
-          assert_equal nil, log_parser.color('HistoryWorker (unknow status)')
+      describe '#sub_line' do
+        it 'returns substituted log line' do
+          substituted_line = "HistoryWorker (done) <span class=\"statistic__jid js-jid__219f4e9b9013bfec76faa270\"data-target=\".js-jid__219f4e9b9013bfec76faa270\" style=\"background-color: rgba(116,63,167,0.2);\">JID-219f4e9b9013bfec76faa270</span>"
+          assert_equal 'HistoryWorker (done)', log_parser.sub_line('HistoryWorker (done)')
+          assert_equal substituted_line, log_parser.sub_line('HistoryWorker (done) JID-219f4e9b9013bfec76faa270')
         end
       end
     end

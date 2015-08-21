@@ -35,6 +35,13 @@
     .statistic__log {
       display: none;
       }
+      .statistic__jid {
+        cursor: pointer;
+        background-color: red;
+        }
+        .statistic__jid:hover {
+          background-color: inherit;
+          }
     .statistic__table {
       margin-top: 25px;
       }

@@ -15,12 +15,27 @@ module Sidekiq
         File
           .readlines(@logfile)
           .first(FILE_LINES_COUNT)
-          .map{ |line| line_hash(line) if line[/\W?#@worker_name\W?/] }
+          .map{ |line| sub_line(line) if line[/\W?#@worker_name\W?/] }
           .compact
       end
 
-      def line_hash(line)
-        { color: color(line), text: line.sub(/\n/, '') }
+      def sub_line(line)
+        line
+          .sub(/\n/, '')
+          .sub(/(JID-[\w]+)/) { jid_tag($1) }
+      end
+
+      def jid_tag(jid)
+        "<span class=\"statistic__jid js-jid__#{jid[4..-1]}\""\
+          "data-target=\".js-jid__#{jid[4..-1]}\" #{jid_style jid}>#{jid}</span>"
+      end
+
+      def jid_style(worker_jid)
+        return unless worker_jid
+        color = Digest::MD5.hexdigest(worker_jid)[4..9]
+          .scan(/../).map{ |c| c.to_i(16) }.join ','
+
+        "style=\"background-color: rgba(#{color},0.2);\""
       end
 
       def color(line)
