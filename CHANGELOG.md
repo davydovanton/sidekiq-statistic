@@ -1,3 +1,9 @@
+* 21.08.2015: Use dynamic path generation for json requests (fix #56)
+
+  *Anton Davydov*
+* 21.08.2015: Add button in log page for display only special job (#40)
+
+  *Anton Davydov*
 * 20.08.2015: Add German Localization (#54)
 
   *Felix Bünemann*
