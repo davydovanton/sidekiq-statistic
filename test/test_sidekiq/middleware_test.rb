@@ -72,7 +72,7 @@ module Sidekiq
         assert_equal 500, actual['HistoryWorker'][:passed]
       end
 
-      it 'support ActiveJob workers' do
+      it 'supports ActiveJob workers' do
         message = {
           'class'   => 'ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper',
           'wrapped' => 'RealWorkerClassName'
@@ -83,6 +83,25 @@ module Sidekiq
         assert_equal actual.keys, ['RealWorkerClassName']
         assert_equal 1, actual['RealWorkerClassName'][:passed]
         assert_equal nil, actual['RealWorkerClassName'][:failed]
+      end
+
+      it 'supports mailers called from AJ' do
+        message = {
+          'class'   => 'ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper',
+          'wrapped' => 'ActionMailer::DeliveryJob',
+          'args'    => [{
+            'job_class' => 'ActionMailer::DeliveryJob',
+            'job_id'=>'cdcc67fb-8fdc-490c-9226-9c7f46a2dbaf',
+            'queue_name'=>'mailers',
+            'arguments' => ['WrappedMailer', 'welcome_email', 'deliver_now']
+          }]
+        }
+
+        middlewared(ActiveJobWrapper, message) {}
+
+        assert_equal actual.keys, ['WrappedMailer']
+        assert_equal 1, actual['WrappedMailer'][:passed]
+        assert_equal nil, actual['WrappedMailer'][:failed]
       end
 
       it 'records statistic for more than one worker' do
