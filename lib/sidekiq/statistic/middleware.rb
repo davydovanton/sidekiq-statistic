@@ -14,6 +14,7 @@ module Sidekiq
         raise e
       ensure
         finish = Time.now
+        worker_status[:queue] = msg['queue'.freeze]
         worker_status[:last_runtime] = finish.utc
         worker_status[:time] = (finish - start).to_f.round(3)
         worker_status[:class] = msg['wrapped'.freeze] || worker.class.to_s
@@ -34,7 +35,8 @@ module Sidekiq
           redis.pipelined do
             redis.hincrby REDIS_HASH, "#{worker_key}:#{status[:last_job_status]}", 1
             redis.hmset REDIS_HASH, "#{worker_key}:last_job_status", status[:last_job_status],
-                                    "#{worker_key}:last_time", status[:last_runtime]
+                                    "#{worker_key}:last_time", status[:last_runtime],
+                                    "#{worker_key}:queue", status[:queue]
             redis.lpush "#{worker_key}:timeslist", status[:time]
 
             redis.hincrby realtime_hash, "#{status[:last_job_status]}:#{worker_status[:class]}", 1

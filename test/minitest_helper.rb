@@ -18,6 +18,11 @@ class HistoryWorker
   include Sidekiq::Worker
 end
 
+class HistoryWorkerWithQueue
+  include Sidekiq::Worker
+  sidekiq_options queue: :new
+end
+
 class OtherHistoryWorker
   include Sidekiq::Worker
 end
