@@ -17,6 +17,9 @@ module Sidekiq
         worker_status[:last_runtime] = finish.utc
         worker_status[:time] = (finish - start).to_f.round(3)
         worker_status[:class] = msg['wrapped'.freeze] || worker.class.to_s
+        if worker_status[:class] == 'ActionMailer::DeliveryJob'.freeze
+          worker_status[:class] = msg['args'.freeze].first['arguments'.freeze].first
+        end
 
         save_entry_for_worker worker_status
       end
