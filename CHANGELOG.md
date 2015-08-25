@@ -1,3 +1,10 @@
+## HEAD
+* 21.08.2015: Italian localization
+
+  *Fabio Napoleoni*
+* 21.08.2015: Fix worker naming for AJ mailers (fix #59)
+
+  *Anton Davydov*
 * 21.08.2015: Use dynamic path generation for json requests (fix #56)
 
   *Anton Davydov*
