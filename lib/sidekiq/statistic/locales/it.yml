@@ -1,5 +1,6 @@
 # elements like %{queue} are variables and should not be translated
 it: # <---- change this to your locale code
+  Queue: Fila
   Exclude: Escludi
   Index: Indice
   RealtimeStatistic: Statistiche in Tempo Reale

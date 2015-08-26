@@ -30,7 +30,7 @@ module Sidekiq
 
           response = JSON.parse(last_response.body)
           response['workers'].wont_equal []
-          response['workers'].first.keys.must_equal %w[name last_job_status number_of_calls runtime]
+          response['workers'].first.keys.must_equal %w[name last_job_status number_of_calls queue runtime]
         end
       end
 

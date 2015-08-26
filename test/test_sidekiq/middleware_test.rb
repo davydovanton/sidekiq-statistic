@@ -113,6 +113,16 @@ module Sidekiq
         assert_equal 1, actual['OtherHistoryWorker'][:passed]
         assert_equal nil, actual['OtherHistoryWorker'][:failed]
       end
+
+      it 'records queue statistic for each worker' do
+        message = { 'queue' => 'default' }
+        middlewared(HistoryWorker, message){}
+        message = { 'queue' => 'test' }
+        middlewared(HistoryWorkerWithQueue, message){}
+
+        assert_equal 'default', actual['HistoryWorker'][:queue]
+        assert_equal 'test', actual['HistoryWorkerWithQueue'][:queue]
+      end
     end
   end
 end
