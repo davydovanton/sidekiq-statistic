@@ -1,8 +1,11 @@
 ## HEAD
-* 21.08.2015: Italian localization
+* 26.08.2015: Add queue to workers table in index page
+
+  *Anton Davydov*
+* 25.08.2015: Italian localization
 
   *Fabio Napoleoni*
-* 21.08.2015: Fix worker naming for AJ mailers (fix #59)
+* 25.08.2015: Fix worker naming for AJ mailers (fix #59)
 
   *Anton Davydov*
 * 21.08.2015: Use dynamic path generation for json requests (fix #56)
