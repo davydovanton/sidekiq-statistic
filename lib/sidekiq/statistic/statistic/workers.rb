@@ -9,6 +9,7 @@ module Sidekiq
             name: worker,
             last_job_status: last_job_status_for(worker),
             number_of_calls: number_of_calls(worker),
+            queue: last_queue(worker),
             runtime: runtime_statistic(worker).values_hash
           }
         end
@@ -58,6 +59,10 @@ module Sidekiq
         statistic_for(worker)
           .select(&:any?)
           .last[:last_job_status]
+      end
+
+      def last_queue(worker)
+        statistic_for(worker).last[:queue]
       end
 
       def runtime_statistic(worker, values = nil)

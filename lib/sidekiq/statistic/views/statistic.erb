@@ -31,6 +31,7 @@
         <thead>
           <th><%= t('Worker') %></th>
           <th><%= t('Date') %></th>
+          <th><%= t('Queue') %></th>
           <th><%= t('Success') %></th>
           <th><%= t('Failure') %></th>
           <th><%= t('Total') %></th>
@@ -44,6 +45,7 @@
           <tr>
             <td class="worker"><a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a></td>
             <td class="worker"><%= formate_date worker[:runtime][:last] %></td>
+            <td class="worker"><%= worker[:queue] %></td>
             <td class="worker"><%= worker[:number_of_calls][:success] %></td>
             <td class="worker"><%= worker[:number_of_calls][:failure] %></td>
             <td class="worker"><%= worker[:number_of_calls][:total] %></td>
