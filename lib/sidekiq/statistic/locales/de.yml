@@ -1,5 +1,6 @@
 # elements like %{queue} are variables and should not be translated
 de: # <---- change this to your locale code
+  Queue: Queue
   Exclude: Ausblenden
   Index: Übersicht
   RealtimeStatistic: Echtzeitstatistik
