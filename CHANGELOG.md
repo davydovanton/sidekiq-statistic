@@ -1,4 +1,9 @@
 ## HEAD
+
+## v1.1
+* 29.08.2015: Create custom tooltip for charts on index page (fix #63)
+
+  *Anton Davydov*
 * 26.08.2015: Add queue to workers table in index page
 
   *Anton Davydov*
