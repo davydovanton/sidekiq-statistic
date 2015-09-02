@@ -2,7 +2,7 @@ module Sidekiq
   module Statistic
     class Charts < Base
       def information_for(type)
-        worker_names.map do |worker|
+        worker_names.reverse.map do |worker|
           color = color_for(worker)
           {
             label: worker,

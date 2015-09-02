@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 require 'minitest_helper'
-require 'json'
 
 module Sidekiq
   describe 'WebApiExtension' do
@@ -18,7 +17,7 @@ module Sidekiq
         it 'returns empty workers statistic' do
           get '/api/statistic.json'
 
-          response = JSON.parse(last_response.body)
+          response = Sidekiq.load_json(last_response.body)
           response['workers'].must_equal []
         end
       end
@@ -28,7 +27,7 @@ module Sidekiq
           middlewared {}
           get '/api/statistic.json'
 
-          response = JSON.parse(last_response.body)
+          response = Sidekiq.load_json(last_response.body)
           response['workers'].wont_equal []
           response['workers'].first.keys.must_equal %w[name last_job_status number_of_calls queue runtime]
         end
@@ -43,7 +42,7 @@ module Sidekiq
           it 'returns empty statistic' do
             get '/api/statistic.json?dateFrom=2015-07-28&dateTo=2015-07-29'
 
-            response = JSON.parse(last_response.body)
+            response = Sidekiq.load_json(last_response.body)
             response['workers'].must_equal []
           end
         end
@@ -52,7 +51,7 @@ module Sidekiq
           it 'returns workers statistic' do
             get "/api/statistic.json?dateFrom=2015-07-28&dateTo=#{Date.today}"
 
-            response = JSON.parse(last_response.body)
+            response = Sidekiq.load_json(last_response.body)
             response['workers'].wont_equal []
             response['workers'].count.must_equal 1
           end
@@ -65,7 +64,7 @@ module Sidekiq
         it 'returns empty workers statistic' do
           get '/api/statistic/HistoryWorker.json'
 
-          response = JSON.parse(last_response.body)
+          response = Sidekiq.load_json(last_response.body)
           response['days'].must_equal []
         end
       end
@@ -75,7 +74,7 @@ module Sidekiq
           middlewared {}
           get '/api/statistic/HistoryWorker.json'
 
-          response = JSON.parse(last_response.body)
+          response = Sidekiq.load_json(last_response.body)
           response['days'].wont_equal []
           response['days'].first.keys.must_equal %w[date failure success total last_job_status runtime]
         end
@@ -90,7 +89,7 @@ module Sidekiq
           it 'returns empty statistic' do
             get '/api/statistic/HistoryWorker.json?dateFrom=2015-07-28&dateTo=2015-07-29'
 
-            response = JSON.parse(last_response.body)
+            response = Sidekiq.load_json(last_response.body)
             response['days'].must_equal []
           end
         end
@@ -99,7 +98,7 @@ module Sidekiq
           it 'returns workers statistic' do
             get "/api/statistic/HistoryWorker.json?dateFrom=2015-07-28&dateTo=#{Date.today}"
 
-            response = JSON.parse(last_response.body)
+            response = Sidekiq.load_json(last_response.body)
             response['days'].wont_equal []
             response['days'].count.must_equal 1
           end
