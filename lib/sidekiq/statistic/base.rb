@@ -13,7 +13,7 @@ module Sidekiq
       end
 
       def worker_names
-        @worker_names ||= statistic_hash.flat_map{ |h| h.values.first.keys }.uniq.sort.reverse
+        @worker_names ||= statistic_hash.flat_map{ |h| h.values.first.keys }.uniq.sort
       end
 
       def statistic_hash
