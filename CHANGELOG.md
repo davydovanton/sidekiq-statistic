@@ -1,5 +1,4 @@
 ## HEAD
-* 03.09.2015: Add Arabic Localization *Milena Novikova*
 
 ## v1.1
 * 29.08.2015: Create custom tooltip for charts on index page (fix #63) *Anton Davydov*
