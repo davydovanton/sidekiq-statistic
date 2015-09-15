@@ -31,9 +31,8 @@ And then execute:
 Open in your browser `<sidekiq-path>/statistic` page.
 
 ### Not rails application
-First step: read [sidekiq documentation](https://github.com/mperham/sidekiq/wiki/Monitoring#standalone).
-
-Second step: add `require 'sidekiq-statistic'` to you `config.ru`. For example:
+Read [sidekiq documentation](https://github.com/mperham/sidekiq/wiki/Monitoring#standalone).
+After that add `require 'sidekiq-statistic'` to you `config.ru`. For example:
 ``` ruby
 # config.ru
 require 'sidekiq/web'
