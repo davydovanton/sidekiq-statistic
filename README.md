@@ -28,7 +28,7 @@ And then execute:
     $ bundle
 
 ## Usage
-Open in your browser `<sidekiq-path>/statistic` page.
+Open Statistic tab on your sidekiq page.
 
 ### Not rails application
 Read [sidekiq documentation](https://github.com/mperham/sidekiq/wiki/Monitoring#standalone).
