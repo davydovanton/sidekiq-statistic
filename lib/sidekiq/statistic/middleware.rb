@@ -29,7 +29,7 @@ module Sidekiq
         status = worker_status.dup
         time = worker_status[:last_runtime]
         realtime_hash = "#{REDIS_HASH}:realtime:#{time.sec}"
-        worker_key = "#{time.to_date}:#{status.delete :class}"
+        worker_key = "#{time.strftime "%Y-%m-%d"}:#{status.delete :class}"
 
         Sidekiq.redis do |redis|
           redis.pipelined do
