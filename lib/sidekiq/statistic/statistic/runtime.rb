@@ -44,6 +44,7 @@ module Sidekiq
 
       def values(key)
         @values ||= @redis_statistic.statistic_for(@worker)
+        @values = @values.is_a?(Array) ? @values : [@values]
         @values.map{ |s| s[key] }.compact
       end
     end

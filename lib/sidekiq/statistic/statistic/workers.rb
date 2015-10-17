@@ -34,9 +34,9 @@ module Sidekiq
       end
 
       def runtime_for_day(worker_name, worker_data)
-        runtime_statistic(worker_name, worker_data[:runtime])
+        runtime_statistic(worker_name, worker_data)
           .values_hash
-          .merge!(last: worker_data[:last_runtime])
+          .merge!(last: worker_data[:last_time])
       end
 
       def number_of_calls(worker)
