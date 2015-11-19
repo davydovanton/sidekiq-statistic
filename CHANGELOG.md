@@ -1,5 +1,12 @@
 ## HEAD
 
+## v1.2
+* 15.11.2015: Update gemspec to allow usage with sidekiq 4 (#83) *Felix Bünemann*
+* 21.10.2015: Fix charts initialize and Uncaught TypeError (#70, #79) *Anton Davydov*
+* 17.10.2015: Fix worker's per day stats (#78) *Alexander Yunin*
+* 28.09.2015: Use strftime to ensure date string format (#77) *@stan*
+* 02.09.2015: Sort worker names in GUI (#69) *Anton Davydov*
+
 ## v1.1
 * 29.08.2015: Create custom tooltip for charts on index page (fix #63) *Anton Davydov*
 * 26.08.2015: Add queue to workers table in index page *Anton Davydov*
