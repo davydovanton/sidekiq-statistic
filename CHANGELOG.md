@@ -1,4 +1,5 @@
 ## HEAD
+* 20.11.2015: Add Ukrainian Localization (#85) *@POStroi*
 
 ## v1.2
 * 15.11.2015: Update gemspec to allow usage with sidekiq 4 (#83) *Felix Bünemann*
