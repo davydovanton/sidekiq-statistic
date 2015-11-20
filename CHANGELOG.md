@@ -1,4 +1,5 @@
 ## HEAD
+* 20.11.2015: Convert value in redis time array to float (#76) *Anton Davydov*
 * 20.11.2015: Add Ukrainian Localization (#85) *@POStroi*
 
 ## v1.2
