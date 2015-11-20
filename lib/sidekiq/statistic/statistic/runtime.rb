@@ -18,11 +18,11 @@ module Sidekiq
       end
 
       def max_runtime
-        values(:max_time).max || 0.0
+        values(:max_time).map(&:to_f).max || 0.0
       end
 
       def min_runtime
-        values(:min_time).min || 0.0
+        values(:min_time).map(&:to_f).min || 0.0
       end
 
       def last_runtime
@@ -30,7 +30,7 @@ module Sidekiq
       end
 
       def total_runtime
-        values(:total_time).inject(:+) || 0.0
+        values(:total_time).map(&:to_f).inject(:+) || 0.0
       end
 
       def average_runtime
