@@ -41,7 +41,7 @@ module Sidekiq
       end
 
       def desired_dates
-        (@end_date..@start_date).map { |date| date.strftime "%Y-%m-%d" }
+        (@end_date..@start_date).map { |date| date.strftime "%Y-%m-%d".freeze }
       end
 
       def result_hash(redis_hash, key)
