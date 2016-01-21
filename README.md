@@ -126,7 +126,7 @@ $ curl http://example.com/sidekiq/api/statistic/Worker.json?dateFrom=2015-07-30&
 ## Update statistic inside middleware
 You can update your worker statistic inside middleware. For this you should to update `sidekiq:statistic` redis hash.
 This hash has the following structure:
-* `sideki:statistic` - redis hash with all statistic
+* `sidekiq:statistic` - redis hash with all statistic
   - `yyyy-mm-dd:WorkerName:passed` - count of passed jobs for Worker name on yyyy-mm-dd
   - `yyyy-mm-dd:WorkerName:failed` - count of failed jobs for Worker name on yyyy-mm-dd
   - `yyyy-mm-dd:WorkerName:failed` - count of failed jobs for Worker name on yyyy-mm-dd
