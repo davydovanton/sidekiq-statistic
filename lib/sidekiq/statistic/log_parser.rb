@@ -3,7 +3,6 @@ module Sidekiq
     # Heroku have read only file system. See more in this link:
     # https://devcenter.heroku.com/articles/read-only-filesystem
     class LogParser
-      FILE_LINES_COUNT = 1_000
       def initialize(worker_name)
         @worker_name = worker_name
         @logfile = log_file
@@ -14,7 +13,7 @@ module Sidekiq
 
         File
           .readlines(@logfile)
-          .first(FILE_LINES_COUNT)
+          .last(log_file_lines_count)
           .map{ |line| sub_line(line) if line[/\W?#@worker_name\W?/] }
           .compact
       end
@@ -51,6 +50,10 @@ module Sidekiq
         Sidekiq.options[:logfile] ||
           Sidekiq.logger.instance_variable_get(:@logdev).filename ||
           Sidekiq::Statistic.configuration.log_file
+      end
+
+      def log_file_lines_count
+        Sidekiq::Statistic.configuration.log_file_lines_count
       end
     end
   end

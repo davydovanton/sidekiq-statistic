@@ -20,6 +20,13 @@ module Sidekiq
 
             assert_equal result, log_parser.parse
           end
+
+          it 'returns array with last <log_file_lines_count> lines' do
+            Sidekiq::Statistic.configuration.log_file_lines_count = 1
+
+            result = ["HistoryWorker (fail) <span class=\"statistic__jid js-jid__219f4e9b9013bfec76faa270\"data-target=\".js-jid__219f4e9b9013bfec76faa270\" style=\"background-color: rgba(116,63,167,0.2);\">JID-219f4e9b9013bfec76faa270</span>"]
+            assert_equal  result, log_parser.parse
+          end
         end
 
         describe 'when worker don\'t called' do
