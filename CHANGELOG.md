@@ -1,4 +1,5 @@
 ## HEAD
+* 08.04.2016: Add new option fir displaying last N lines of log file (#91) *Nick Zhebrun*
 * 20.11.2015: Convert value in redis time array to float (#76) *Anton Davydov*
 * 20.11.2015: Add Ukrainian Localization (#85) *@POStroi*
 
