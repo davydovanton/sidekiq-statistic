@@ -14,7 +14,7 @@ module Sidekiq
 
         File
           .readlines(@logfile)
-          .first(FILE_LINES_COUNT)
+          .last(FILE_LINES_COUNT)
           .map{ |line| sub_line(line) if line[/\W?#@worker_name\W?/] }
           .compact
       end
