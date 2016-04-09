@@ -7,18 +7,18 @@ ru: # <---- change this to your locale code
   Statistic: Статистика
   Start: Начало
   End: Конец
-  Failed: Не выполненые
-  Passed: Выполненые
+  Failed: Не выполненные
+  Passed: Выполненные
   WorkersTable: Таблица воркеров
   Worker: Воркер
   Date: Дата
   Success: Успешно
   Failure: Неудачно
-  Total: Сумарно
+  Total: Суммарно
   TimeSec: Время(сек)
-  AverageSec: Среднее(сек)
-  MinTimeSec: Мин время(сек)
-  MaxTimeSec: Макс время(сек)
+  AverageSec: Среднее время(сек)
+  MinTimeSec: 'Мин. время(сек)'
+  MaxTimeSec: 'Макс. время(сек)'
   LastJobStatus: Статус последнего джоба
   WorkerInformation: 'Информация о %{worker}'
   InformationTable: Таблица с информацией
