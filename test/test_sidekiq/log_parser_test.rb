@@ -8,6 +8,7 @@ module Sidekiq
       before do
         Sidekiq::Statistic.configure do |config|
           config.log_file = 'test/helpers/logfile.log'
+          config.log_file_lines_count = 10_000
         end
       end
 
