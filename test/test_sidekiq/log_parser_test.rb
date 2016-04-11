@@ -8,7 +8,7 @@ module Sidekiq
       before do
         Sidekiq::Statistic.configure do |config|
           config.log_file = 'test/helpers/logfile.log'
-          config.log_file_lines_count = 10_000
+          config.last_log_lines = 1_000
         end
       end
 
@@ -22,11 +22,13 @@ module Sidekiq
             assert_equal result, log_parser.parse
           end
 
-          it 'returns array with last <log_file_lines_count> lines' do
-            Sidekiq::Statistic.configuration.log_file_lines_count = 1
+          describe 'when last_log_lines option set to 1' do
+            it 'returns array with one line' do
+              Sidekiq::Statistic.configuration.last_log_lines = 1
 
-            result = ["HistoryWorker (fail) <span class=\"statistic__jid js-jid__219f4e9b9013bfec76faa270\"data-target=\".js-jid__219f4e9b9013bfec76faa270\" style=\"background-color: rgba(116,63,167,0.2);\">JID-219f4e9b9013bfec76faa270</span>"]
-            assert_equal  result, log_parser.parse
+              result = ["HistoryWorker (fail) <span class=\"statistic__jid js-jid__219f4e9b9013bfec76faa270\"data-target=\".js-jid__219f4e9b9013bfec76faa270\" style=\"background-color: rgba(116,63,167,0.2);\">JID-219f4e9b9013bfec76faa270</span>"]
+              assert_equal  result, log_parser.parse
+            end
           end
         end
 
