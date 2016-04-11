@@ -44,11 +44,14 @@ run Sidekiq::Web
 ```
 
 ## Configuration
-Sidekiq statistic gem have `log_file` option. This option lets you specify a custom path to sidekiq log file. By default this option equal `log/sidekiq.log`
+Sidekiq statistic gem have `log_file` and `last_log_lines` options.
+`log_file` option lets you specify a custom path to sidekiq log file. By default this option equal `log/sidekiq.log`
+`last_log lines` option lets you specify a custom count of last logger file lines which will be displayed. By default this option equal 1000.
 
 ``` ruby
 Sidekiq::Statistic.configure do |config|
   config.log_file = 'test/helpers/logfile.log'
+  config.last_log_lines = 10_000
 end
 ```
 

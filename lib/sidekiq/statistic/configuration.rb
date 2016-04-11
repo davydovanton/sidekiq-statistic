@@ -1,11 +1,11 @@
 module Sidekiq
   module Statistic
     class Configuration
-      attr_accessor :log_file, :log_file_lines_count
+      attr_accessor :log_file, :last_log_lines
 
       def initialize
         @log_file = 'log/sidekiq.log'
-        @log_file_lines_count = 1000
+        @last_log_lines = 1_000
       end
     end
   end

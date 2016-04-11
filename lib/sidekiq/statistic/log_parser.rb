@@ -13,7 +13,7 @@ module Sidekiq
 
         File
           .readlines(@logfile)
-          .last(log_file_lines_count)
+          .last(last_log_lines)
           .map{ |line| sub_line(line) if line[/\W?#@worker_name\W?/] }
           .compact
       end
@@ -52,8 +52,8 @@ module Sidekiq
           Sidekiq::Statistic.configuration.log_file
       end
 
-      def log_file_lines_count
-        Sidekiq::Statistic.configuration.log_file_lines_count
+      def last_log_lines
+        Sidekiq::Statistic.configuration.last_log_lines
       end
     end
   end
