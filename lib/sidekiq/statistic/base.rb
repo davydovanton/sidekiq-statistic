@@ -56,8 +56,8 @@ module Sidekiq
 
       def to_number(value)
         case value
-        when /\A[\d.]+\z/ then value.to_f
-        when /\A\d+\z/ then value.to_i
+        when /\A-?\d+\.\d+\z/ then value.to_f
+        when /\A-?\d+\z/ then value.to_i
         else value
         end
       end
