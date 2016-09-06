@@ -140,7 +140,10 @@ This hash has the following structure:
 For time information you should push the runtime value to `yyyy-mm-dd:WorkerName:timeslist` redis list.
 
 ## How it works
-![how-it-works](https://cloud.githubusercontent.com/assets/1147484/8802272/fc0a1302-2fc8-11e5-86a5-817409259338.png)
+<details>
+ <summary>Big image 'how it works'</summary>
+ ![how-it-works](https://cloud.githubusercontent.com/assets/1147484/8802272/fc0a1302-2fc8-11e5-86a5-817409259338.png)
+</details>
 
 ## Contributing
 1. Fork it ( https://github.com/davydovanton/sidekiq-statistic/fork )
