@@ -51,6 +51,17 @@ module Sidekiq
           assert_equal 0.2, values.round(1)
         end
 
+        it 'returns precise average runtime HistoryWorker' do
+          middlewared { sleep 0.2423 }
+          middlewared { sleep 0.1513 }
+          middlewared { sleep 0.3125 }
+          middlewared { sleep 0.34587 }
+          middlewared { sleep 1.12908 }
+
+          values = runtime_statistic.average_runtime
+          assert_equal 0.43621, values
+        end
+
         describe 'when jobs were not call' do
           it 'returns array with empty values' do
             values = runtime_statistic.average_runtime
