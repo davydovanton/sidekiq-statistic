@@ -34,7 +34,7 @@ module Sidekiq
       end
 
       def average_runtime
-        averages = values(:average_time)
+        averages = values(:average_time).map(&:to_f)
         count = averages.count
         return 0.0 if count == 0
         averages.inject(:+) / count
