@@ -59,7 +59,7 @@ module Sidekiq
           middlewared { sleep 1.12908 }
 
           values = runtime_statistic.average_runtime
-          assert_equal 0.4362, values.round(4)
+          assert_equal 0.44, values.round(2)
         end
 
         describe 'when jobs were not call' do
