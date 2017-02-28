@@ -71,10 +71,9 @@ module Sidekiq
 
         describe 'when values are strings' do
           it 'should return with precise value' do
-            test_values = { average_time: '0.2423', average_time: '0.1513', average_time: '0.3125', average_time: '0.34587', average_time: '1.12908' }
-            string_test = Sidekiq::Statistic::Runtime.new(statistic, 'JobWorker', test_values)
-            values = string_test.average_runtime
-            assert_equal 0.4362, values.round(4)
+            job_worker = Sidekiq::Statistic::Runtime.new(statistic, 'JobWorker', { average_time: '1.12908' })
+            values = job_worker.average_runtime
+            assert_equal 1.1291, values.round(4)
           end
         end
       end
