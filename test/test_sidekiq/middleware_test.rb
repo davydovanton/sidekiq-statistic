@@ -1,4 +1,5 @@
 require 'minitest_helper'
+require 'mocha/setup'
 
 module Sidekiq
   module Statistic
@@ -70,6 +71,16 @@ module Sidekiq
         workers.each(&:join)
 
         assert_equal 500, actual['HistoryWorker'][:passed]
+      end
+
+      it 'removes 1/4 the timelist entries after crossing max_timelist_length' do
+        workers = []
+        Sidekiq::Statistic.configuration.max_timelist_length = 10
+        11.times do
+          middlewared {}
+        end
+
+        assert_equal 8, Sidekiq.redis { |conn| conn.llen("#{Time.now.strftime "%Y-%m-%d"}:HistoryWorker:timeslist") }
       end
 
       it 'supports ActiveJob workers' do

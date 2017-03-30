@@ -30,6 +30,9 @@ module Sidekiq
         time = worker_status[:last_runtime]
         realtime_hash = "#{REDIS_HASH}:realtime:#{time.sec}"
         worker_key = "#{time.strftime "%Y-%m-%d"}:#{status.delete :class}"
+        timeslist_key = "#{worker_key}:timeslist"
+        times_list_length = nil
+        max_timelist_length = Sidekiq::Statistic.configuration.max_timelist_length
 
         Sidekiq.redis do |redis|
           redis.pipelined do
@@ -37,10 +40,15 @@ module Sidekiq
             redis.hmset REDIS_HASH, "#{worker_key}:last_job_status", status[:last_job_status],
                                     "#{worker_key}:last_time", status[:last_runtime],
                                     "#{worker_key}:queue", status[:queue]
-            redis.lpush "#{worker_key}:timeslist", status[:time]
+            times_list_length = redis.lpush timeslist_key, status[:time]
 
             redis.hincrby realtime_hash, "#{status[:last_job_status]}:#{worker_status[:class]}", 1
             redis.expire realtime_hash, 2
+          end
+
+          # Drop the oldest 25% of timing values if required to prevent Redis memory issues
+          if times_list_length.value > max_timelist_length
+            redis.ltrim(timeslist_key, 0, (max_timelist_length * 0.75).to_i)
           end
         end
       end
