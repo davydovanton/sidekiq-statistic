@@ -17,6 +17,14 @@ module Sidekiq
           assert_equal 'test/sidekiq.log', config.log_file
         end
       end
+
+      describe '#max_timelist_length=' do
+        it 'can set value' do
+          config = Configuration.new
+          config.max_timelist_length = 12345
+          assert_equal 12345, config.max_timelist_length
+        end
+      end
     end
   end
 end
