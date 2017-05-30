@@ -7,7 +7,7 @@ module Sidekiq
         app.helpers WebExtensionHelper
 
         app.before '/api/*' do
-          content_type :json
+          type = :json
         end
 
         app.get '/api/statistic.json' do
