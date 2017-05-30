@@ -52,6 +52,7 @@ Sidekiq statistic gem have `log_file` and `last_log_lines` options.
 Sidekiq::Statistic.configuration do |config|
   config.log_file = 'test/helpers/logfile.log'
   config.last_log_lines = 10_000
+  config.max_timelist_length = 500_000
 end
 ```
 
