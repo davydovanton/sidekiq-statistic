@@ -20,7 +20,7 @@ module Sidekiq
 
         describe 'when jobs were not call' do
           it 'returns nil' do
-            assert_equal nil, runtime_statistic.last_runtime
+            assert_nil runtime_statistic.last_runtime
           end
         end
       end

@@ -30,7 +30,7 @@ module Sidekiq
         middlewared {}
 
         assert_equal 1, actual['HistoryWorker'][:passed]
-        assert_equal nil, actual['HistoryWorker'][:failed]
+        assert_nil actual['HistoryWorker'][:failed]
       end
 
       it 'records statistic for failed worker' do
@@ -41,7 +41,7 @@ module Sidekiq
         rescue
         end
 
-        assert_equal nil, actual['HistoryWorker'][:passed]
+        assert_nil actual['HistoryWorker'][:passed]
         assert_equal 1, actual['HistoryWorker'][:failed]
       end
 
@@ -93,7 +93,7 @@ module Sidekiq
 
         assert_equal actual.keys, ['RealWorkerClassName']
         assert_equal 1, actual['RealWorkerClassName'][:passed]
-        assert_equal nil, actual['RealWorkerClassName'][:failed]
+        assert_nil actual['RealWorkerClassName'][:failed]
       end
 
       it 'supports mailers called from AJ' do
@@ -112,7 +112,7 @@ module Sidekiq
 
         assert_equal actual.keys, ['WrappedMailer']
         assert_equal 1, actual['WrappedMailer'][:passed]
-        assert_equal nil, actual['WrappedMailer'][:failed]
+        assert_nil actual['WrappedMailer'][:failed]
       end
 
       it 'records statistic for more than one worker' do
@@ -120,9 +120,9 @@ module Sidekiq
         middlewared(OtherHistoryWorker){}
 
         assert_equal 1, actual['HistoryWorker'][:passed]
-        assert_equal nil, actual['HistoryWorker'][:failed]
+        assert_nil actual['HistoryWorker'][:failed]
         assert_equal 1, actual['OtherHistoryWorker'][:passed]
-        assert_equal nil, actual['OtherHistoryWorker'][:failed]
+        assert_nil actual['OtherHistoryWorker'][:failed]
       end
 
       it 'records queue statistic for each worker' do
