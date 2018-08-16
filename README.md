@@ -143,7 +143,9 @@ For time information you should push the runtime value to `yyyy-mm-dd:WorkerName
 ## How it works
 <details>
  <summary>Big image 'how it works'</summary>
+    
  ![how-it-works](https://cloud.githubusercontent.com/assets/1147484/8802272/fc0a1302-2fc8-11e5-86a5-817409259338.png)
+
 </details>
 
 ## Contributing
