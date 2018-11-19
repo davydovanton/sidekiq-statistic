@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 begin
   require 'sidekiq/web'
 rescue LoadError
@@ -20,7 +22,7 @@ require 'sidekiq/statistic/web_extension_helper'
 
 module Sidekiq
   module Statistic
-    REDIS_HASH = 'sidekiq:statistic'.freeze
+    REDIS_HASH = 'sidekiq:statistic'
 
     class << self
       attr_writer :configuration

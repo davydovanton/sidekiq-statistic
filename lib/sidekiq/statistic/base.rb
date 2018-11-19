@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Sidekiq
   module Statistic
     class Base
-      KEY_SEPARATOR = /(?<!:):(?!:)/.freeze
+      KEY_SEPARATOR = /(?<!:):(?!:)/
 
       def initialize(days_previous, start_date = nil)
         @start_date = start_date || Time.now.utc.to_date
@@ -41,7 +43,7 @@ module Sidekiq
       end
 
       def desired_dates
-        (@end_date..@start_date).map { |date| date.strftime "%Y-%m-%d".freeze }
+        (@end_date..@start_date).map { |date| date.strftime "%Y-%m-%d" }
       end
 
       def result_hash(redis_hash, key)
