@@ -1,25 +1,27 @@
+# frozen_string_literal: true
+
 module Sidekiq
   module Statistic
     class Middleware
       attr_accessor :msg
 
       def call(worker, msg, queue)
-        worker_status = { last_job_status: 'passed'.freeze }
+        worker_status = { last_job_status: 'passed' }
         start = Time.now
 
         yield
       rescue => e
-        worker_status[:last_job_status] = 'failed'.freeze
+        worker_status[:last_job_status] = 'failed'
 
         raise e
       ensure
         finish = Time.now
-        worker_status[:queue] = msg['queue'.freeze]
+        worker_status[:queue] = msg['queue']
         worker_status[:last_runtime] = finish.utc
         worker_status[:time] = (finish - start).to_f.round(3)
-        worker_status[:class] = msg['wrapped'.freeze] || worker.class.to_s
-        if worker_status[:class] == 'ActionMailer::DeliveryJob'.freeze
-          worker_status[:class] = msg['args'.freeze].first['arguments'.freeze].first
+        worker_status[:class] = msg['wrapped'] || worker.class.to_s
+        if worker_status[:class] == 'ActionMailer::DeliveryJob'
+          worker_status[:class] = msg['args'].first['arguments'].first
         end
 
         save_entry_for_worker worker_status

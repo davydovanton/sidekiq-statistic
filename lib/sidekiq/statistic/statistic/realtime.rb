@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sidekiq
   module Statistic
     class Realtime < Base
@@ -5,7 +7,7 @@ module Sidekiq
 
       def self.charts_initializer
         workers = new.worker_names.map{ |w| Array.new(12, 0).unshift(w) }
-        workers << Array.new(12) { |i| (Time.now - i).strftime('%T'.freeze) }.unshift('x'.freeze)
+        workers << Array.new(12) { |i| (Time.now - i).strftime('%T') }.unshift('x')
         workers
       end
 
@@ -30,8 +32,8 @@ module Sidekiq
 
       def statistic(params = {})
         {
-          failed: { columns: columns_for('failed'.freeze, params) },
-          passed: { columns: columns_for('passed'.freeze, params) }
+          failed: { columns: columns_for('failed', params) },
+          passed: { columns: columns_for('passed', params) }
         }
       end
 
@@ -50,7 +52,7 @@ module Sidekiq
       end
 
       def axis_array
-        @array ||= ['x', Time.now.strftime('%T'.freeze)]
+        @array ||= ['x', Time.now.strftime('%T')]
       end
     end
   end

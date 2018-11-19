@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'minitest_helper'
 
 class TestSidekiq::Statistic < Minitest::Test
