@@ -11,7 +11,7 @@ module Sidekiq
       end
 
       def parse
-        return [] unless File.exists?(@logfile)
+        return [] unless File.exist?(@logfile)
 
         File
           .readlines(@logfile)
