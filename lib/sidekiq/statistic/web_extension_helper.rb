@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require 'json'
 
 module Sidekiq
@@ -7,8 +6,8 @@ module Sidekiq
     module WebExtensionHelper
       DAFAULT_DAYS = 20
 
-      def formate_date(string, format = nil)
-        time = string ? Time.parse(string) : Time.now
+      def format_date(date_to_format, format = nil)
+        time = date_to_format ? convert_to_date_object(date_to_format) : Time.now
         time.strftime(format || '%T, %e %B %Y')
       end
 
@@ -22,6 +21,12 @@ module Sidekiq
           [DAFAULT_DAYS]
         end
       end
+
+      private
+
+      def convert_to_date_object(date)
+        date.is_a?(String) ? Time.parse(date) : Time.at(date)
+      end  
     end
   end
 end
