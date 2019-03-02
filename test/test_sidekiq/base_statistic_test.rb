@@ -57,7 +57,7 @@ module Sidekiq
 
           Time.stub :now, time do
             values = base_statistic.statistic_for('HistoryWorker')
-            assert_equal [{}, { passed: 1.0, last_job_status: "passed", last_time: time.to_s, queue: "", average_time: 0.0, min_time: 0.0, max_time: 0.0, total_time: 0.0, failed: 0 }], values
+            assert_equal [{}, { passed: 1.0, last_job_status: "passed", last_time: time.to_i, queue: "", average_time: 0.0, min_time: 0.0, max_time: 0.0, total_time: 0.0, failed: 0 }], values
           end
         end
 

@@ -16,7 +16,7 @@ module Sidekiq
 
           time = Time.now.utc
           Time.stub :now, time do
-            assert_equal time.to_s, runtime_statistic.last_runtime
+            assert_equal time.to_i, runtime_statistic.last_runtime
           end
         end
 

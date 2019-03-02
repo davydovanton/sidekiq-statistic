@@ -1,4 +1,5 @@
 ## HEAD
+* 03.02.02019: Change storing of last_runtime from date to timestamp (#87) *Kirill Tatchihin*
 * 30.03.2017: Prevent excessive Redis memory usage (#107) *Gareth du Plooy*
 * 08.04.2016: Add new option for displaying last N lines of log file (#91) *Nick Zhebrun*
 * 20.11.2015: Convert value in redis time array to float (#76) *Anton Davydov*

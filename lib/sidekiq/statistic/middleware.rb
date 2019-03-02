@@ -17,7 +17,7 @@ module Sidekiq
       ensure
         finish = Time.now
         worker_status[:queue] = msg['queue']
-        worker_status[:last_runtime] = finish.utc
+        worker_status[:last_runtime] = finish.utc.to_i
         worker_status[:time] = (finish - start).to_f.round(3)
         worker_status[:class] = msg['wrapped'] || worker.class.to_s
         if worker_status[:class] == 'ActionMailer::DeliveryJob'
@@ -29,7 +29,7 @@ module Sidekiq
 
       def save_entry_for_worker(worker_status)
         status = worker_status.dup
-        time = worker_status[:last_runtime]
+        time = Time.at(worker_status[:last_runtime]).utc
         realtime_hash = "#{REDIS_HASH}:realtime:#{time.sec}"
         worker_key = "#{time.strftime "%Y-%m-%d"}:#{status.delete :class}"
         timeslist_key = "#{worker_key}:timeslist"
