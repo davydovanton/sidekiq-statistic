@@ -39,7 +39,6 @@ require 'sidekiq/web'
 require 'sidekiq-statistic'
 
 use Rack::Session::Cookie, secret: 'some unique secret string here'
-Sidekiq::Web.instance_eval { @middleware.reverse! } # Last added, First Run
 run Sidekiq::Web
 ```
 
