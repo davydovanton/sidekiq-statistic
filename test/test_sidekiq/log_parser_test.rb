@@ -32,6 +32,15 @@ module Sidekiq
               assert_equal  result, log_parser.parse
             end
           end
+
+          describe 'when called with param AnotherHistoryWorker' do
+            let(:log_parser) { Sidekiq::Statistic::LogParser.new('AnotherHistoryWorker') }
+          
+            it 'returns lines only with AnotherHistoryWorker inside' do
+              result = ["AnotherHistoryWorker (fail) <span class=\"statistic__jid js-jid__79d0a83b5eb21f7d0ae49f99\"data-target=\".js-jid__79d0a83b5eb21f7d0ae49f99\" style=\"background-color: rgba(192,160,192,0.2);\">JID-79d0a83b5eb21f7d0ae49f99</span>"]
+              assert_equal result, log_parser.parse
+            end
+          end
         end
 
         describe 'when worker don\'t called' do

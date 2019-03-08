@@ -5,9 +5,13 @@ module Sidekiq
     # Heroku have read only file system. See more in this link:
     # https://devcenter.heroku.com/articles/read-only-filesystem
     class LogParser
+      WORKER_INFO_REGEXP_TEMPLATE = "([\\W]+|^)%{worker_name}([\\W]+|$)"
+
       def initialize(worker_name)
         @worker_name = worker_name
         @logfile = log_file
+        @worker_info_regexp = Regexp.compile(WORKER_INFO_REGEXP_TEMPLATE % { worker_name: @worker_name })
+        @jid_tag_regexp =  Regexp.compile('(JID-[\\w]+)')
       end
 
       def parse
@@ -16,14 +20,14 @@ module Sidekiq
         File
           .readlines(@logfile)
           .last(last_log_lines)
-          .map{ |line| sub_line(line) unless line.match(log_line_contains_worker_regexp).nil? }
+          .map{ |line| sub_line(line) if line.match(worker_info_regexp) }
           .compact
       end
 
       def sub_line(line)
         line
           .sub(/\n/, '')
-          .sub(/(JID-[\w]+)/) { jid_tag($1) }
+          .sub(jid_tag_regexp) { jid_tag($1) }
       end
 
       def jid_tag(jid)
@@ -48,6 +52,9 @@ module Sidekiq
       end
 
     private
+
+      attr_reader :worker_info_regexp, :jid_tag_regexp
+
       def log_file
         Sidekiq.options[:logfile] ||
           Sidekiq.logger.instance_variable_get(:@logdev).filename ||
@@ -56,10 +63,6 @@ module Sidekiq
 
       def last_log_lines
         Sidekiq::Statistic.configuration.last_log_lines
-      end
-
-      def log_line_contains_worker_regexp
-        /([\W]+|^)#{@worker_name}([\W]+|$)/
       end
     end
   end
