@@ -16,7 +16,7 @@ module Sidekiq
         File
           .readlines(@logfile)
           .last(last_log_lines)
-          .map{ |line| sub_line(line) if line[/\W?#@worker_name\W?/] }
+          .map{ |line| sub_line(line) unless line.match(log_line_contains_worker_regexp).nil? }
           .compact
       end
 
@@ -56,6 +56,10 @@ module Sidekiq
 
       def last_log_lines
         Sidekiq::Statistic.configuration.last_log_lines
+      end
+
+      def log_line_contains_worker_regexp
+        /([\W]+|^)#{@worker_name}([\W]+|$)/
       end
     end
   end

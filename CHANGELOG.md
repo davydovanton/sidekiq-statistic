@@ -1,4 +1,5 @@
 ## HEAD
+* 08.03.2019: Change LogParser regexp (#81) *Kirill Tatchihin*
 * 03.02.02019: Change storing of last_runtime from date to timestamp (#87) *Kirill Tatchihin*
 * 30.03.2017: Prevent excessive Redis memory usage (#107) *Gareth du Plooy*
 * 08.04.2016: Add new option for displaying last N lines of log file (#91) *Nick Zhebrun*
