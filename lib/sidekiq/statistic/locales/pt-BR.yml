@@ -9,7 +9,7 @@ pt-BR: # <---- change this to your locale code
   End: Fim
   Failed: Falhou
   Passed: Passou
-  WorkersTable: Tabela de trabalhadores
+  WorkersTable: Tabela de Workers
   Worker: Trabalhador
   Date: Data
   Success: Successo
@@ -22,6 +22,6 @@ pt-BR: # <---- change this to your locale code
   LastJobStatus: Status do último trabalho
   WorkerInformation: 'Informações do %{worker}'
   InformationTable: Tabela de informação
-  WorkerLog: Log do trabalhador
-  WorkerTablePerDay: Tabela do trabalhador (por dia)
+  WorkerLog: Log do Worker
+  WorkerTablePerDay: Tabela do Worker (por dia)
   LastRun: Última execução
