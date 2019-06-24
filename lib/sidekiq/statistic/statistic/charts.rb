@@ -9,8 +9,7 @@ module Sidekiq
           {
             label: worker,
             backgroundColor: "rgba(#{color},0.2)",
-            borderColor: "rgba(#{color},0.2)",
-            strokeColor: "rgba(#{color},0.9)",
+            borderColor: "rgba(#{color},0.9)",
             pointColor: "rgba(#{color},0.2)",
             pointStrokeColor: '#fff',
             pointHighlightFill: '#fff',
