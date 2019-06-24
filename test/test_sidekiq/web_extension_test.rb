@@ -70,7 +70,6 @@ module Sidekiq
         last_response.status.must_equal 200
         response = JSON.parse(last_response.body)
 
-        response['tooltip_template'].must_equal '<%= datasetLabel %> - <%= value %>'
         response['labels'].wont_be_empty
       end
 
