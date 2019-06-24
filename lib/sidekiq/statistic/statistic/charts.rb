@@ -8,7 +8,8 @@ module Sidekiq
           color = color_for(worker)
           {
             label: worker,
-            fillColor: "rgba(#{color},0.2)",
+            backgroundColor: "rgba(#{color},0.2)",
+            borderColor: "rgba(#{color},0.2)",
             strokeColor: "rgba(#{color},0.9)",
             pointColor: "rgba(#{color},0.2)",
             pointStrokeColor: '#fff',
