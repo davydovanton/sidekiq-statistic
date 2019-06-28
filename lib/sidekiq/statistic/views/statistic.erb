@@ -42,7 +42,7 @@
           <th><%= t('MaxTimeSec') %></th>
           <th><%= t('LastJobStatus') %></th>
         </thead>
-        <% @workers.each do |worker| %>
+        <% @all_workers.each do |worker| %>
           <tr>
             <td class="worker"><a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a></td>
             <td class="worker"><%= format_date worker[:runtime][:last] %></td>

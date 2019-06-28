@@ -28,7 +28,7 @@ module Sidekiq
 
         app.get '/statistic' do
           statistic = Sidekiq::Statistic::Workers.new(*calculate_date_range(params))
-          @workers = statistic.display
+          @all_workers = statistic.display
           render(:erb, File.read(File.join(view_path, 'statistic.erb')))
         end
 
