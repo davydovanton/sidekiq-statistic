@@ -20,14 +20,19 @@
       <div class="realtime__passed-chart"></div>
     </div>
 
-    <table class="workers-table table table-hover">
+    <h2><%= t('Workers') %></h2>
+    <table class="workers__table table table-hover table-bordered table-striped table-white">
       <thead>
-        <th><%= t('Exclude') %></th>
-        <th><%= t('Worker') %></th>
+        <tr>
+          <th><%= t('Exclude') %></th>
+          <th><%= t('Worker') %></th>
+        </tr>
       </thead>
       <% @workers.each do |worker| %>
         <tr>
-          <td class="worker"><input class="worker__checkbox" type="checkbox" name="<%= worker %>" value="<%= worker %>"></td>
+          <td class="worker">
+            <input class="worker__checkbox" type="checkbox" name="<%= worker %>" value="<%= worker %>">
+          </td>
           <td class="worker"><a href="<%= root_path %>statistic/<%= worker %>"><%= worker %></a></td>
         </tr>
       <% end %>
