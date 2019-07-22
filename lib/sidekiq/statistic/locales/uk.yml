@@ -25,3 +25,5 @@ uk: # <---- change this to your locale code
   WorkerLog: Журнал обробника
   WorkerTablePerDay: Таблиця обробника (по днях)
   LastRun: Останній запуск
+  EmptyLogs: немає результатів
+  SearchLogs: Пошук у файлі журналу
