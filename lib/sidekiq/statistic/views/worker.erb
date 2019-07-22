@@ -15,7 +15,7 @@
   <div class="statistic__container live-reload">
     <div class="statistic__table">
       <div class='statistic__datepicker'>
-      <%= t('InformationTable') %>: <input id='datepicker_from' />
+      <%= t('Start') %>: <input id='datepicker_from' />
       <%= t('End') %>: <input id='datepicker_to' />
       </div>
 
@@ -53,9 +53,17 @@
     </div>
 
     <div class="statistic__log">
-      <input type='text' name='' id='statistic__search' value='' placeholder='Search text in log file'/>
-      <% @worker_log.each do |line| %>
-        <p class="statistic__i"><%= line %></p>
+      <input type="text" id="statistic__search" placeholder="<%= t('SearchLogs') %>" />
+
+      <% if @worker_log.empty? %>
+        <%= t('EmptyLogs') %>
+        <p>
+          <small><%= Sidekiq::Statistic.configuration.log_file %></small>
+        </p>
+      <% else %>
+        <% @worker_log.each do |line| %>
+          <p class="statistic__i"><%= line %></p>
+        <% end %>
       <% end %>
     </div>
   </div>

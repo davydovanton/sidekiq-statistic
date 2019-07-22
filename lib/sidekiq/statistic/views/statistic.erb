@@ -23,7 +23,6 @@
       <canvas id="js-failed-chart" width="800" height="200"></canvas>
       <h2><%= t('Passed') %></h2>
       <canvas id="js-passed-chart" width="800" height="200"></canvas>
-      <div id="chartjs-tooltip"></div>
     </div>
 
     <h2><%= t('WorkersTable') %></h2>
@@ -44,7 +43,9 @@
         </thead>
         <% @all_workers.each do |worker| %>
           <tr>
-            <td class="worker"><a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a></td>
+            <td class="worker">
+              <a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a>
+            </td>
             <td class="worker"><%= format_date worker[:runtime][:last] %></td>
             <td class="worker"><%= worker[:queue] %></td>
             <td class="worker"><%= worker[:number_of_calls][:success] %></td>
