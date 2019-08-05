@@ -19,7 +19,7 @@ jp: # <---- change this to your locale code
   AverageSec: 平均時間(秒)
   MinTimeSec: 最小時間(秒)
   MaxTimeSec: 最長時間(秒)
-  LastJobStatus: 最後の仕事の状態
+  LastJobStatus: 最後の状態
   WorkerInformation: '%{worker}の情報'
   InformationTable: 情報表
   WorkerLog: ワーカーログ
@@ -27,4 +27,3 @@ jp: # <---- change this to your locale code
   LastRun: 最後の実行
   EmptyLogs: データがありません
   SearchLogs: ログファイルにて検索
-   
