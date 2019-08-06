@@ -27,3 +27,8 @@ pt-br: # <---- change this to your locale code
   LastRun: Última execução
   EmptyLogs: Nenhum resultado
   SearchLogs: Pesquisar no arquivo de logs
+  date:
+    formats:
+      withoutTime: "%d/%m/%Y"
+      withTime: "%d/%m/%Y - %T"
+
