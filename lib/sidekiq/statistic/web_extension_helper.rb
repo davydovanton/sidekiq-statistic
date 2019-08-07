@@ -25,7 +25,7 @@ module Sidekiq
       private
 
       def date_format(format)
-        get_locale.dig('date', 'formats', format) || '%m/%e/%Y - %T'
+        get_locale.dig('date', 'formats', format || 'default') || '%m/%d/%Y'
       end
 
       def convert_to_date_object(date)
