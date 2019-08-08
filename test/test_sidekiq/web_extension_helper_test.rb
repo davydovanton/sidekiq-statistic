@@ -16,19 +16,17 @@ module Sidekiq
     describe '.format_date' do
       let(:header) { { 'HTTP_ACCEPT_LANGUAGE' => 'pt-br' } }
       let(:datetime) { Time.now }
+      let(:helper) { Helper.new(header, {}) }
 
       describe "when doesn't have translation" do
+        before { header['HTTP_ACCEPT_LANGUAGE'] = 'xx-xx' }
+
         it 'return date with en format' do
-          header['HTTP_ACCEPT_LANGUAGE'] = 'xx-xx'
-
-          helper = Helper.new(header, {})
-
           assert_equal helper.format_date(datetime), datetime.strftime('%m/%d/%Y')
         end
       end
 
       describe 'when have translation' do
-        let(:helper) { Helper.new(header, {}) }
         it 'return date with default format' do
           default_format = helper.get_locale.dig('date', 'formats', 'default')
           assert_equal helper.format_date(datetime), datetime.strftime(default_format)
