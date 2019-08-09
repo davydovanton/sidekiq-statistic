@@ -46,7 +46,7 @@
             <td class="worker">
               <a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a>
             </td>
-            <td class="worker"><%= format_date worker[:runtime][:last] %></td>
+            <td class="worker"><%= format_date worker[:runtime][:last], 'datetime' %></td>
             <td class="worker"><%= worker[:queue] %></td>
             <td class="worker"><%= worker[:number_of_calls][:success] %></td>
             <td class="worker"><%= worker[:number_of_calls][:failure] %></td>

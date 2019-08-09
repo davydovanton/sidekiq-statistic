@@ -36,8 +36,8 @@
           </thead>
           <% @worker_statistic.each do |worker| %>
             <tr>
-              <td class="worker"><%= format_date worker[:date], '%e %B %Y' %></td>
-              <td class="worker"><%= format_date worker[:runtime][:last] %></td>
+              <td class="worker"><%= format_date worker[:date] %></td>
+              <td class="worker"><%= format_date worker[:runtime][:last], 'datetime' %></td>
               <td class="worker"><%= worker[:success] %></td>
               <td class="worker"><%= worker[:failure] %></td>
               <td class="worker"><%= worker[:total] %></td>
