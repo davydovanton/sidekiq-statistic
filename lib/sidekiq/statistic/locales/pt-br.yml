@@ -31,4 +31,3 @@ pt-br: # <---- change this to your locale code
     formats:
       default: "%d/%m/%Y"
       datetime: "%d/%m/%Y - %T"
-

@@ -3,7 +3,6 @@
 # encoding: utf-8
 
 require 'minitest_helper'
-require 'json'
 
 module Sidekiq
   class Helper < Sidekiq::WebAction
