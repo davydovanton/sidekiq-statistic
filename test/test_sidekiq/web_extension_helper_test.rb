@@ -37,5 +37,23 @@ module Sidekiq
         end
       end
     end
+
+    describe '.calculate_date_range' do
+      let(:helper) { Helper.new({}, {}) }
+
+      it 'return the range between dates' do
+        diference = 2
+        today = Date.new
+        two_days_ago = today - diference
+        params = { 'dateFrom' => two_days_ago.to_s,
+                   'dateTo' => today.to_s }
+
+        helper.calculate_date_range(params).must_equal([diference, today])
+      end
+
+      it 'return default range' do
+        helper.calculate_date_range({}).must_equal([20])
+      end
+    end
   end
 end
