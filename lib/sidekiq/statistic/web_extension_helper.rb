@@ -4,7 +4,7 @@ require 'json'
 module Sidekiq
   module Statistic
     module WebExtensionHelper
-      DAFAULT_DAYS = 20
+      DEFAULT_DAYS = 20
 
       def format_date(date_to_format, format = nil)
         time = date_to_format ? convert_to_date_object(date_to_format) : Time.now
@@ -18,7 +18,7 @@ module Sidekiq
 
           [(to - from).to_i, to]
         else
-          [DAFAULT_DAYS]
+          [DEFAULT_DAYS]
         end
       end
 
