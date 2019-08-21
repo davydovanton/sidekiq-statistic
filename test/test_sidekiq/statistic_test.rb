@@ -161,14 +161,35 @@ module Sidekiq
         end
       end
 
-      describe '#number_of_calls' do
-        it 'count total jobs' do
-          5.times { middlewared {} }
+      describe '#last_job_status_for' do
+        it 'failed last job ' do
+          middlewared {}
+          middlewared {}
+          begin
+            middlewared do
+              raise StandardError.new('failed')
+            end
+          rescue
+          end
 
-          count = statistic.number_of_calls(worker)
+          status = statistic.last_job_status_for(worker)
 
-          expected = { success: 5, failure: 0, total: 5 }
-          assert_equal expected, count
+          assert_equal 'failed', status
+        end
+
+        it 'passed last job ' do
+          middlewared {}
+          begin
+            middlewared do
+              raise StandardError.new('failed')
+            end
+          rescue
+          end
+          middlewared {}
+
+          status = statistic.last_job_status_for(worker)
+
+          assert_equal 'passed', status
         end
       end
     end
