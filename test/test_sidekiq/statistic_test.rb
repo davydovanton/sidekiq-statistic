@@ -160,6 +160,17 @@ module Sidekiq
           assert_equal 5, count
         end
       end
+
+      describe '#number_of_calls' do
+        it 'count total jobs' do
+          5.times { middlewared {} }
+
+          count = statistic.number_of_calls(worker)
+
+          expected = { success: 5, failure: 0, total: 5 }
+          assert_equal expected, count
+        end
+      end
     end
   end
 end
