@@ -116,6 +116,23 @@ module Sidekiq
           assert_equal subject[0][:date], Time.now.strftime("%Y-%m-%d")
         end
       end
+
+      describe '#runtime_for_day' do
+        it 'return runtime' do
+          middlewared {}
+
+          worker_statistic = base_statistic.statistic_for(worker)[1]
+          subject = statistic.runtime_for_day(worker, worker_statistic)
+
+          subject.must_be_instance_of Hash
+          assert_equal subject.keys.sort, %i[average last max min total].sort
+          assert_equal subject[:average], worker_statistic[:average_time]
+          assert_equal subject[:last], worker_statistic[:last_time]
+          assert_equal subject[:max], worker_statistic[:max_time]
+          assert_equal subject[:min], worker_statistic[:min_time]
+          assert_equal subject[:total], worker_statistic[:total_time]
+        end
+      end
     end
   end
 end
