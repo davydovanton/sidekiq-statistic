@@ -8,6 +8,8 @@ module Sidekiq
       before { Sidekiq.redis(&:flushdb) }
 
       let(:statistic) { Sidekiq::Statistic::Workers.new(1) }
+      let(:base_statistic) { Sidekiq::Statistic::Base.new(1) }
+      let(:worker) { 'HistoryWorker' }
 
       describe '#number_of_calls' do
         it 'returns success jobs count for worker' do
@@ -85,6 +87,20 @@ module Sidekiq
 
           count = statistic.number_of_calls('Nested::HistoryWorker')
           assert_equal 1, count[:total]
+        end
+      end
+
+      describe '#display' do
+        it 'return workers' do
+          middlewared {}
+
+          subject = statistic.display
+
+          subject.must_be_instance_of Array
+          assert_equal subject[0].keys.sort,
+                       %i[name last_job_status number_of_calls queue runtime].sort
+
+          assert_equal subject[0][:name], worker
         end
       end
     end
