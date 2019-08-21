@@ -100,7 +100,7 @@ module Sidekiq
           assert_equal subject[0].keys.sort,
                        %i[name last_job_status number_of_calls queue runtime].sort
 
-          assert_equal subject[0][:name], worker
+          assert_equal worker, subject[0][:name]
         end
       end
 
@@ -113,7 +113,7 @@ module Sidekiq
           subject.must_be_instance_of Array
           assert_equal subject[0].keys.sort,
                        %i[date failure last_job_status runtime success total].sort
-          assert_equal subject[0][:date], Time.now.strftime("%Y-%m-%d")
+          assert_equal Time.now.strftime("%Y-%m-%d"), subject[0][:date]
         end
       end
 
@@ -126,11 +126,38 @@ module Sidekiq
 
           subject.must_be_instance_of Hash
           assert_equal subject.keys.sort, %i[average last max min total].sort
-          assert_equal subject[:average], worker_statistic[:average_time]
-          assert_equal subject[:last], worker_statistic[:last_time]
-          assert_equal subject[:max], worker_statistic[:max_time]
-          assert_equal subject[:min], worker_statistic[:min_time]
-          assert_equal subject[:total], worker_statistic[:total_time]
+          assert_equal worker_statistic[:average_time], subject[:average]
+          assert_equal worker_statistic[:last_time], subject[:last]
+          assert_equal worker_statistic[:max_time], subject[:max]
+          assert_equal worker_statistic[:min_time], subject[:min]
+          assert_equal worker_statistic[:total_time], subject[:total]
+        end
+      end
+
+      describe '#number_of_calls_for' do
+        it 'count passed jobs' do
+          5.times { middlewared {} }
+
+          count = statistic.number_of_calls_for(:passed, worker)
+
+          assert_equal 5, count
+        end
+
+        it 'count failed jobs' do
+          5.times do
+            middlewared {}
+
+            begin
+              middlewared do
+                raise StandardError.new('failed')
+              end
+            rescue
+            end
+          end
+
+          count = statistic.number_of_calls_for(:failed, worker)
+
+          assert_equal 5, count
         end
       end
     end
