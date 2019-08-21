@@ -103,6 +103,19 @@ module Sidekiq
           assert_equal subject[0][:name], worker
         end
       end
+
+      describe '#display_per_day' do
+        it 'return workers job per day' do
+          middlewared {}
+
+          subject = statistic.display_per_day(worker)
+
+          subject.must_be_instance_of Array
+          assert_equal subject[0].keys.sort,
+                       %i[date failure last_job_status runtime success total].sort
+          assert_equal subject[0][:date], Time.now.strftime("%Y-%m-%d")
+        end
+      end
     end
   end
 end
