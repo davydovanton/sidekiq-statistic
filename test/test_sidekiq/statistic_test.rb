@@ -202,6 +202,24 @@ module Sidekiq
           assert_equal message['queue'], last_queue
         end
       end
+
+      describe '#runtime_statistic' do
+        it 'returns instance of Runtime' do
+          middlewared {}
+
+          runtime_statistic = statistic.runtime_statistic(worker)
+          assert_instance_of Sidekiq::Statistic::Runtime, runtime_statistic
+        end
+
+        it 'returns object with value passed' do
+          middlewared {}
+
+          time = 1.00268
+          runtime_statistic = statistic.runtime_statistic(worker, { average_time: time })
+
+          assert_equal runtime_statistic.average_runtime, time
+        end
+      end
     end
   end
 end
