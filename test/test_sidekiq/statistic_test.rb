@@ -162,7 +162,7 @@ module Sidekiq
       end
 
       describe '#last_job_status_for' do
-        it 'failed last job ' do
+        it 'failed last job' do
           middlewared {}
           middlewared {}
           begin
@@ -177,7 +177,7 @@ module Sidekiq
           assert_equal 'failed', status
         end
 
-        it 'passed last job ' do
+        it 'passed last job' do
           middlewared {}
           begin
             middlewared do
@@ -190,6 +190,16 @@ module Sidekiq
           status = statistic.last_job_status_for(worker)
 
           assert_equal 'passed', status
+        end
+      end
+
+      describe '#last_queue' do
+        it 'returns last queue' do
+          message = { 'queue' => 'queue_test' }
+          middlewared(HistoryWorker, message) {}
+
+          last_queue = statistic.last_queue(worker)
+          assert_equal message['queue'], last_queue
         end
       end
     end
