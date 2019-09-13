@@ -37,7 +37,7 @@ module Sidekiq
 
           json({
             tooltip_template: '<%= datasetLabel %> - <%= value %>',
-            labels: charts.dates,
+            date_labels: charts.dates,
             failed_datasets: charts.information_for(:failed),
             passed_datasets: charts.information_for(:passed)
           })

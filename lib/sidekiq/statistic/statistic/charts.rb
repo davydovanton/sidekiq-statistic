@@ -6,16 +6,9 @@ module Sidekiq
       def information_for(type)
         worker_names.reverse.map do |worker|
           color = color_for(worker)
-          {
-            label: worker,
-            backgroundColor: "rgba(#{color},0.2)",
-            borderColor: "rgba(#{color},0.9)",
-            pointColor: "rgba(#{color},0.2)",
-            pointStrokeColor: '#fff',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(220,220,220,1)',
-            data: statistic_for(worker).map{ |val| val.fetch(type, 0) }
-          }
+          data = [worker]
+          statistic_for(worker).each { |val| data << val.fetch(type, 0) }
+          data
         end
       end
 
