@@ -34,10 +34,13 @@ module Sidekiq
 
         app.get '/statistic/charts.json' do
           charts = Sidekiq::Statistic::Charts.new(*calculate_date_range(params))
+          date = {
+            format: date_format,
+            labels: charts.dates
+          }
 
           json({
-            tooltip_template: '<%= datasetLabel %> - <%= value %>',
-            date_labels: charts.dates,
+            date: date,
             failed_data: charts.information_for(:failed),
             passed_data: charts.information_for(:passed)
           })

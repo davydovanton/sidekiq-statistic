@@ -7,8 +7,7 @@ module Sidekiq
         worker_names.reverse.map.with_index do |worker, i|
           color_hex = rgb_to_hex(color_for(worker))
           index = "data#{i}"
-          dataset = [index]
-          statistic_for(worker).each { |val| dataset << val.fetch(type, 0) }
+          dataset = [index] + statistic_for(worker).map { |val| val.fetch(type, 0) }
           { worker: worker,
             dataset: dataset,
             color: color_hex }

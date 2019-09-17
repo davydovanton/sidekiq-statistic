@@ -36,6 +36,20 @@ module Sidekiq
           assert_equal helper.format_date(datetime, 'datetime'), datetime.strftime(datetime_format)
         end
       end
+
+      describe '#date_format' do
+        describe 'when does not pass format' do
+          it 'return the default format' do
+            assert_equal helper.date_format, helper.get_locale.dig('date', 'formats', 'default')
+          end
+        end
+
+        describe 'when pass format' do
+          it 'return the format' do
+            assert_equal helper.get_locale.dig('date', 'formats', 'datetime'), helper.date_format('datetime')
+          end
+        end
+      end
     end
 
     describe '.calculate_date_range' do
