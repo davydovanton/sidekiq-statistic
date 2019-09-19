@@ -15,12 +15,6 @@ module Sidekiq
           assert_equal Time.now.utc.to_date.to_s, days.last
         end
       end
-
-      describe '#color' do
-        it 'returns rgb color for worker' do
-          assert_equal '102,63,243', chart.color_for('HistoryWorker')
-        end
-      end
     end
   end
 end
