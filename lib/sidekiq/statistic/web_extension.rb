@@ -14,6 +14,10 @@ module Sidekiq
 
         app.helpers WebExtensionHelper
 
+        app.get '/c3.js' do
+          [200, { "Content-Type" => "application/javascript" }, [File.read(File.join(view_path, 'c3.js'))]]
+        end
+
         app.get '/realtime_statistic.js' do
           [200, { "Content-Type" => "application/javascript" }, [File.read(File.join(view_path, 'realtime_statistic.js'))]]
         end
@@ -33,13 +37,16 @@ module Sidekiq
         end
 
         app.get '/statistic/charts.json' do
-          charts = Sidekiq::Statistic::Charts.new(*calculate_date_range(params))
+          charts = Charts.new(*calculate_date_range(params))
+          date = {
+            format: date_format,
+            labels: charts.dates
+          }
 
           json({
-            tooltip_template: '<%= datasetLabel %> - <%= value %>',
-            labels: charts.dates,
-            failed_datasets: charts.information_for(:failed),
-            passed_datasets: charts.information_for(:passed)
+            date: date,
+            failed_data: charts.information_for(:failed),
+            passed_data: charts.information_for(:passed)
           })
         end
 

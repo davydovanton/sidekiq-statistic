@@ -8,7 +8,7 @@ module Sidekiq
 
       def format_date(date_to_format, format = nil)
         time = date_to_format ? convert_to_date_object(date_to_format) : Time.now
-        time.strftime(date_format(format))
+        time.strftime(self.date_format(format))
       end
 
       def calculate_date_range(params)
@@ -22,9 +22,7 @@ module Sidekiq
         end
       end
 
-      private
-
-      def date_format(format)
+      def date_format(format = nil)
         get_locale.dig('date', 'formats', format || 'default') || '%m/%d/%Y'
       end
 

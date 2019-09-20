@@ -70,7 +70,11 @@ module Sidekiq
         last_response.status.must_equal 200
         response = JSON.parse(last_response.body)
 
-        response['labels'].wont_be_empty
+        assert_includes response, 'date'
+        assert_includes response, 'failed_data'
+        assert_includes response, 'passed_data'
+        assert_includes response['date'], 'labels'
+        assert_includes response['date'], 'format'
       end
 
       describe 'when there are statistic' do

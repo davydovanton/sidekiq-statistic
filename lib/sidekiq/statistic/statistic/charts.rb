@@ -4,26 +4,14 @@ module Sidekiq
   module Statistic
     class Charts < Base
       def information_for(type)
-        worker_names.reverse.map do |worker|
-          color = color_for(worker)
-          {
-            label: worker,
-            backgroundColor: "rgba(#{color},0.2)",
-            borderColor: "rgba(#{color},0.9)",
-            pointColor: "rgba(#{color},0.2)",
-            pointStrokeColor: '#fff',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(220,220,220,1)',
-            data: statistic_for(worker).map{ |val| val.fetch(type, 0) }
-          }
+        worker_names.reverse.map.with_index do |worker, i|
+          color_hex = Helpers::Color.for(worker, :hex)
+          index = "data#{i}"
+          dataset = [index] + statistic_for(worker).map { |val| val.fetch(type, 0) }
+          { worker: worker,
+            dataset: dataset,
+            color: color_hex }
         end
-      end
-
-      def color_for(worker)
-        Digest::MD5.hexdigest(worker)[0..5]
-          .scan(/../)
-          .map{ |color| color.to_i(16) }
-          .join ','
       end
 
       def dates
