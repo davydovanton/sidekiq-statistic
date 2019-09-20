@@ -33,7 +33,7 @@ module Sidekiq
         end
 
         app.get '/statistic/charts.json' do
-          charts = Sidekiq::Statistic::Charts.new(*calculate_date_range(params))
+          charts = Charts.new(*calculate_date_range(params))
           date = {
             format: date_format,
             labels: charts.dates

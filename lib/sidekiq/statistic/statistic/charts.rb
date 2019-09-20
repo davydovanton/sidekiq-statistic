@@ -5,7 +5,7 @@ module Sidekiq
     class Charts < Base
       def information_for(type)
         worker_names.reverse.map.with_index do |worker, i|
-          color_hex = Helpers::Color.rgb_to_hex(Helpers::Color.color_for(worker))
+          color_hex = Helpers::Color.for(worker, :hex)
           index = "data#{i}"
           dataset = [index] + statistic_for(worker).map { |val| val.fetch(type, 0) }
           { worker: worker,
