@@ -14,6 +14,10 @@ module Sidekiq
 
         app.helpers WebExtensionHelper
 
+        app.get '/c3.js' do
+          [200, { "Content-Type" => "application/javascript" }, [File.read(File.join(view_path, 'c3.js'))]]
+        end
+
         app.get '/realtime_statistic.js' do
           [200, { "Content-Type" => "application/javascript" }, [File.read(File.join(view_path, 'realtime_statistic.js'))]]
         end
