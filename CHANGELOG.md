@@ -1,6 +1,19 @@
 ## HEAD
+
+* Fix UI problem when the number of workers increases too much (#140) *Guilherme Quirino*
+
+## 1.4.0
+
+* 13.09.2019: Replace `chart.js` to `c3.js` (#139) *Guilherme Quirino*
+* 17.08.2019: Improve Date translations (#136) *Guilherme Quirino*
+* 05.08.2019: Add translation to FR (#135) *Wender Freese*
+* 02.08.2019: Add translation to JP (#133) *Emerson Araki*
+* 30.06.2019: Fix UI problem in realtime graphics when hided/showed (#130) *Wender Freese*
+* 28.06.2019: Fix UI problem in busy workers counter (#129) *Guilherme Quirino*
+* 24.06.2019: Update `chart.js` to V2 (#128) *Guilherme Quirino*
+* 11.05.2019: Add translations to PT-BR (#126) *Guilherme Quirino*
 * 08.03.2019: Change LogParser regexp (#81) *Kirill Tatchihin*
-* 03.02.02019: Change storing of last_runtime from date to timestamp (#87) *Kirill Tatchihin*
+* 03.02.2019: Change storing of last_runtime from date to timestamp (#87) *Kirill Tatchihin*
 * 30.03.2017: Prevent excessive Redis memory usage (#107) *Gareth du Plooy*
 * 08.04.2016: Add new option for displaying last N lines of log file (#91) *Nick Zhebrun*
 * 20.11.2015: Convert value in redis time array to float (#76) *Anton Davydov*
