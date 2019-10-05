@@ -10,7 +10,7 @@ Improved display of statistics for your sidekiq workers and jobs.
 Also you can check <a href="https://sidekiq-history-gem.herokuapp.com/sidekiq/statistic" target="_blank">heroku application</a> with rails app with this sidekiq plugin
 
 ### Index page:
-![sidekiq-history_index](https://cloud.githubusercontent.com/assets/1147484/8071172/1708e3b0-0f10-11e5-84cf-86a910f5ecc2.png)
+![sidekiq-history_index](https://user-images.githubusercontent.com/15057257/66249364-74645d80-e708-11e9-8f06-a9a224be4e37.png)
 
 ### Worker page with table (per day):
 ![sidekiq-history_worker](https://cloud.githubusercontent.com/assets/1147484/8071171/1706924a-0f10-11e5-9ddc-8aeeb7f5c794.png)
