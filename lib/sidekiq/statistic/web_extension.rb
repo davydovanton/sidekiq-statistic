@@ -12,7 +12,8 @@ module Sidekiq
 
         Sidekiq::Web.settings.locales << locale_path
 
-        app.helpers WebExtensionHelper
+        app.helpers Helpers::Color
+        app.helpers Helpers::Date
 
         app.get '/c3.js' do
           [200, { "Content-Type" => "application/javascript" }, [File.read(File.join(view_path, 'c3.js'))]]
@@ -31,7 +32,7 @@ module Sidekiq
         end
 
         app.get '/statistic' do
-          statistic = Sidekiq::Statistic::Workers.new(*calculate_date_range(params))
+          statistic = Workers.new(*calculate_date_range(params))
           @all_workers = statistic.display
           render(:erb, File.read(File.join(view_path, 'statistic.erb')))
         end
@@ -51,26 +52,25 @@ module Sidekiq
         end
 
         app.get '/statistic/realtime' do
-          @workers = Sidekiq::Statistic::Realtime.new.worker_names
+          @workers = Realtime.new.worker_names
           render(:erb, File.read(File.join(view_path, 'realtime.erb')))
         end
 
         app.get '/statistic/realtime/charts.json' do
-          realtime = Sidekiq::Statistic::Realtime.new
+          realtime = Realtime.new
           json(realtime.statistic(params))
         end
 
         app.get '/statistic/realtime/charts_initializer.json' do
-          json(Sidekiq::Statistic::Realtime.charts_initializer)
+          json(Realtime.charts_initializer)
         end
 
         app.get '/statistic/:worker' do
           @name = params[:worker]
 
-          @worker_statistic =
-            Sidekiq::Statistic::Workers.new(*calculate_date_range(params)).display_per_day(@name)
-          @worker_log =
-            Sidekiq::Statistic::LogParser.new(@name).parse
+          @worker_statistic = Workers.new(*calculate_date_range(params))
+                                     .display_per_day(@name)
+          @worker_log = LogParser.new(@name).parse
 
           render(:erb, File.read(File.join(view_path, 'worker.erb')))
         end

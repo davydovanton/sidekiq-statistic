@@ -18,8 +18,8 @@ require 'sidekiq/statistic/statistic/workers'
 require 'sidekiq/statistic/version'
 require 'sidekiq/statistic/web_extension'
 require 'sidekiq/statistic/web_api_extension'
-require 'sidekiq/statistic/web_extension_helper'
 require 'sidekiq/statistic/helpers/color'
+require 'sidekiq/statistic/helpers/date'
 
 module Sidekiq
   module Statistic
