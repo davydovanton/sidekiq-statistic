@@ -6,7 +6,8 @@ module Sidekiq
   module Statistic
     module WebApiExtension
       def self.registered(app)
-        app.helpers WebExtensionHelper
+        app.helpers Helpers::Color
+        app.helpers Helpers::Date
 
         app.before '/api/*' do
           type = :json

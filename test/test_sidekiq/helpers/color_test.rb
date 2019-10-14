@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
-# encoding: utf-8
-
 require 'minitest_helper'
-require 'json'
 
 module Sidekiq
   module Statistic
     module Helpers
-      describe 'Color' do
+      describe Color do
         include Rack::Test::Methods
 
         let(:worker_name) { 'HistoryWorker' }
