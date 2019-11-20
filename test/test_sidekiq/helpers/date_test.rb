@@ -52,11 +52,11 @@ module Sidekiq
         params = { 'dateFrom' => two_days_ago.to_s,
                    'dateTo' => today.to_s }
 
-        helper_date.calculate_date_range(params).must_equal([diference, today])
+        _(helper_date.calculate_date_range(params)).must_equal([diference, today])
       end
 
       it 'returns default range' do
-        helper_date.calculate_date_range({}).must_equal([20])
+        _(helper_date.calculate_date_range({})).must_equal([20])
       end
     end
   end

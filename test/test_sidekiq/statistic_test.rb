@@ -96,7 +96,7 @@ module Sidekiq
 
           subject = statistic.display
 
-          subject.must_be_instance_of Array
+          _(subject).must_be_instance_of Array
           assert_equal subject[0].keys.sort,
                        %i[name last_job_status number_of_calls queue runtime].sort
 
@@ -110,7 +110,7 @@ module Sidekiq
 
           subject = statistic.display_per_day(worker)
 
-          subject.must_be_instance_of Array
+          _(subject).must_be_instance_of Array
           assert_equal subject[0].keys.sort,
                        %i[date failure last_job_status runtime success total].sort
           assert_equal Time.now.strftime("%Y-%m-%d"), subject[0][:date]
@@ -124,7 +124,7 @@ module Sidekiq
           worker_statistic = base_statistic.statistic_for(worker)[1]
           subject = statistic.runtime_for_day(worker, worker_statistic)
 
-          subject.must_be_instance_of Hash
+          _(subject).must_be_instance_of Hash
           assert_equal subject.keys.sort, %i[average last max min total].sort
           assert_equal worker_statistic[:average_time], subject[:average]
           assert_equal worker_statistic[:last_time], subject[:last]
