@@ -39,6 +39,7 @@
 
 .statistic__log {
   display: none;
+  word-break: break-word;
 }
 
 .statistic__jid {
