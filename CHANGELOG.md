@@ -1,6 +1,9 @@
 ## HEAD
 
-* Fix UI problem when the number of workers increases too much (#140) *Guilherme Quirino*
+* 06.12.2019: Avoid whites when generating colors (#141) *Wender Freese*
+* 25.11.2019: Add line break in log visualization *Dmitriy*
+* 25.11.2019: Fix high memory usage in Log Parser *Dmitriy*
+* 04.10.2019: Fix UI problem when the number of workers increases too much (#140) *Guilherme Quirino*
 
 ## 1.4.0
 
