@@ -8,14 +8,12 @@ module Sidekiq
       describe Color do
         include Rack::Test::Methods
 
-        let(:worker_name) { 'HistoryWorker' }
-        let(:rgb_color) { '102,63,243' }
-        let(:hex_color) { '#663FF3' }
+        let(:phrase) { 'HistoryWorker' }
 
         describe 'when passes rgb format' do
           describe '.for' do
             it 'returns rgb format' do
-              assert_equal rgb_color, Color.for(worker_name, :rgb)
+              assert_equal '102,63,28', Color.for(phrase, format: :rgb)
             end
           end
         end
@@ -23,7 +21,7 @@ module Sidekiq
         describe 'when passes hex format' do
           describe '.for' do
             it 'return hex format' do
-              assert_equal hex_color, Color.for(worker_name, :hex)
+              assert_equal '#663f1c', Color.for(phrase, format: :hex)
             end
           end
         end
