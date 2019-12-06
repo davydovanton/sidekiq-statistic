@@ -6,7 +6,7 @@ module Sidekiq
       module Color
         class << self
           BASE = 16
-          LIMIT_NUMBERT_TO_AVOID_WHITES = 215
+          LIMIT_NUMBER_TO_AVOID_WHITES = 215
 
           def for(phrase, format: :rgb)
             return hex(phrase) if format == :hex
@@ -33,7 +33,7 @@ module Sidekiq
           end
 
           def hex_pair_to_number(pair)
-            pair.to_i(BASE) % LIMIT_NUMBERT_TO_AVOID_WHITES
+            pair.to_i(BASE) % LIMIT_NUMBER_TO_AVOID_WHITES
           end
         end
       end
