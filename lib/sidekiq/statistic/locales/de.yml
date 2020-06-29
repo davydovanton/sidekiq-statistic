@@ -7,6 +7,7 @@ de: # <---- change this to your locale code
   Statistic: Statistik
   Start: Beginn
   End: Ende
+  Stop: Halt
   Failed: Fehlgeschlagen
   Passed: Erfolgreich
   WorkersTable: Arbeiter-Tabelle

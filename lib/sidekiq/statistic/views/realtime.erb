@@ -14,6 +14,12 @@
   </ul>
 
   <div class='statistic__container'>
+    <div>
+      <button class="realtime__toggle btn btn-primary" style="margin: 0px auto; display: flex; justify-content: center;" type="button">
+        <strong style="display:none" class='start-button'> <%= t('Start') %> </strong>
+        <strong class='stop-button'> <%= t('Stop') %> </strong>
+      </button>
+    </div>
     <div class="realtime">
       <h2><%= t('Failed') %></h2>
       <div class="realtime__failed-chart"></div>

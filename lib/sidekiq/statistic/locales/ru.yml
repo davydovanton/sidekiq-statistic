@@ -7,6 +7,7 @@ ru: # <---- change this to your locale code
   Statistic: Статистика
   Start: Начало
   End: Конец
+  Stop: Cтоп
   Failed: Не выполненные
   Passed: Выполненные
   WorkersTable: Таблица воркеров

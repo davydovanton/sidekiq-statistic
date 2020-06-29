@@ -7,6 +7,7 @@ uk: # <---- change this to your locale code
   Statistic: Статистика
   Start: Початок
   End: Кінець
+  Stop: Стоп
   Failed: Невиконані
   Passed: Виконані
   WorkersTable: Таблиця обробників
