@@ -1,7 +1,7 @@
 # elements like %{queue} are variables and should not be translated
 fr: # <---- change this to your locale code
   Queue: Queue
-  Exclude: Exclure
+  Show/Hide: Afficher / Masquer
   Index: Indice
   RealtimeStatistic: Statistique en temps réel
   Statistic: Statistique

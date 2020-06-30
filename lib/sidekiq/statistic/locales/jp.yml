@@ -1,7 +1,7 @@
 # elements like %{queue} are variables and should not be translated
 jp: # <---- change this to your locale code
   Queue: キュー
-  Exclude: 削除
+  Show/Hide: 表示/非表示
   Index: 索引
   RealtimeStatistic: リアルタイム統計
   Statistic: 統計
