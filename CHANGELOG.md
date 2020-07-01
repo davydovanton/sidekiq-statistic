@@ -1,5 +1,6 @@
 ## HEAD
 
+* 01.07.2020: Update workers toggle visibility button on RealTime (#156) *kostadriano*
 * 06.12.2019: Avoid whites when generating colors (#141) *Wender Freese*
 * 25.11.2019: Add line break in log visualization *Dmitriy*
 * 25.11.2019: Fix high memory usage in Log Parser *Dmitriy*
