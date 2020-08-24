@@ -5,9 +5,9 @@ pt-br: # <---- change this to your locale code
   Index: Índice
   RealtimeStatistic: Estatística em tempo real
   Statistic: Estatística
-  Start: Início
+  Start: Iniciar
   End: Fim
-  Stop: Pare
+  Stop: Parar
   Failed: Falhou
   Passed: Passou
   WorkersTable: Tabela de Workers
