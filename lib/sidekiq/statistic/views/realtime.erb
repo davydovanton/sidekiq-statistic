@@ -16,9 +16,14 @@
 
   <div class='statistic__container'>
     <div>
-      <button class="realtime__toggle btn btn-primary" style="margin: 0px auto; display: flex; justify-content: center;" type="button">
-        <strong style="display:none" class='start-button'> <%= t('Start') %> </strong>
-        <strong class='stop-button'> <%= t('Stop') %> </strong>
+      <button
+        class="realtime__toggle-button btn btn-primary"
+        type="button"
+        data-started=true
+        data-start=<%= t('Start') %>
+        data-stop=<%= t('Stop') %>
+      >
+        <%= t('Stop') %>
       </button>
     </div>
     <div class="realtime">

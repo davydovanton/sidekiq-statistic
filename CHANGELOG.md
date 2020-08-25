@@ -1,5 +1,6 @@
 ## HEAD
 
+* 25.08.2020: Refactor realtime statistic JS code (#159) *kostadriano*
 * 24.08.2020: Fix translation pt-Br start/stop (#153) *brunnohenrique*
 * 01.07.2020: Update workers toggle visibility button on RealTime (#156) *kostadriano*
 * 06.12.2019: Avoid whites when generating colors (#141) *Wender Freese*

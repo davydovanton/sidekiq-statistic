@@ -55,6 +55,12 @@
   margin-top: 25px;
 }
 
+.realtime__toggle-button {
+  margin: 0px auto;
+  display: flex;
+  justify-content: center;
+}
+
 .workers__table {
   width: 350px;
 }
