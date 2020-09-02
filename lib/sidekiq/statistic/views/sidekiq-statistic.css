@@ -1,4 +1,5 @@
-.statistic {}
+.statistic {
+}
 
 .statistic__datepicker {
   margin-top: 10px;
@@ -85,7 +86,8 @@
   background: rgba(0, 0, 0, 0.1);
 }
 
-.worker__toggle-visibility:focus, .worker__toggle-visibility:active {
+.worker__toggle-visibility:focus,
+.worker__toggle-visibility:active {
   outline: none !important;
   box-shadow: none;
 }
@@ -93,12 +95,12 @@
 #chartjs-tooltip {
   opacity: 1;
   position: absolute;
-  background: rgba(0, 0, 0, .7);
+  background: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 3px;
   border-radius: 3px;
-  -webkit-transition: all .1s ease;
-  transition: all .1s ease;
+  -webkit-transition: all 0.1s ease;
+  transition: all 0.1s ease;
   pointer-events: none;
   -webkit-transform: translate(-50%, 0);
   transform: translate(-50%, 0);
@@ -116,7 +118,6 @@
   margin: 0 2px 0 5px;
 }
 
-
 /*!
  * jQuery UI Datepicker @VERSION
  * http://jqueryui.com
@@ -130,15 +131,15 @@
 
 .ui-datepicker {
   width: 17em;
-  padding: .2em .2em 0;
+  padding: 0.2em 0.2em 0;
   display: none;
   background-color: #fff;
-  border: 1px solid #d7d7d7
+  border: 1px solid #d7d7d7;
 }
 
 .ui-datepicker .ui-datepicker-header {
   position: relative;
-  padding: .2em 0
+  padding: 0.2em 0;
 }
 
 .ui-datepicker .ui-datepicker-prev,
@@ -146,28 +147,28 @@
   position: absolute;
   top: 2px;
   width: 1.8em;
-  height: 1.8em
+  height: 1.8em;
 }
 
 .ui-datepicker .ui-datepicker-prev-hover,
 .ui-datepicker .ui-datepicker-next-hover {
-  top: 1px
+  top: 1px;
 }
 
 .ui-datepicker .ui-datepicker-prev {
-  left: 2px
+  left: 2px;
 }
 
 .ui-datepicker .ui-datepicker-next {
-  right: 15px
+  right: 15px;
 }
 
 .ui-datepicker .ui-datepicker-prev-hover {
-  left: 1px
+  left: 1px;
 }
 
 .ui-datepicker .ui-datepicker-next-hover {
-  right: 15px
+  right: 15px;
 }
 
 .ui-datepicker .ui-datepicker-prev span,
@@ -177,163 +178,172 @@
   left: 50%;
   margin-left: -8px;
   top: 50%;
-  margin-top: -8px
+  margin-top: -8px;
 }
 
 .ui-datepicker .ui-datepicker-title {
   margin: 0 2.3em;
   line-height: 1.8em;
-  text-align: center
+  text-align: center;
 }
 
 .ui-datepicker .ui-datepicker-title select {
   font-size: 1em;
-  margin: 1px 0
+  margin: 1px 0;
 }
 
 .ui-datepicker select.ui-datepicker-month,
 .ui-datepicker select.ui-datepicker-year {
-  width: 45%
+  width: 45%;
 }
 
 .ui-datepicker table {
   width: 100%;
-  font-size: .9em;
+  font-size: 0.9em;
   border-collapse: collapse;
-  margin: 0 0 .4em
+  margin: 0 0 0.4em;
 }
 
 .ui-datepicker th {
-  padding: .7em .3em;
+  padding: 0.7em 0.3em;
   text-align: center;
   font-weight: 700;
-  border: 0
+  border: 0;
 }
 
 .ui-datepicker td {
   border: 0;
-  padding: 1px
+  padding: 1px;
 }
 
 .ui-datepicker td span,
 .ui-datepicker td a {
   display: block;
-  padding: .2em;
+  padding: 0.2em;
   text-align: right;
-  text-decoration: none
+  text-decoration: none;
 }
 
 .ui-datepicker .ui-datepicker-buttonpane {
   background-image: none;
-  margin: .7em 0 0;
-  padding: 0 .2em;
+  margin: 0.7em 0 0;
+  padding: 0 0.2em;
   border-left: 0;
   border-right: 0;
-  border-bottom: 0
+  border-bottom: 0;
 }
 
 .ui-datepicker .ui-datepicker-buttonpane button {
   float: right;
-  margin: .5em .2em .4em;
+  margin: 0.5em 0.2em 0.4em;
   cursor: pointer;
-  padding: .2em .6em .3em;
+  padding: 0.2em 0.6em 0.3em;
   width: auto;
-  overflow: visible
+  overflow: visible;
 }
 
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
-  float: left
+  float: left;
 }
 
 .ui-datepicker.ui-datepicker-multi {
-  width: auto
+  width: auto;
 }
 
 .ui-datepicker-multi .ui-datepicker-group {
-  float: left
+  float: left;
 }
 
 .ui-datepicker-multi .ui-datepicker-group table {
   width: 95%;
-  margin: 0 auto .4em
+  margin: 0 auto 0.4em;
 }
 
 .ui-datepicker-multi-2 .ui-datepicker-group {
-  width: 50%
+  width: 50%;
 }
 
 .ui-datepicker-multi-3 .ui-datepicker-group {
-  width: 33.3%
+  width: 33.3%;
 }
 
 .ui-datepicker-multi-4 .ui-datepicker-group {
-  width: 25%
+  width: 25%;
 }
 
 .ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header,
 .ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header {
-  border-left-width: 0
+  border-left-width: 0;
 }
 
 .ui-datepicker-multi .ui-datepicker-buttonpane {
-  clear: left
+  clear: left;
 }
 
 .ui-datepicker-row-break {
   clear: both;
   width: 100%;
-  font-size: 0
+  font-size: 0;
 }
 
 .ui-datepicker-rtl {
-  direction: rtl
+  direction: rtl;
 }
 
 .ui-datepicker-rtl .ui-datepicker-prev {
   right: 2px;
-  left: auto
+  left: auto;
 }
 
 .ui-datepicker-rtl .ui-datepicker-next {
   left: 2px;
-  right: auto
+  right: auto;
 }
 
 .ui-datepicker-rtl .ui-datepicker-prev:hover {
   right: 1px;
-  left: auto
+  left: auto;
 }
 
 .ui-datepicker-rtl .ui-datepicker-next:hover {
   left: 1px;
-  right: auto
+  right: auto;
 }
 
 .ui-datepicker-rtl .ui-datepicker-buttonpane {
-  clear: right
+  clear: right;
 }
 
 .ui-datepicker-rtl .ui-datepicker-buttonpane button {
-  float: left
+  float: left;
 }
 
 .ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current,
 .ui-datepicker-rtl .ui-datepicker-group {
-  float: right
+  float: right;
 }
 
 .ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header,
 .ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header {
   border-right-width: 0;
-  border-left-width: 1px
+  border-left-width: 1px;
 }
 
-.ui-datepicker a:active,
-a:hover,
-a:visited {
-  color: #4b001a;
+@media (prefers-color-scheme: dark) {
+  .ui-datepicker a:active,
+  a:hover,
+  a:visited {
+    color: #ccc;
+  }
 }
 
+@media (prefers-color-scheme: light) {
+  .ui-datepicker a:active,
+  a:hover,
+  a:visited {
+    color: #4b001a;
+  }
+}
 
 /*!
  * C3.js
@@ -342,19 +352,19 @@ a:visited {
 
 .c3 svg {
   font: 10px sans-serif;
-  -webkit-tap-highlight-color: transparent
+  -webkit-tap-highlight-color: transparent;
 }
 
 .c3 line,
 .c3 path {
   fill: none;
-  stroke: #000
+  stroke: #000;
 }
 
 .c3 text {
   -webkit-user-select: none;
   -moz-user-select: none;
-  user-select: none
+  user-select: none;
 }
 
 .c3-bars path,
@@ -362,101 +372,101 @@ a:visited {
 .c3-legend-item-tile,
 .c3-xgrid-focus,
 .c3-ygrid {
-  shape-rendering: crispEdges
+  shape-rendering: crispEdges;
 }
 
 .c3-chart-arc path {
-  stroke: #fff
+  stroke: #fff;
 }
 
 .c3-chart-arc text {
   fill: #fff;
-  font-size: 13px
+  font-size: 13px;
 }
 
 .c3-grid line {
-  stroke: #aaa
+  stroke: #aaa;
 }
 
 .c3-grid text {
-  fill: #aaa
+  fill: #aaa;
 }
 
 .c3-xgrid,
 .c3-ygrid {
-  stroke-dasharray: 3 3
+  stroke-dasharray: 3 3;
 }
 
 .c3-text.c3-empty {
   fill: gray;
-  font-size: 2em
+  font-size: 2em;
 }
 
 .c3-line {
-  stroke-width: 1px
+  stroke-width: 1px;
 }
 
 .c3-circle._expanded_ {
   stroke-width: 1px;
-  stroke: #fff
+  stroke: #fff;
 }
 
 .c3-selected-circle {
   fill: #fff;
-  stroke-width: 2px
+  stroke-width: 2px;
 }
 
 .c3-bar {
-  stroke-width: 0
+  stroke-width: 0;
 }
 
 .c3-bar._expanded_ {
-  fill-opacity: .75
+  fill-opacity: 0.75;
 }
 
 .c3-target.c3-focused {
-  opacity: 1
+  opacity: 1;
 }
 
 .c3-target.c3-focused path.c3-line,
 .c3-target.c3-focused path.c3-step {
-  stroke-width: 2px
+  stroke-width: 2px;
 }
 
 .c3-target.c3-defocused {
-  opacity: .3!important
+  opacity: 0.3 !important;
 }
 
 .c3-region {
   fill: #4682b4;
-  fill-opacity: .1
+  fill-opacity: 0.1;
 }
 
 .c3-brush .extent {
-  fill-opacity: .1
+  fill-opacity: 0.1;
 }
 
 .c3-legend-item {
-  font-size: 12px
+  font-size: 12px;
 }
 
 .c3-legend-item-hidden {
-  opacity: .15
+  opacity: 0.15;
 }
 
 .c3-legend-background {
-  opacity: .75;
+  opacity: 0.75;
   fill: #fff;
   stroke: #d3d3d3;
-  stroke-width: 1
+  stroke-width: 1;
 }
 
 .c3-title {
-  font: 14px sans-serif
+  font: 14px sans-serif;
 }
 
 .c3-tooltip-container {
-  z-index: 10
+  z-index: 10;
 }
 
 .c3-tooltip {
@@ -467,11 +477,11 @@ a:visited {
   -webkit-box-shadow: 7px 7px 12px -9px #777;
   -moz-box-shadow: 7px 7px 12px -9px #777;
   box-shadow: 7px 7px 12px -9px #777;
-  opacity: .9
+  opacity: 0.9;
 }
 
 .c3-tooltip tr {
-  border: 1px solid #CCC
+  border: 1px solid #ccc;
 }
 
 .c3-tooltip th {
@@ -479,52 +489,52 @@ a:visited {
   font-size: 14px;
   padding: 2px 5px;
   text-align: left;
-  color: #FFF
+  color: #fff;
 }
 
 .c3-tooltip td {
   font-size: 13px;
   padding: 3px 6px;
   background-color: #fff;
-  border-left: 1px dotted #999
+  border-left: 1px dotted #999;
 }
 
-.c3-tooltip td>span {
+.c3-tooltip td > span {
   display: inline-block;
   width: 10px;
   height: 10px;
-  margin-right: 6px
+  margin-right: 6px;
 }
 
 .c3-tooltip td.value {
-  text-align: right
+  text-align: right;
 }
 
 .c3-area {
   stroke-width: 0;
-  opacity: .2
+  opacity: 0.2;
 }
 
 .c3-chart-arcs-title {
   dominant-baseline: middle;
-  font-size: 1.3em
+  font-size: 1.3em;
 }
 
 .c3-chart-arcs .c3-chart-arcs-background {
   fill: #e0e0e0;
-  stroke: none
+  stroke: none;
 }
 
 .c3-chart-arcs .c3-chart-arcs-gauge-unit {
   fill: #000;
-  font-size: 16px
+  font-size: 16px;
 }
 
 .c3-chart-arcs .c3-chart-arcs-gauge-max,
 .c3-chart-arcs .c3-chart-arcs-gauge-min {
-  fill: #777
+  fill: #777;
 }
 
 .c3-chart-arc .c3-gauge-value {
-  fill: #000
+  fill: #000;
 }
