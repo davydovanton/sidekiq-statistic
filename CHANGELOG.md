@@ -1,6 +1,6 @@
 ## HEAD
 
-- 25.08.2020: Improve dark mode workers table links readability(#160) _V-Gutierrez_
+- 02.09.2020: Improve dark mode workers table links readability(#160) _V-Gutierrez_
 - 25.08.2020: Refactor realtime statistic JS code (#159) _kostadriano_
 - 24.08.2020: Fix translation pt-Br start/stop (#153) _brunnohenrique_
 - 01.07.2020: Update workers toggle visibility button on RealTime (#156) _kostadriano_
