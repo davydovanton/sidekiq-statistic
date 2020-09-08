@@ -1,0 +1,30 @@
+# elements like %{queue} are variables and should not be translated
+es: # <---- change this to your locale code
+  Queue: Fila
+  Show/Hide: Mostrar / Esconder
+  Index: Índice
+  RealtimeStatistic: Estadística en tiempo real
+  Statistic: Estadística
+  Start: Iniciar
+  End: Fin
+  Stop: Detener
+  Failed: Fracasado
+  Passed: Exitoso
+  WorkersTable: Tabla de Workers
+  Worker: Worker
+  Date: Fecha
+  Success: Exito
+  Failure: Fracaso
+  Total: Total
+  TimeSec: Tiempo(s)
+  AverageSec: Promedio(s)
+  MinTimeSec: Tiempo Mínimo(s)
+  MaxTimeSec: Tiempo Máximo(s)
+  LastJobStatus: Status del último trabajo
+  WorkerInformation: 'Información del %{worker}'
+  InformationTable: Tabla de información
+  WorkerLog: Log de Worker
+  WorkerTablePerDay: Tabla de Worker (por día)
+  LastRun: Última ejecución
+  EmptyLogs: No hay resultados
+  SearchLogs: Buscar en archivo de log
