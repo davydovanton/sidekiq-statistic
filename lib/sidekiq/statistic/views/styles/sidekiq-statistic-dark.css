@@ -1,0 +1,95 @@
+.statistic__container {
+  background-color: #282828;
+}
+
+.statistic__datepicker {
+  border-bottom: 1px solid #333333;
+}
+
+.nav-tabs {
+  background-color: #333333;
+  border-bottom: 1px solid #333333;
+  margin-left: 0px;
+}
+
+.nav-tabs > li.active > a {
+  background-color: #282828;
+  border: 1px solid #282828;
+  color: #DCDCDC;
+}
+
+.nav-tabs > li > a:hover, a:visited {
+  background-color: #4A4443;
+  border: 1px solid #4A4443;
+  color: #DCDCDC;
+  cursor: pointer;
+}
+
+.nav-tabs > li.active > a:hover {
+  background-color: #4A4443;
+  border: 1px solid #4A4443;
+  color: #DCDCDC;
+  cursor: pointer;
+}
+
+.nav-tabs .statistic__tab {
+  background-color: #403A39;
+}
+
+.statistic__datepicker input {
+  background: #333333;
+  border: 1px solid #555;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+.worker__toggle-visibility {
+  color: #d5d5d5 !important;
+}
+
+.worker__toggle-visibility {
+  background: inherit;
+  border: 1px solid #666;
+}
+
+.worker__toggle-visibility:hover {
+  background: #999;
+  border: 1px solid #999;
+}
+
+.worker__toggle-visibility:active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.worker__toggle-visibility:focus,
+.worker__toggle-visibility:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
+/*!
+* jQuery UI Datepicker @VERSION
+* http://jqueryui.com
+*
+* Copyright jQuery Foundation and other contributors
+* Released under the MIT license.
+* http://jquery.org/license
+*
+* http://api.jqueryui.com/datepicker/#theming
+*/
+
+.ui-datepicker {
+  background-color: #282828;
+  border: 1px solid #d5d5d5;
+}
+
+.ui-datepicker-today {
+  background: #CD3844;
+}
+
+.ui-state-disabled {
+  background: #333;
+}
+
+.ui-datepicker a:active, a:hover, a:visited {
+  color: #ccc;
+}

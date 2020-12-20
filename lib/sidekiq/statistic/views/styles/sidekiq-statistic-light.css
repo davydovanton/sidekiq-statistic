@@ -1,0 +1,82 @@
+.statistic__datepicker {
+  border-bottom: 1px solid rgb(236, 236, 236);
+}
+
+.statistic__container {
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
+  -moz-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
+  box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
+}
+
+.statistic__jid {
+  background-color: red;
+}
+
+.statistic__jid:hover {
+  background-color: inherit;
+}
+
+.worker__toggle-visibility {
+  background: inherit;
+}
+
+.worker__toggle-visibility:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.worker__toggle-visibility:active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.worker__toggle-visibility:focus,
+.worker__toggle-visibility:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
+#chartjs-tooltip {
+  opacity: 1;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 3px;
+  border-radius: 3px;
+  -webkit-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+  pointer-events: none;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+}
+
+.chartjs-tooltip-title {
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.chartjs-tooltip-key {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 2px 0 5px;
+}
+
+/*!
+* jQuery UI Datepicker @VERSION
+* http://jqueryui.com
+*
+* Copyright jQuery Foundation and other contributors
+* Released under the MIT license.
+* http://jquery.org/license
+*
+* http://api.jqueryui.com/datepicker/#theming
+*/
+
+.ui-datepicker {
+  background-color: #fff;
+  border: 1px solid #d7d7d7;
+}
+
+.ui-datepicker a:active, a:hover, a:visited {
+  color: #4b001a;
+}

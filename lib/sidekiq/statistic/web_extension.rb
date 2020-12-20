@@ -27,8 +27,16 @@ module Sidekiq
           [200, { "Content-Type" => "application/javascript" }, [File.read(File.join(view_path, 'statistic.js'))]]
         end
 
-        app.get '/sidekiq-statistic.css' do
-          [200, { "Content-Type" => "text/css" }, [File.read(File.join(view_path, 'sidekiq-statistic.css'))]]
+        app.get '/common.css' do
+          [200, { "Content-Type" => "text/css" }, [File.read(File.join(view_path, 'styles/common.css'))]]
+        end
+
+        app.get '/sidekiq-statistic-light.css' do
+          [200, { "Content-Type" => "text/css" }, [File.read(File.join(view_path, 'styles/sidekiq-statistic-light.css'))]]
+        end
+
+        app.get '/sidekiq-statistic-dark.css' do
+          [200, { "Content-Type" => "text/css" }, [File.read(File.join(view_path, 'styles/sidekiq-statistic-dark.css'))]]
         end
 
         app.get '/statistic' do
