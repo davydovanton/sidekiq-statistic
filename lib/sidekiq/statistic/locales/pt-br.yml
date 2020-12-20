@@ -20,7 +20,7 @@ pt-br: # <---- change this to your locale code
   AverageSec: Média(s)
   MinTimeSec: Tempo Min(s)
   MaxTimeSec: Tempo Max(s)
-  LastJobStatus: Status do último trabalho
+  LastJobStatus: Status da última execução
   WorkerInformation: 'Informações do %{worker}'
   InformationTable: Tabela de informação
   WorkerLog: Log do Worker
