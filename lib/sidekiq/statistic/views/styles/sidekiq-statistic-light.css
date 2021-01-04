@@ -1,11 +1,17 @@
-.statistic__datepicker {
-  border-bottom: 1px solid rgb(236, 236, 236);
-}
-
 .statistic__container {
   background-color: #fff;
   -webkit-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
   -moz-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
+  box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
+}
+
+.statistic__datepicker {
+  border-bottom: 1px solid rgb(236, 236, 236);
+}
+
+.statistic__datepicker input {
+  background: #FFF;
+  border: 1px solid #CCC;
   box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
 }
 
@@ -77,6 +83,37 @@
   border: 1px solid #d7d7d7;
 }
 
-.ui-datepicker a:active, a:hover, a:visited {
-  color: #4b001a;
+.ui-datepicker-today {
+  background: #F5F5F5;
+  font-weight: bold;
+}
+
+.ui-datepicker th {
+  padding:.5em 0;
+	font-size: 10px;
+	font-weight: bold;
+	text-transform: uppercase;
+	border: none;
+	border-bottom: 1px solid #d5d9e2;
+  background: #f3f3f3;
+  text-align: center;
+}
+
+.ui-datepicker td a:hover {
+  background: #F5F5F5;
+}
+
+.ui-state-disabled {
+  color: #d7d7d7;
+}
+
+/*!
+* C3.js
+* http://c3js.org/
+*/
+
+.c3 line,
+.c3 path {
+  fill: none;
+  stroke: #000;
 }

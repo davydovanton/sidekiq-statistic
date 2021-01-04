@@ -6,6 +6,12 @@
   border-bottom: 1px solid #333333;
 }
 
+.statistic__datepicker input {
+  background: #333333;
+  border: 1px solid #555;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
 .nav-tabs {
   background-color: #333333;
   border-bottom: 1px solid #333333;
@@ -33,27 +39,21 @@
 }
 
 .nav-tabs .statistic__tab {
-  background-color: #403A39;
-}
-
-.statistic__datepicker input {
-  background: #333333;
-  border: 1px solid #555;
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+  background-color: rgb(64, 58, 57);
 }
 
 .worker__toggle-visibility {
-  color: #d5d5d5 !important;
+  color: rgb(213, 213, 213) !important;
 }
 
 .worker__toggle-visibility {
   background: inherit;
-  border: 1px solid #666;
+  border: 1px solid rgb(102, 102, 102);
 }
 
 .worker__toggle-visibility:hover {
-  background: #999;
-  border: 1px solid #999;
+  background:rgb(153, 153, 153);
+  border: 1px solid rgb(153, 153, 153);
 }
 
 .worker__toggle-visibility:active {
@@ -86,10 +86,24 @@
   background: #CD3844;
 }
 
-.ui-state-disabled {
-  background: #333;
-}
-
 .ui-datepicker a:active, a:hover, a:visited {
   color: #ccc;
 }
+
+/*!
+* C3.js
+* http://c3js.org/
+*/
+
+.c3 svg {
+  background-color: #555;
+}
+
+.c3 line,
+.c3 path,
+.tick text {
+  fill: none;
+  stroke: #FFF;
+}
+
+.c3-legend-item text { stroke: #FFF; }
