@@ -1,5 +1,6 @@
 <% add_to_head do %>
   <link href="<%= root_path %>common.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="<%= root_path %>ui-datepicker.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="<%= root_path %>sidekiq-statistic-light.css" media="screen and (prefers-color-scheme: light)" rel="stylesheet" type="text/css" />
   <link href="<%= root_path %>sidekiq-statistic-dark.css" media="screen and (prefers-color-scheme: dark)" rel="stylesheet" type="text/css" />
 <% end %>
@@ -7,7 +8,7 @@
 <script type="text/javascript" src="<%= root_path %>c3.js"></script>
 <script type="text/javascript" src="<%= root_path %>statistic.js"></script>
 
-<div class='statistic'>
+<div class="statistic">
   <h2><%= t('Statistic') %></h2>
 
   <ul class="nav nav-tabs">
@@ -15,15 +16,15 @@
     <li><a href="<%= root_path %>statistic/realtime" class="statistic__tab"><%= t('Realtime') %></a></li>
   </ul>
 
-  <div class="statistic__container">
+  <div class="statistic__container border-radius straight-top-left-radius">
     <div class="statistic__datepicker">
       <div>
         <label><%= t('Start') %></label>
-        <input id="datepicker_from" autocomplete="off" />
+        <input id="datepicker_from" class="statistic__datepicker__input left" autocomplete="off" />
       </div>
       <div>
         <label><%= t('End') %></label>
-        <input id="datepicker_to" autocomplete="off" />
+        <input id="datepicker_to" class="statistic__datepicker__input right" autocomplete="off" />
       </div>
     </div>
 
@@ -35,39 +36,39 @@
     </div>
 
     <h2><%= t('WorkersTable') %></h2>
-    <div class="table_container">
-      <table class="statistic__table table table-hover table-bordered table-striped table-white live-reload">
-        <thead>
-          <th><%= t('Worker') %></th>
-          <th><%= t('Date') %></th>
-          <th><%= t('Queue') %></th>
-          <th><%= t('Success') %></th>
-          <th><%= t('Failure') %></th>
-          <th><%= t('Total') %></th>
-          <th><%= t('TimeSec') %></th>
-          <th><%= t('AverageSec') %></th>
-          <th><%= t('MinTimeSec') %></th>
-          <th><%= t('MaxTimeSec') %></th>
-          <th><%= t('LastJobStatus') %></th>
-        </thead>
-        <% @all_workers.each do |worker| %>
-          <tr>
-            <td class="worker">
-              <a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a>
-            </td>
-            <td class="worker"><%= format_date worker[:runtime][:last], 'datetime' %></td>
-            <td class="worker"><%= worker[:queue] %></td>
-            <td class="worker"><%= worker[:number_of_calls][:success] %></td>
-            <td class="worker"><%= worker[:number_of_calls][:failure] %></td>
-            <td class="worker"><%= worker[:number_of_calls][:total] %></td>
-            <td class="worker"><%= worker[:runtime][:total] %></td>
-            <td class="worker"><%= worker[:runtime][:average] %></td>
-            <td class="worker"><%= worker[:runtime][:min] %></td>
-            <td class="worker"><%= worker[:runtime][:max] %></td>
-            <td class="worker"><%= worker[:last_job_status] %></td>
-          </tr>
-        <% end %>
-      </table>
-    </div>
+    <table class="statistic__table table table-hover table-bordered table-striped table-white live-reload">
+      <thead>
+        <th><%= t('Worker') %></th>
+        <th><%= t('Date') %></th>
+        <th><%= t('Queue') %></th>
+        <th><%= t('Success') %></th>
+        <th><%= t('Failure') %></th>
+        <th><%= t('Total') %></th>
+        <th><%= t('TimeSec') %></th>
+        <th><%= t('AverageSec') %></th>
+        <th><%= t('MinTimeSec') %></th>
+        <th><%= t('MaxTimeSec') %></th>
+        <th><%= t('LastJobStatus') %></th>
+      </thead>
+      <tbody>
+      <% @all_workers.each do |worker| %>
+        <tr>
+          <td>
+            <a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a>
+          </td>
+          <td><%= format_date worker[:runtime][:last], 'datetime' %></td>
+          <td><%= worker[:queue] %></td>
+          <td><%= worker[:number_of_calls][:success] %></td>
+          <td><%= worker[:number_of_calls][:failure] %></td>
+          <td><%= worker[:number_of_calls][:total] %></td>
+          <td><%= worker[:runtime][:total] %></td>
+          <td><%= worker[:runtime][:average] %></td>
+          <td><%= worker[:runtime][:min] %></td>
+          <td><%= worker[:runtime][:max] %></td>
+          <td><%= worker[:last_job_status] %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

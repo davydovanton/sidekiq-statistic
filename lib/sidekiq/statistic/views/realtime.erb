@@ -17,8 +17,8 @@
     <li class="active"><a href="<%= root_path %>statistic/realtime" class="statistic__tab"><%= t('Realtime') %></a></li>
   </ul>
 
-  <div class='statistic__container'>
-    <div>
+  <div class="statistic__container">
+    <div class="realtime__toggle-container">
       <button
         class="realtime__toggle-button btn btn-primary"
         type="button"
@@ -37,23 +37,25 @@
     </div>
 
     <h2><%= t('Workers') %></h2>
-    <table class="workers__table table table-hover table-bordered table-striped table-white">
+    <table class="statistic__table table table-hover table-bordered table-striped table-white">
       <thead>
         <tr>
           <th><%= t('Worker') %></th>
           <th><%= t('Show/Hide') %></th>
         </tr>
       </thead>
+      <tbody>
       <% @workers.each do |worker| %>
         <tr>
-          <td class="worker"><a href="<%= root_path %>statistic/<%= worker %>"><%= worker %></a></td>
-          <td class="worker">
+          <td><a href="<%= root_path %>statistic/<%= worker %>"><%= worker %></a></td>
+          <td>
             <button class="worker__toggle-visibility btn" name="<%= worker %>" data-visible=true>
               <i class="worker__visibility-icon fa fa-eye"></i>
             </button>
           </td>
         </tr>
       <% end %>
+      </tbody>
     </table>
   </div>
 </div>

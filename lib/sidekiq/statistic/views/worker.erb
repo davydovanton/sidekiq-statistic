@@ -1,5 +1,7 @@
 <% add_to_head do %>
   <link href="<%= root_path %>common.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="<%= root_path %>ui-datepicker.css" media="screen" rel="stylesheet" type="text/css" />
+  
   <link href="<%= root_path %>sidekiq-statistic-light.css" media="screen and (prefers-color-scheme: light)" rel="stylesheet" type="text/css" />
   <link href="<%= root_path %>sidekiq-statistic-dark.css" media="screen and (prefers-color-scheme: dark)" rel="stylesheet" type="text/css" />
 <% end %>
@@ -15,59 +17,57 @@
   </ul>
 
   <div class="statistic__container live-reload">
-    <div class="statistic__table">
-      <div class="statistic__datepicker">
-        <div>
-          <label><%= t('Start') %></label>
-          <input id="datepicker_from" autocomplete="off" />
-        </div>
-        <div>
-          <label><%= t('End') %></label>
-          <input id="datepicker_to" autocomplete="off" />
-        </div>
+    <div class="statistic__datepicker">
+      <div>
+        <label><%= t('Start') %></label>
+        <input id="datepicker_from" class="statistic__datepicker__input left" autocomplete="off" />
       </div>
-
-      <h2><%= t('WorkerTablePerDay') %></h2>
-      <div class="table_container">
-        <table class="statistic__table table table-hover table-bordered table-striped table-white">
-          <thead>
-            <th><%= t('Date') %></th>
-            <th><%= t('LastRun') %></th>
-            <th><%= t('Success') %></th>
-            <th><%= t('Failure') %></th>
-            <th><%= t('Total') %></th>
-            <th><%= t('TimeSec') %></th>
-            <th><%= t('AverageSec') %></th>
-            <th><%= t('MinTimeSec') %></th>
-            <th><%= t('MaxTimeSec') %></th>
-            <th><%= t('LastJobStatus') %></th>
-          </thead>
-          <% @worker_statistic.each do |worker| %>
-            <tr>
-              <td class="worker"><%= format_date worker[:date] %></td>
-              <td class="worker"><%= format_date worker[:runtime][:last], 'datetime' %></td>
-              <td class="worker"><%= worker[:success] %></td>
-              <td class="worker"><%= worker[:failure] %></td>
-              <td class="worker"><%= worker[:total] %></td>
-              <td class="worker"><%= worker[:runtime][:total] %></td>
-              <td class="worker"><%= worker[:runtime][:average] %></td>
-              <td class="worker"><%= worker[:runtime][:min] %></td>
-              <td class="worker"><%= worker[:runtime][:max] %></td>
-              <td class="worker"><%= worker[:last_job_status] %></td>
-            </tr>
-          <% end %>
-        </table>
+      <div>
+        <label><%= t('End') %></label>
+        <input id="datepicker_to" class="statistic__datepicker__input right" autocomplete="off" />
       </div>
     </div>
 
+    <div class="statistic__table">
+      <h2><%= t('WorkerTablePerDay') %></h2>
+
+      <table class="statistic__table table table-hover table-bordered table-striped table-white">
+        <thead>
+          <th><%= t('Date') %></th>
+          <th><%= t('LastRun') %></th>
+          <th><%= t('Success') %></th>
+          <th><%= t('Failure') %></th>
+          <th><%= t('Total') %></th>
+          <th><%= t('TimeSec') %></th>
+          <th><%= t('AverageSec') %></th>
+          <th><%= t('MinTimeSec') %></th>
+          <th><%= t('MaxTimeSec') %></th>
+          <th><%= t('LastJobStatus') %></th>
+        </thead>
+        <% @worker_statistic.each do |worker| %>
+          <tr>
+            <td class="worker"><%= format_date worker[:date] %></td>
+            <td class="worker"><%= format_date worker[:runtime][:last], 'datetime' %></td>
+            <td class="worker"><%= worker[:success] %></td>
+            <td class="worker"><%= worker[:failure] %></td>
+            <td class="worker"><%= worker[:total] %></td>
+            <td class="worker"><%= worker[:runtime][:total] %></td>
+            <td class="worker"><%= worker[:runtime][:average] %></td>
+            <td class="worker"><%= worker[:runtime][:min] %></td>
+            <td class="worker"><%= worker[:runtime][:max] %></td>
+            <td class="worker"><%= worker[:last_job_status] %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+
     <div class="statistic__log">
-      <input type="text" id="statistic__search" placeholder="<%= t('SearchLogs') %>" />
+      <input type="text" class="border-radius" placeholder="<%= t('SearchLogs') %>" />
 
       <% if @worker_log.empty? %>
         <%= t('EmptyLogs') %>
-        <p>
-          <small><%= Sidekiq::Statistic.configuration.log_file %></small>
-        </p>
+        <br/>
+        <small><%= Sidekiq::Statistic.configuration.log_file %></small>
       <% else %>
         <% @worker_log.each do |line| %>
           <p class="statistic__i"><%= line %></p>

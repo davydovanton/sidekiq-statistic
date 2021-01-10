@@ -98,7 +98,19 @@ module Sidekiq
       it 'displays common styles successfully' do
         _(last_response.status).must_equal 200
         _(last_response.content_type).must_match(/text\/css/)
-        _(last_response.body).must_match(/Common Styles/)
+        _(last_response.body).must_match(/=== COMMON ===/)
+      end
+    end
+
+    describe 'GET /sidekiq/ui-datepicker.css' do
+      before do
+        get '/ui-datepicker.css'
+      end
+
+      it 'displays ui-datepicker styles successfully' do
+        _(last_response.status).must_equal 200
+        _(last_response.content_type).must_match(/text\/css/)
+        _(last_response.body).must_match(/jQuery UI Datepicker/)
       end
     end
 
@@ -107,10 +119,10 @@ module Sidekiq
         get '/sidekiq-statistic-light.css'
       end
 
-      it 'displays common styles successfully' do
+      it 'displays light mode styles successfully' do
         _(last_response.status).must_equal 200
         _(last_response.content_type).must_match(/text\/css/)
-        _(last_response.body).must_match(/Light Styles/)
+        _(last_response.body).must_match(/LIGHT MODE STYLES/)
       end
     end
 
@@ -119,10 +131,10 @@ module Sidekiq
         get '/sidekiq-statistic-dark.css'
       end
 
-      it 'displays common styles successfully' do
+      it 'displays dark mode styles successfully' do
         _(last_response.status).must_equal 200
         _(last_response.content_type).must_match(/text\/css/)
-        _(last_response.body).must_match(/Dark Styles/)
+        _(last_response.body).must_match(/DARK MODE STYLES/)
       end
     end
   end

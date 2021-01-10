@@ -1,4 +1,6 @@
-/* Light Styles */
+/* === LIGHT MODE STYLES === */
+
+/* === CONTAINER === */
 
 .statistic__container {
   background-color: #fff;
@@ -6,6 +8,8 @@
   -moz-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
   box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
 }
+
+/* === DATEPICKER === */
 
 .statistic__datepicker {
   border-bottom: 1px solid rgb(236, 236, 236);
@@ -17,13 +21,7 @@
   box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
 }
 
-.statistic__jid {
-  background-color: red;
-}
-
-.statistic__jid:hover {
-  background-color: inherit;
-}
+/* === Worker table TOGGLE === */
 
 .worker__toggle-visibility {
   background: inherit;
@@ -43,42 +41,7 @@
   box-shadow: none;
 }
 
-#chartjs-tooltip {
-  opacity: 1;
-  position: absolute;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 3px;
-  border-radius: 3px;
-  -webkit-transition: all 0.1s ease;
-  transition: all 0.1s ease;
-  pointer-events: none;
-  -webkit-transform: translate(-50%, 0);
-  transform: translate(-50%, 0);
-}
-
-.chartjs-tooltip-title {
-  font-weight: 800;
-  margin-bottom: 5px;
-}
-
-.chartjs-tooltip-key {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 0 2px 0 5px;
-}
-
-/*!
-* jQuery UI Datepicker @VERSION
-* http://jqueryui.com
-*
-* Copyright jQuery Foundation and other contributors
-* Released under the MIT license.
-* http://jquery.org/license
-*
-* http://api.jqueryui.com/datepicker/#theming
-*/
+/* === UI DATEPICKER jQuery === */
 
 .ui-datepicker {
   background-color: #fff;
@@ -109,10 +72,7 @@
   color: #d7d7d7;
 }
 
-/*!
-* C3.js
-* http://c3js.org/
-*/
+/* === CHART C3.js === */
 
 .c3 line,
 .c3 path {
