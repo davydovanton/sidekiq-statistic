@@ -6,8 +6,8 @@ require 'json'
 module Sidekiq
   module Statistic
     module WebExtension
-      JAVASCRIPT_CONTENT_TYPE = { "Content-Type" => "application/javascript" }.freeze
-      CSS_CONTENT_TYPE = { "Content-Type" => "text/css" }.freeze
+      JAVASCRIPT_CONTENT_TYPE = { "Content-Type" => "application/javascript" }
+      CSS_CONTENT_TYPE = { "Content-Type" => "text/css" }
 
       def self.registered(app)
         Sidekiq::Web.settings.locales << File.expand_path(File.dirname(__FILE__) + '/locales')

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'tilt/erb'
-
 module Sidekiq
   module Statistic
     module Views
