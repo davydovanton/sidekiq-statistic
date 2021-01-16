@@ -51,14 +51,17 @@
   border-bottom: 1px solid #333333;
 }
 
+.nav-tabs > li > a {
+  background-color: #3D3D3D;
+}
+
 .nav-tabs > li.active > a {
   background-color: #282828;
   border: 1px solid #282828;
   color: #DCDCDC;
 }
 
-.nav-tabs > li > a:hover,
-.nav-tabs > li > a:visited {
+.nav-tabs > li > a:hover {
   background-color: #4A4443;
   border: 1px solid #4A4443;
   color: #DCDCDC;
@@ -66,14 +69,10 @@
 }
 
 .nav-tabs > li.active > a:hover {
-  background-color: #4A4443;
-  border: 1px solid #4A4443;
+  background-color: #282828;
+  border: 1px solid #282828;
   color: #DCDCDC;
   cursor: pointer;
-}
-
-.nav-tabs .statistic__tab {
-  background-color: rgb(64, 58, 57);
 }
 
 /* === Worker table TOGGLE === */
