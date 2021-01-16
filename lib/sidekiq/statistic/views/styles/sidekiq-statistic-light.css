@@ -1,0 +1,81 @@
+/* === LIGHT MODE STYLES === */
+
+/* === CONTAINER === */
+
+.statistic__container {
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
+  -moz-box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
+  box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
+}
+
+/* === DATEPICKER === */
+
+.statistic__datepicker {
+  border-bottom: 1px solid rgb(236, 236, 236);
+}
+
+.statistic__datepicker input {
+  background: #FFF;
+  border: 1px solid #CCC;
+  box-shadow: 0 0 5px rgba(50, 50, 50, 0.25);
+}
+
+/* === Worker table TOGGLE === */
+
+.worker__toggle-visibility {
+  background: inherit;
+}
+
+.worker__toggle-visibility:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.worker__toggle-visibility:active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.worker__toggle-visibility:focus,
+.worker__toggle-visibility:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
+/* === UI DATEPICKER jQuery === */
+
+.ui-datepicker {
+  background-color: #fff;
+  border: 1px solid #d7d7d7;
+}
+
+.ui-datepicker-today {
+  background: #F5F5F5;
+  font-weight: bold;
+}
+
+.ui-datepicker th {
+  padding: .5em 0;
+	font-size: 10px;
+	font-weight: bold;
+	text-transform: uppercase;
+	border: none;
+	border-bottom: 1px solid #d5d9e2;
+  background: #f3f3f3;
+  text-align: center;
+}
+
+.ui-datepicker td a:hover {
+  background: #F5F5F5;
+}
+
+.ui-state-disabled {
+  color: #d7d7d7;
+}
+
+/* === CHART C3.js === */
+
+.c3 line,
+.c3 path {
+  fill: none;
+  stroke: #000;
+}

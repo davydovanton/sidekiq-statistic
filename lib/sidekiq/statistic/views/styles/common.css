@@ -1,0 +1,106 @@
+/* === COMMON === */
+
+.border-radius {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.straight-top-left-radius {
+  -webkit-border-top-left-radius: 0;
+  -moz-border-top-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+/* === CONTAINER === */
+
+.statistic__container {
+  padding: 8px;
+  margin-bottom: 10px;
+  border-width: 0;
+}
+
+.statistic__container  > .realtime__toggle-container {
+  float: right;
+}
+
+/* === TABLES === */
+
+.statistic__table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+/* === DATEPICKER === */
+
+.statistic__datepicker {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.statistic__datepicker > div {
+  position: relative;
+}
+
+.statistic__datepicker > div > label {
+  font-size: 10px;
+  font-weight: normal;
+  margin-top: 2px;
+  margin-left: 5px;
+  position: absolute;
+  text-transform: uppercase;
+  transition: 0.2s;
+}
+
+.statistic__datepicker__input {
+  padding: 15px 5px 2px 5px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.statistic__datepicker__input.left {
+  -webkit-border-top-right-radius: 0 !important;
+  -moz-border-radius-topright: 0 !important;
+  border-top-right-radius: 0 !important;
+  -webkit-border-bottom-right-radius: 0 !important;
+  -moz-border-radius-bottomright: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.statistic__datepicker__input.right {
+  -webkit-border-top-left-radius: 0 !important;
+  -moz-border-radius-topleft: 0 !important;
+  border-top-left-radius: 0 !important;
+  -webkit-border-bottom-left-radius: 0 !important;
+  -moz-border-radius-bottomleft: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+/* === Worker table TOGGLE === */
+
+.worker__toggle-visibility {
+  padding: 2px 10px;
+}
+
+/* === Worker page LOGS === */
+
+.statistic__log {
+  display: none;
+  word-break: break-word;
+}
+
+.statistic__log > input[type=text] {
+  padding: 5px 2px 5px 5px;
+  float: right;
+  margin: -50px -7px 0;
+  width: 200px;
+}
+
+/* === CHART C3.js === */
+
+.c3 svg {
+  font: 10px sans-serif;
+}

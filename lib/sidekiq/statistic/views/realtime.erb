@@ -1,6 +1,9 @@
 <% add_to_head do %>
-  <link href="<%= root_path %>sidekiq-statistic.css" media="screen" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="<%= root_path %>common.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="<%= root_path %>sidekiq-statistic-light.css" media="screen and (prefers-color-scheme: light)" rel="stylesheet" type="text/css" />
+  <link href="<%= root_path %>sidekiq-statistic-dark.css" media="screen and (prefers-color-scheme: dark)" rel="stylesheet" type="text/css" />
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <% end %>
 
 <script type="text/javascript" src="<%= root_path %>c3.js"></script>
@@ -14,8 +17,8 @@
     <li class="active"><a href="<%= root_path %>statistic/realtime" class="statistic__tab"><%= t('Realtime') %></a></li>
   </ul>
 
-  <div class='statistic__container'>
-    <div>
+  <div class="statistic__container">
+    <div class="realtime__toggle-container">
       <button
         class="realtime__toggle-button btn btn-primary"
         type="button"
@@ -34,23 +37,25 @@
     </div>
 
     <h2><%= t('Workers') %></h2>
-    <table class="workers__table table table-hover table-bordered table-striped table-white">
+    <table class="statistic__table table table-hover table-bordered table-striped table-white">
       <thead>
         <tr>
           <th><%= t('Worker') %></th>
           <th><%= t('Show/Hide') %></th>
         </tr>
       </thead>
+      <tbody>
       <% @workers.each do |worker| %>
         <tr>
-          <td class="worker"><a href="<%= root_path %>statistic/<%= worker %>"><%= worker %></a></td>
-          <td class="worker">
+          <td><a href="<%= root_path %>statistic/<%= worker %>"><%= worker %></a></td>
+          <td>
             <button class="worker__toggle-visibility btn" name="<%= worker %>" data-visible=true>
               <i class="worker__visibility-icon fa fa-eye"></i>
             </button>
           </td>
         </tr>
       <% end %>
+      </tbody>
     </table>
   </div>
 </div>

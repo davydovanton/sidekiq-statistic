@@ -6,35 +6,49 @@ require 'json'
 module Sidekiq
   module Statistic
     module WebExtension
-      def self.registered(app)
-        view_path   = File.join(File.expand_path('..', __FILE__), 'views')
-        locale_path = File.expand_path(File.dirname(__FILE__) + '/locales')
+      JAVASCRIPT_CONTENT_TYPE = { "Content-Type" => "application/javascript" }
+      CSS_CONTENT_TYPE = { "Content-Type" => "text/css" }
 
-        Sidekiq::Web.settings.locales << locale_path
+      def self.registered(app)
+        Sidekiq::Web.settings.locales << File.expand_path(File.dirname(__FILE__) + '/locales')
 
         app.helpers Helpers::Color
         app.helpers Helpers::Date
 
         app.get '/c3.js' do
-          [200, { "Content-Type" => "application/javascript" }, [File.read(File.join(view_path, 'c3.js'))]]
+          [200, JAVASCRIPT_CONTENT_TYPE, Views.require_assets('c3.js')]
         end
 
         app.get '/realtime_statistic.js' do
-          [200, { "Content-Type" => "application/javascript" }, [File.read(File.join(view_path, 'realtime_statistic.js'))]]
+          [200, JAVASCRIPT_CONTENT_TYPE, Views.require_assets('realtime_statistic.js')]
         end
 
         app.get '/statistic.js' do
-          [200, { "Content-Type" => "application/javascript" }, [File.read(File.join(view_path, 'statistic.js'))]]
+          [200, JAVASCRIPT_CONTENT_TYPE, Views.require_assets('statistic.js')]
         end
 
-        app.get '/sidekiq-statistic.css' do
-          [200, { "Content-Type" => "text/css" }, [File.read(File.join(view_path, 'sidekiq-statistic.css'))]]
+        app.get '/ui-datepicker.css' do
+          [200, CSS_CONTENT_TYPE, Views.require_assets('styles/ui-datepicker.css')]
+        end
+
+        app.get '/common.css' do
+          [200, CSS_CONTENT_TYPE, Views.require_assets('styles/common.css')]
+        end
+
+        app.get '/sidekiq-statistic-light.css' do
+          [200, CSS_CONTENT_TYPE, Views.require_assets('styles/sidekiq-statistic-light.css')]
+        end
+
+        app.get '/sidekiq-statistic-dark.css' do
+          [200, CSS_CONTENT_TYPE, Views.require_assets('styles/sidekiq-statistic-dark.css')]
         end
 
         app.get '/statistic' do
           statistic = Workers.new(*calculate_date_range(params))
+          
           @all_workers = statistic.display
-          render(:erb, File.read(File.join(view_path, 'statistic.erb')))
+
+          render(:erb, Views.require_assets('statistic.erb').first)
         end
 
         app.get '/statistic/charts.json' do
@@ -53,11 +67,13 @@ module Sidekiq
 
         app.get '/statistic/realtime' do
           @workers = Realtime.new.worker_names
-          render(:erb, File.read(File.join(view_path, 'realtime.erb')))
+          
+          render(:erb, Views.require_assets('realtime.erb').first)
         end
 
         app.get '/statistic/realtime/charts.json' do
           realtime = Realtime.new
+
           json(realtime.statistic(params))
         end
 
@@ -72,7 +88,7 @@ module Sidekiq
                                      .display_per_day(@name)
           @worker_log = LogParser.new(@name).parse
 
-          render(:erb, File.read(File.join(view_path, 'worker.erb')))
+          render(:erb, Views.require_assets('worker.erb').first)
         end
       end
     end

@@ -13,13 +13,19 @@ module Sidekiq
       Sidekiq::Web
     end
 
-    it 'can show text with any locales' do
-      rackenv = { 'HTTP_ACCEPT_LANGUAGE' => 'ru,en' }
-      get '/', {}, rackenv
-      assert_match(/Статистика/, last_response.body)
-      rackenv = { 'HTTP_ACCEPT_LANGUAGE' => 'en-us' }
-      get '/', {}, rackenv
-      assert_match(/Statistic/, last_response.body)
+    describe 'GET /' do
+      it 'can show text with any locales' do
+        rackenv = { 'HTTP_ACCEPT_LANGUAGE' => 'ru,en' }
+
+        get '/', {}, rackenv
+
+        assert_match(/Статистика/, last_response.body)
+        rackenv = { 'HTTP_ACCEPT_LANGUAGE' => 'en-us' }
+
+        get '/', {}, rackenv
+
+        assert_match(/Statistic/, last_response.body)
+      end
     end
 
     describe 'GET /sidekiq' do
@@ -81,6 +87,54 @@ module Sidekiq
         it 'should be successful' do
           _(last_response.status).must_equal 200
         end
+      end
+    end
+
+    describe 'GET /sidekiq/common.css' do
+      before do
+        get '/common.css'
+      end
+
+      it 'displays common styles successfully' do
+        _(last_response.status).must_equal 200
+        _(last_response.content_type).must_match(/text\/css/)
+        _(last_response.body).must_match(/=== COMMON ===/)
+      end
+    end
+
+    describe 'GET /sidekiq/ui-datepicker.css' do
+      before do
+        get '/ui-datepicker.css'
+      end
+
+      it 'displays ui-datepicker styles successfully' do
+        _(last_response.status).must_equal 200
+        _(last_response.content_type).must_match(/text\/css/)
+        _(last_response.body).must_match(/jQuery UI Datepicker/)
+      end
+    end
+
+    describe 'GET /sidekiq/sidekiq-statistic-light.css' do
+      before do
+        get '/sidekiq-statistic-light.css'
+      end
+
+      it 'displays light mode styles successfully' do
+        _(last_response.status).must_equal 200
+        _(last_response.content_type).must_match(/text\/css/)
+        _(last_response.body).must_match(/LIGHT MODE STYLES/)
+      end
+    end
+
+    describe 'GET /sidekiq/sidekiq-statistic-dark.css' do
+      before do
+        get '/sidekiq-statistic-dark.css'
+      end
+
+      it 'displays dark mode styles successfully' do
+        _(last_response.status).must_equal 200
+        _(last_response.content_type).must_match(/text\/css/)
+        _(last_response.body).must_match(/DARK MODE STYLES/)
       end
     end
   end
