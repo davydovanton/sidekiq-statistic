@@ -38,7 +38,9 @@
   background: #CD3844;
 }
 
-.ui-datepicker a:active, a:hover, a:visited {
+.ui-datepicker a:active,
+.ui-datepicker a:hover,
+.ui-datepicker a:visited {
   color: #ccc;
 }
 
@@ -55,7 +57,8 @@
   color: #DCDCDC;
 }
 
-.nav-tabs > li > a:hover, a:visited {
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:visited {
   background-color: #4A4443;
   border: 1px solid #4A4443;
   color: #DCDCDC;
@@ -76,10 +79,7 @@
 /* === Worker table TOGGLE === */
 
 .worker__toggle-visibility {
-  color: rgb(213, 213, 213) !important;
-}
-
-.worker__toggle-visibility {
+  color: rgb(213, 213, 213);
   background: inherit;
   border: 1px solid rgb(102, 102, 102);
 }
