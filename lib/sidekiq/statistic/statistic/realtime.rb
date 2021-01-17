@@ -20,7 +20,7 @@ module Sidekiq
         Sidekiq.redis do |conn|
           redis_hash = {}
           conn
-            .hgetall("#{REDIS_HASH}:realtime:#{Time.now.sec - 1}")
+            .hgetall("#{Metrics::Store::REDIS_HASH}:realtime:#{Time.now.sec - 1}")
             .each do |keys, value|
               *keys, last = keys.split(KEY_SEPARATOR)
               keys.inject(redis_hash, &key_or_empty_hash)[last] = value.to_i

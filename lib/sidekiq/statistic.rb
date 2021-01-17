@@ -9,6 +9,9 @@ end
 require 'sidekiq/api'
 require 'sidekiq/statistic/configuration'
 require 'sidekiq/statistic/log_parser'
+require 'sidekiq/statistic/statistic/metric'
+require 'sidekiq/statistic/statistic/metrics/cache_keys'
+require 'sidekiq/statistic/statistic/metrics/store'
 require 'sidekiq/statistic/middleware'
 require 'sidekiq/statistic/base'
 require 'sidekiq/statistic/statistic/charts'
@@ -24,8 +27,6 @@ require 'sidekiq/statistic/helpers/date'
 
 module Sidekiq
   module Statistic
-    REDIS_HASH = 'sidekiq:statistic'
-
     class << self
       attr_writer :configuration
     end

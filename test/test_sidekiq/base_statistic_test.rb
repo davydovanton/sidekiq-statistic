@@ -36,14 +36,14 @@ module Sidekiq
             middlewared {}
 
             Sidekiq.redis do |conn|
-              assert_equal true, conn.hget(REDIS_HASH, "#{Time.now.utc.to_date}:HistoryWorker:total_time").nil?
+              assert_equal true, conn.hget(Metrics::Store::REDIS_HASH, "#{Time.now.utc.to_date}:HistoryWorker:total_time").nil?
               assert_equal 1, conn.lrange("#{Time.now.utc.to_date}:HistoryWorker:timeslist", 0, -1).size
             end
 
             base_statistic.statistic_hash
 
             Sidekiq.redis do |conn|
-              assert_equal false, conn.hget(REDIS_HASH, "#{Time.now.utc.to_date}:HistoryWorker:total_time").nil?
+              assert_equal false, conn.hget(Metrics::Store::REDIS_HASH, "#{Time.now.utc.to_date}:HistoryWorker:total_time").nil?
               assert_equal 0, conn.lrange("#{Time.now.utc.to_date}:HistoryWorker:timeslist", 0, -1).size
             end
           end
@@ -55,9 +55,9 @@ module Sidekiq
           middlewared {}
           time = Time.now.utc
 
-          Time.stub :now, time do
+          travel_to time do
             values = base_statistic.statistic_for('HistoryWorker')
-            assert_equal [{}, { passed: 1.0, last_job_status: "passed", last_time: time.to_i, queue: "", average_time: 0.0, min_time: 0.0, max_time: 0.0, total_time: 0.0, failed: 0 }], values
+            assert_equal [{}, { passed: 1.0, last_job_status: "passed", last_time: time.to_i, queue: "default", average_time: 0.0, min_time: 0.0, max_time: 0.0, total_time: 0.0, failed: 0 }], values
           end
         end
 

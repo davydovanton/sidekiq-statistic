@@ -31,7 +31,7 @@ module Sidekiq
 
       def get_statistic_hash(conn, redis_hash)
         conn
-          .hgetall(REDIS_HASH)
+          .hgetall(Metrics::Store::REDIS_HASH)
           .each do |keys, value|
             *keys, last = keys.split(KEY_SEPARATOR)
             keys.inject(redis_hash, &key_or_empty_hash)[last.to_sym] = to_number(value)
@@ -85,7 +85,7 @@ module Sidekiq
         statistics = time_statistics(timeslist)
 
         Sidekiq.redis do |redis|
-          redis.hmset REDIS_HASH,
+          redis.hmset Metrics::Store::REDIS_HASH,
             statistics.flat_map{ |(k, v)| ["#{worker_key}:#{k}", v] }
         end
 
