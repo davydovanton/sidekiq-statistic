@@ -39,6 +39,12 @@ module Nested
   end
 end
 
+def travel_to(time)
+  Time.stub :now, time do
+    yield
+  end
+end
+
 def middlewared(worker_class = HistoryWorker, msg = {})
   middleware = Sidekiq::Statistic::Middleware.new
   middleware.call worker_class.new, msg, 'default' do

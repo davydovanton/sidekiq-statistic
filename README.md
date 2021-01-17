@@ -132,10 +132,9 @@ This hash has the following structure:
 * `sidekiq:statistic` - redis hash with all statistic
   - `yyyy-mm-dd:WorkerName:passed` - count of passed jobs for Worker name on yyyy-mm-dd
   - `yyyy-mm-dd:WorkerName:failed` - count of failed jobs for Worker name on yyyy-mm-dd
-  - `yyyy-mm-dd:WorkerName:failed` - count of failed jobs for Worker name on yyyy-mm-dd
   - `yyyy-mm-dd:WorkerName:last_job_status` - string with status (`passed` or `failed`) for last job
-  - `yyyy-mm-dd:WorkerName:last_time` - date of lact job performing
-  - `yyyy-mm-dd:WorkerName:queue` - name of job queue (`defauld` by default)
+  - `yyyy-mm-dd:WorkerName:last_time` - date of last job performing
+  - `yyyy-mm-dd:WorkerName:queue` - name of job queue (`default` by default)
 
 For time information you should push the runtime value to `yyyy-mm-dd:WorkerName:timeslist` redis list.
 

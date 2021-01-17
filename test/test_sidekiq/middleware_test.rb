@@ -12,12 +12,12 @@ module Sidekiq
 
       before { Sidekiq.redis(&:flushdb) }
 
-      let(:date){ Time.now.utc.to_date }
+      let(:date) { Time.now.utc.to_date }
       let(:actual) do
         Sidekiq.redis do |conn|
           redis_hash = {}
           conn
-            .hgetall(REDIS_HASH)
+            .hgetall(Metrics::Store::REDIS_HASH)
             .each do |keys, value|
               *keys, last = keys.split(":")
               keys.inject(redis_hash){ |hash, key| hash[key] || hash[key] = {} }[last.to_sym] = to_number(value)
