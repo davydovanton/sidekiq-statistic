@@ -1,4 +1,5 @@
 ## HEAD
+* 02.02.2021: Fix tests *Kirill Tatchihin*
 * 02.09.2020: Improve dark mode workers table links readability(#160) *V-Gutierrez*
 * 25.08.2020: Refactor realtime statistic JS code (#159) *kostadriano*
 * 24.08.2020: Fix translation pt-Br start/stop (#153) *brunnohenrique*

@@ -7,10 +7,6 @@ describe Sidekiq::Statistic::Metrics::CacheKeys do
     describe 'for success status' do
       let(:metric) { Sidekiq::Statistic::Metric.new('HistoryWorker') }
 
-      before do
-        metric.status = Sidekiq::Statistic::Metric::STATUSES[:success]
-      end
-
       it 'returns correct key for "status" attribute' do
         travel_to Time.new(2021, 1, 17, 14, 00, 00) do
           result = Sidekiq::Statistic::Metrics::CacheKeys.new(metric)
@@ -23,12 +19,9 @@ describe Sidekiq::Statistic::Metrics::CacheKeys do
     describe 'for failure status' do
       let(:metric) { Sidekiq::Statistic::Metric.new('HistoryWorker') }
 
-      before do
-        metric.status = Sidekiq::Statistic::Metric::STATUSES[:failure]
-      end
-
       it 'returns correct key for "status" attribute' do
         travel_to Time.new(2021, 1, 17, 14, 00, 00) do
+          metric.fails!
           result = Sidekiq::Statistic::Metrics::CacheKeys.new(metric)
 
           assert_equal '2021-01-17:HistoryWorker:failed', result.status
