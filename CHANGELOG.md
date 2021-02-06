@@ -2,7 +2,7 @@
 
 ## 1.5.1
 
-* 06.02.2021: Generate new TAG to fix "version.rb" not updated in the previous one (#168) *Wender Freese*
+* 06.02.2021: Generate new TAG to fix "version.rb" not updated in the previous one (#170) *Wender Freese*
 * 02.02.2021: Fix tests (#167) *Kirill Tatchihin*
 * 17.01.2021: Refactor middleware to break responsibilities (#165) *Wender Freese*
 
