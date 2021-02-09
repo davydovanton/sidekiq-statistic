@@ -1,6 +1,15 @@
 ## HEAD
-* 02.02.2021: Fix tests *Kirill Tatchihin*
-* 02.09.2020: Improve dark mode workers table links readability(#160) *V-Gutierrez*
+
+## v1.5.1
+
+* 06.02.2021: Generate new TAG to fix "version.rb" not updated in the previous one (#170) *Wender Freese*
+* 02.02.2021: Fix tests (#167) *Kirill Tatchihin*
+* 17.01.2021: Refactor middleware to break responsibilities (#165) *Wender Freese*
+
+## v1.5.0
+
+* 16.01.2021: Fully support dark mode (#164) *Wender Freese*
+* 02.09.2020: Improve dark mode workers table links readability (#160) *V-Gutierrez*
 * 25.08.2020: Refactor realtime statistic JS code (#159) *kostadriano*
 * 24.08.2020: Fix translation pt-Br start/stop (#153) *brunnohenrique*
 * 01.07.2020: Update workers toggle visibility button on RealTime (#156) *kostadriano*
@@ -9,7 +18,7 @@
 * 25.11.2019: Fix high memory usage in Log Parser *Dmitriy*
 * 04.10.2019: Fix UI problem when the number of workers increases too much (#140) *Guilherme Quirino*
 
-## 1.4.0
+## v1.4.0
 
 * 13.09.2019: Replace `chart.js` to `c3.js` (#139) *Guilherme Quirino*
 * 17.08.2019: Improve Date translations (#136) *Guilherme Quirino*
