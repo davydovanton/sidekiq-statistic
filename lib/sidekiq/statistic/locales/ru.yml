@@ -23,8 +23,5 @@ ru: # <---- change this to your locale code
   LastJobStatus: Статус последнего джоба
   WorkerInformation: 'Информация о %{worker}'
   InformationTable: Таблица с информацией
-  WorkerLog: Лог воркера
   WorkerTablePerDay: Таблица воркера (по дням)
   LastRun: Последний запуск
-  EmptyLogs: Нет результатов
-  SearchLogs: Поиск в лог-файле

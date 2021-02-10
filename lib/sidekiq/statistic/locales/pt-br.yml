@@ -23,11 +23,8 @@ pt-br: # <---- change this to your locale code
   LastJobStatus: Status da última execução
   WorkerInformation: 'Informações do %{worker}'
   InformationTable: Tabela de informação
-  WorkerLog: Log do Worker
   WorkerTablePerDay: Tabela do Worker (por dia)
   LastRun: Última execução
-  EmptyLogs: Nenhum resultado
-  SearchLogs: Pesquisar no arquivo de logs
   date:
     formats:
       default: "%d/%m/%Y"

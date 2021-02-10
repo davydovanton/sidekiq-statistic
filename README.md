@@ -1,22 +1,17 @@
-# Sidekiq statistic
+
+# Sidekiq::Statistic
 
 [![Build Status](https://travis-ci.org/davydovanton/sidekiq-statistic.svg)](https://travis-ci.org/davydovanton/sidekiq-statistic) [![Code Climate](https://codeclimate.com/github/davydovanton/sidekiq-history/badges/gpa.svg)](https://codeclimate.com/github/davydovanton/sidekiq-history) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/davydovanton/sidekiq-history?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-Improved display of statistics for your sidekiq workers and jobs.
-
-**This gem work only with sidekiq version more than [3.3.4](https://github.com/mperham/sidekiq/releases/tag/v3.3.4)**
+Improved display of statistics for your Sidekiq workers and jobs.
 
 ## Screenshots
-Also you can check <a href="https://sidekiq-history-gem.herokuapp.com/sidekiq/statistic" target="_blank">heroku application</a> with rails app with this sidekiq plugin
 
 ### Index page:
 ![sidekiq-history_index](https://user-images.githubusercontent.com/15057257/66249364-74645d80-e708-11e9-8f06-a9a224be4e37.png)
 
 ### Worker page with table (per day):
 ![sidekiq-history_worker](https://cloud.githubusercontent.com/assets/1147484/8071171/1706924a-0f10-11e5-9ddc-8aeeb7f5c794.png)
-
-### Worker page with log:
-![screenshot 2015-06-10 01 27 50](https://cloud.githubusercontent.com/assets/1147484/8071166/0edd7688-0f10-11e5-9841-0572ab5704e3.jpg)
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -28,11 +23,19 @@ And then execute:
     $ bundle
 
 ## Usage
-Open Statistic tab on your sidekiq page.
 
-### Not rails application
-Read [sidekiq documentation](https://github.com/mperham/sidekiq/wiki/Monitoring#standalone).
-After that add `require 'sidekiq-statistic'` to you `config.ru`. For example:
+### Using Rails
+
+Read [Sidekiq documentation](https://github.com/mperham/sidekiq/wiki/Monitoring#rails) to configure Sidekiq Web UI in your `routes.rb`.
+
+When Sidekiq Web UI is active you're going be able to see the option `Statistic` on the menu.
+
+### Using a standalone application
+
+Read [Sidekiq documentation](https://github.com/mperham/sidekiq/wiki/Monitoring#standalone) to configure Sidekiq in your Rack server.
+
+Next add `require 'sidekiq-statistic'` to your `config.ru`.
+
 ``` ruby
 # config.ru
 require 'sidekiq/web'
@@ -43,17 +46,25 @@ run Sidekiq::Web
 ```
 
 ## Configuration
-Sidekiq statistic gem have `log_file` and `last_log_lines` options.
-`log_file` option lets you specify a custom path to sidekiq log file. By default this option equal `log/sidekiq.log`
-`last_log lines` option lets you specify a custom count of last logger file lines which will be displayed. By default this option equal 1000.
+
+The Statistic configuration is an initializer that GEM uses to configure itself. The option `max_timelist_length`
+is used to avoid memory leak, in practice, whenever the cache size reaches that number, the GEM is going
+to remove 25% of the key values, avoiding inflating memory.
 
 ``` ruby
 Sidekiq::Statistic.configure do |config|
-  config.log_file = 'test/helpers/logfile.log'
-  config.last_log_lines = 10_000
-  config.max_timelist_length = 500_000
+  config.max_timelist_length = 250_000
 end
 ```
+
+## Supported Sidekiq versions
+
+Statistic support the following Sidekiq versions:
+
+-   Sidekiq 6.
+-   Sidekiq 5.
+-   Sidekiq 4.
+-   Sidekiq 3.5.
 
 ## JSON API
 ### /api/statistic.json

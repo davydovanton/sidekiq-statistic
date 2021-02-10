@@ -23,8 +23,5 @@ it: # <---- change this to your locale code
   LastJobStatus: Stato Ultimo Job
   WorkerInformation: 'Informazioni %{worker}'
   InformationTable: Tabella Informazioni
-  WorkerLog: Worker log
   WorkerTablePerDay: Tabella Worker (per giorno)
   LastRun: Ultima Esecuzione
-  EmptyLogs: Nessun Risultato
-  SearchLogs: Cerca nel file di registro

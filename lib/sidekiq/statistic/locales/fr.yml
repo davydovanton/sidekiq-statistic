@@ -23,8 +23,5 @@ fr: # <---- change this to your locale code
   LastJobStatus: Dernier statut job
   WorkerInformation: '%{worker} information'
   InformationTable: Information table
-  WorkerLog: Journaux Worker
   WorkerTablePerDay: Worker Table (par jour)
   LastRun: Dernier Exécution
-  EmptyLogs: Jornaux Vides
-  SearchLogs: Journaux de recherche

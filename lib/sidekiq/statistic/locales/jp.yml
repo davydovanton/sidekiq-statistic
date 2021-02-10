@@ -23,8 +23,5 @@ jp: # <---- change this to your locale code
   LastJobStatus: 最後の状態
   WorkerInformation: '%{worker}の情報'
   InformationTable: 情報表
-  WorkerLog: ワーカーログ
   WorkerTablePerDay: ワーカー表 (日)
   LastRun: 最後の実行
-  EmptyLogs: データがありません
-  SearchLogs: ログファイルにて検索
