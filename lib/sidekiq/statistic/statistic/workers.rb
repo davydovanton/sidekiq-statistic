@@ -17,6 +17,17 @@ module Sidekiq
         end
       end
 
+			def display_by_last_status
+				{
+					passed: filter_last_job_status('passed'),
+					failed: filter_last_job_status('failed')
+				}
+			end
+
+			def filter_last_job_status(status)
+				display.select { |worker| worker[:last_job_status] == status }
+			end
+
       def display_per_day(worker_name)
         statistic_hash.flat_map do |day|
           day.reject{ |_, workers| workers.empty? }.map do |date, workers|
