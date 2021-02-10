@@ -40,6 +40,10 @@
     </div>
 
     <h2><%= t('WorkersTable') %></h2>
+		<div id="status_filters_checkboxes">
+			<p><input type="checkbox" id="show-passed" checked> Show passed</p>
+			<p><input type="checkbox" id="show-failed" checked> Show failed</p>
+		</div>
     <table class="statistic__table table table-hover table-bordered table-striped table-white live-reload">
       <thead>
         <th><%= t('Worker') %></th>
@@ -56,22 +60,22 @@
       </thead>
       <tbody>
       <% @all_workers.each do |worker| %>
-        <tr>
-          <td>
-            <a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a>
-          </td>
-          <td><%= format_date worker[:runtime][:last], 'datetime' %></td>
-          <td><%= worker[:queue] %></td>
-          <td><%= worker[:number_of_calls][:success] %></td>
-          <td><%= worker[:number_of_calls][:failure] %></td>
-          <td><%= worker[:number_of_calls][:total] %></td>
-          <td><%= worker[:runtime][:total] %></td>
-          <td><%= worker[:runtime][:average] %></td>
-          <td><%= worker[:runtime][:min] %></td>
-          <td><%= worker[:runtime][:max] %></td>
-          <td><%= worker[:last_job_status] %></td>
-        </tr>
-      <% end %>
+				<tr class="worker-<%= worker[:last_job_status] %>">
+					<td>
+						<a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a>
+					</td>
+					<td><%= format_date worker[:runtime][:last], 'datetime' %></td>
+					<td><%= worker[:queue] %></td>
+					<td><%= worker[:number_of_calls][:success] %></td>
+					<td><%= worker[:number_of_calls][:failure] %></td>
+					<td><%= worker[:number_of_calls][:total] %></td>
+					<td><%= worker[:runtime][:total] %></td>
+					<td><%= worker[:runtime][:average] %></td>
+					<td><%= worker[:runtime][:min] %></td>
+					<td><%= worker[:runtime][:max] %></td>
+					<td><%= worker[:last_job_status] %></td>
+				</tr>
+			<% end %>
       </tbody>
     </table>
   </div>

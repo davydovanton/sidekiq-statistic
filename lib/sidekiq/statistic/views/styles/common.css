@@ -24,6 +24,18 @@
   float: right;
 }
 
+/* === INPUT LIST === */
+
+#status_filters_checkboxes {
+	display: flex;
+	gap: 2em;
+}
+
+#status_filters_checkboxes p {
+	display: inline;
+}
+
+
 /* === TABLES === */
 
 .statistic__table > tbody > tr > td {
