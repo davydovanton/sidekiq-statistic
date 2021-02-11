@@ -61,6 +61,62 @@ module Sidekiq
       end
     end
 
+    describe 'GET /api/statistic_by_state.json' do
+      describe 'without jobs' do
+        it 'returns empty workers statistic' do
+          get '/api/statistic_by_state.json'
+
+          response = Sidekiq.load_json(last_response.body)
+          _(response['status']).must_be_instance_of Hash
+          _(response['status']['passed']).must_equal []
+          _(response['status']['failed']).must_equal []
+        end
+      end
+
+      describe 'for perfomed jobs' do
+        it 'returns workers statistic filtered by state' do
+          middlewared {}
+          get '/api/statistic_by_state.json'
+
+          response = Sidekiq.load_json(last_response.body)
+          _(response['status']).must_be_instance_of Hash
+          _(response['status']['passed']).wont_equal []
+          _(response['status']['failed']).must_equal []
+
+          _(response['status']['passed'].first.keys).must_equal %w[name last_job_status number_of_calls queue runtime]
+        end
+      end
+
+      describe 'for any range' do
+        before do
+          middlewared {}
+        end
+
+        describe 'for date range with empty statistic' do
+          it 'returns empty statistic' do
+            get '/api/statistic_by_state.json?dateFrom=2015-07-28&dateTo=2015-07-29'
+
+            response = Sidekiq.load_json(last_response.body)
+						_(response['status']).must_be_instance_of Hash
+						_(response['status']['passed']).must_equal []
+						_(response['status']['failed']).must_equal []
+          end
+        end
+
+        describe 'for any date range with existed statistic' do
+					it 'returns workers statistic filtered by state' do
+            get "/api/statistic_by_state.json?dateFrom=2015-07-28&dateTo=#{Date.today}"
+
+            response = Sidekiq.load_json(last_response.body)
+						_(response['status']).must_be_instance_of Hash
+						_(response['status']['passed']).wont_equal []
+            _(response['status']['passed'].count).must_equal 1
+						_(response['status']['failed']).must_equal []
+          end
+        end
+      end
+    end
+
     describe 'GET /api/statistic/:worker.json' do
       describe 'without jobs' do
         it 'returns empty workers statistic' do
