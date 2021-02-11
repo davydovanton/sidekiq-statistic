@@ -18,7 +18,7 @@ module Sidekiq
           Sidekiq.dump_json(workers: statistic.display)
         end
 
-        app.get '/api/statistic_by_state.json' do
+        app.get '/api/statistic_by_last_job_status.json' do
           statistic = Sidekiq::Statistic::Workers.new(*calculate_date_range(params))
           Sidekiq.dump_json(status: statistic.display_by_last_status)
         end

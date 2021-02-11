@@ -61,10 +61,10 @@ module Sidekiq
       end
     end
 
-    describe 'GET /api/statistic_by_state.json' do
+    describe 'GET /api/statistic_by_last_job_status.json' do
       describe 'without jobs' do
         it 'returns empty workers statistic' do
-          get '/api/statistic_by_state.json'
+          get '/api/statistic_by_last_job_status.json'
 
           response = Sidekiq.load_json(last_response.body)
           _(response['status']).must_be_instance_of Hash
@@ -76,7 +76,7 @@ module Sidekiq
       describe 'for perfomed jobs' do
         it 'returns workers statistic filtered by state' do
           middlewared {}
-          get '/api/statistic_by_state.json'
+          get '/api/statistic_by_last_job_status.json'
 
           response = Sidekiq.load_json(last_response.body)
           _(response['status']).must_be_instance_of Hash
@@ -94,7 +94,7 @@ module Sidekiq
 
         describe 'for date range with empty statistic' do
           it 'returns empty statistic' do
-            get '/api/statistic_by_state.json?dateFrom=2015-07-28&dateTo=2015-07-29'
+            get '/api/statistic_by_last_job_status.json?dateFrom=2015-07-28&dateTo=2015-07-29'
 
             response = Sidekiq.load_json(last_response.body)
             _(response['status']).must_be_instance_of Hash
@@ -105,7 +105,7 @@ module Sidekiq
 
         describe 'for any date range with existed statistic' do
           it 'returns workers statistic filtered by state' do
-            get "/api/statistic_by_state.json?dateFrom=2015-07-28&dateTo=#{Date.today}"
+            get "/api/statistic_by_last_job_status.json?dateFrom=2015-07-28&dateTo=#{Date.today}"
 
             response = Sidekiq.load_json(last_response.body)
             _(response['status']).must_be_instance_of Hash
