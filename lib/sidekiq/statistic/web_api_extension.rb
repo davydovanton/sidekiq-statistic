@@ -18,6 +18,11 @@ module Sidekiq
           Sidekiq.dump_json(workers: statistic.display)
         end
 
+        app.get '/api/statistic_by_state.json' do
+          statistic = Sidekiq::Statistic::Workers.new(*calculate_date_range(params))
+          Sidekiq.dump_json(status: statistic.display_by_last_status)
+        end
+
         app.get '/api/statistic/:worker.json' do
           worker_statistic =
             Sidekiq::Statistic::Workers
@@ -25,11 +30,6 @@ module Sidekiq
               .display_per_day(params[:worker])
 
           Sidekiq.dump_json(days: worker_statistic)
-        end
-
-        app.get '/api/statistic_by_state.json' do
-          statistic = Sidekiq::Statistic::Workers.new(*calculate_date_range(params))
-          Sidekiq.dump_json(status: statistic.display_by_last_status)
         end
       end
     end

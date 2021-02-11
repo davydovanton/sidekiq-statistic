@@ -111,31 +111,28 @@ module Sidekiq
           subject = statistic.display_by_last_status
 
           _(subject).must_be_instance_of Hash
-
           assert_equal subject.keys.sort,
                        %i[passed failed].sort
 
-					_(subject[:passed]).must_be_instance_of Array
-					_(subject[:failed]).must_be_instance_of Array
-
-					assert_equal subject[:passed][0].keys.sort,
-											%i[name last_job_status number_of_calls queue runtime].sort
+          _(subject[:passed]).must_be_instance_of Array
+          _(subject[:failed]).must_be_instance_of Array
+          assert_equal subject[:passed][0].keys.sort,
+                      %i[name last_job_status number_of_calls queue runtime].sort
 
           assert_equal worker, subject[:passed][0][:name]
         end
       end
 
-			describe "#filter_last_job_status" do
-				it 'return array with worker when filtering by passed workers' do
-					middlewared {}
+      describe "#filter_last_job_status" do
+        it 'return array with worker when filtering by passed workers' do
+          middlewared {}
 
           subject = statistic.filter_last_job_status('passed')
 
           _(subject).must_be_instance_of Array
-
-					assert_equal subject[0][:name], worker
-				end
-			end
+          assert_equal subject[0][:name], worker
+        end
+      end
 
       describe '#display_per_day' do
         it 'return workers job per day' do

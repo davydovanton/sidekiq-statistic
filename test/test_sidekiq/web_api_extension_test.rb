@@ -97,21 +97,21 @@ module Sidekiq
             get '/api/statistic_by_state.json?dateFrom=2015-07-28&dateTo=2015-07-29'
 
             response = Sidekiq.load_json(last_response.body)
-						_(response['status']).must_be_instance_of Hash
-						_(response['status']['passed']).must_equal []
-						_(response['status']['failed']).must_equal []
+            _(response['status']).must_be_instance_of Hash
+            _(response['status']['passed']).must_equal []
+            _(response['status']['failed']).must_equal []
           end
         end
 
         describe 'for any date range with existed statistic' do
-					it 'returns workers statistic filtered by state' do
+          it 'returns workers statistic filtered by state' do
             get "/api/statistic_by_state.json?dateFrom=2015-07-28&dateTo=#{Date.today}"
 
             response = Sidekiq.load_json(last_response.body)
-						_(response['status']).must_be_instance_of Hash
-						_(response['status']['passed']).wont_equal []
+            _(response['status']).must_be_instance_of Hash
+            _(response['status']['passed']).wont_equal []
             _(response['status']['passed'].count).must_equal 1
-						_(response['status']['failed']).must_equal []
+            _(response['status']['failed']).must_equal []
           end
         end
       end
