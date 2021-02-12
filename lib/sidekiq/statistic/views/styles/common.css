@@ -27,12 +27,12 @@
 /* === INPUT LIST === */
 
 #status_filters_checkboxes {
-	display: flex;
-	gap: 2em;
+  display: flex;
+  gap: 2em;
 }
 
 #status_filters_checkboxes p {
-	display: inline;
+  display: inline;
 }
 
 
