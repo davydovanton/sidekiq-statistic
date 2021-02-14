@@ -10,7 +10,7 @@ module Sidekiq
       end
 
       def initialize
-        super Filter.month
+        super Filter.past_thirty_days
       end
 
       def realtime_hash

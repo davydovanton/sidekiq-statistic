@@ -6,7 +6,7 @@ module Sidekiq
       DEFAULT_DAYS_TO_RANGE = 30
       DEFAULT_DATE_FORMAT = '%Y-%m-%d'
 
-      def self.month
+      def self.past_thirty_days
         new(from: nil, to: nil)
       end
 

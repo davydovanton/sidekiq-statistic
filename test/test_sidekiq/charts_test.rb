@@ -7,7 +7,7 @@ module Sidekiq
     describe 'Charts' do
       before { Sidekiq.redis(&:flushdb) }
 
-      let(:filter) { Sidekiq::Statistic::Filter.month }
+      let(:filter) { Sidekiq::Statistic::Filter.past_thirty_days }
       let(:chart) { Sidekiq::Statistic::Charts.new(filter) }
 
       describe '#dates' do
