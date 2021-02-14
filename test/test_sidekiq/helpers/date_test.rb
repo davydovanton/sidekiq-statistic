@@ -42,21 +42,13 @@ module Sidekiq
       end
     end
 
-    describe '.calculate_date_range' do
-      let(:helper_date) { Helper.new({}, {}) }
+    describe '.build_filter_from_request' do
+      let(:clazz) { Helper.new({}, {}) }
 
-      it 'returns the range between dates' do
-        diference = 2
-        today = Date.new
-        two_days_ago = today - diference
-        params = { 'dateFrom' => two_days_ago.to_s,
-                   'dateTo' => today.to_s }
-
-        _(helper_date.calculate_date_range(params)).must_equal([diference, today])
-      end
-
-      it 'returns default range' do
-        _(helper_date.calculate_date_range({})).must_equal([20])
+      it 'returns Filter instance with correct data' do
+        helper_date.stub :params, { 'dateFrom' => '2021-02-13T10:15:00', 'dateTo' => '2021-02-14T10:15:00' } do
+          assert_equal helper_date.build_filter_from_request.range, %w[2021-02-13 2021-02-14]
+        end
       end
     end
   end

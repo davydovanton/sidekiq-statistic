@@ -7,7 +7,8 @@ module Sidekiq
     describe 'Base' do
       before { Sidekiq.redis(&:flushdb) }
 
-      let(:base_statistic) { Sidekiq::Statistic::Base.new(1) }
+      let(:filter) { Sidekiq::Statistic::Filter.yesterday }
+      let(:base_statistic) { Sidekiq::Statistic::Base.new(filter) }
 
       describe '#redis_hash' do
         it 'returns hash for each day' do

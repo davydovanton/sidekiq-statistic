@@ -4,22 +4,24 @@ module Sidekiq
   module Statistic
     module Helpers
       module Date
-        DEFAULT_DAYS = 20
-
         def format_date(date_to_format, format = nil)
           time = date_to_format ? convert_to_date_object(date_to_format) : Time.now
           time.strftime(date_format(format))
         end
 
-        def calculate_date_range(params)
-          if params['dateFrom'] && params['dateTo']
-            from = ::Date.parse(params['dateFrom'])
-            to   = ::Date.parse(params['dateTo'])
+        def build_filter_from_request
+          from = params['dateFrom']
+          to = params['dateTo']
 
-            [(to - from).to_i, to]
-          else
-            [DEFAULT_DAYS]
-          end
+          Filter.new(from: from, to: to)
+        end
+
+        def from
+          (::Date.today - Filter::DEFAULT_DAYS_TO_RANGE).strftime(date_format)
+        end
+
+        def to
+          (::Date.today).strftime(date_format)
         end
 
         module_function

@@ -8,6 +8,8 @@
 <script type="text/javascript" src="<%= root_path %>c3.js"></script>
 <script type="text/javascript" src="<%= root_path %>statistic.js"></script>
 
+<input type="hidden" id="i18n.formats.date" name="i18n.formats.date" value="<%= get_locale.dig('date', 'formats', 'picker', 'default') %>" />
+
 <div class="statistic">
   <h2><%= t('Statistic') %></h2>
 
@@ -21,10 +23,12 @@
       <div>
         <label><%= t('Start') %></label>
         <input id="datepicker_from" class="statistic__datepicker__input left" autocomplete="off" />
+        <input type="hidden" id="datepicker_from_init_val" value="<%= from %>" />
       </div>
       <div>
         <label><%= t('End') %></label>
         <input id="datepicker_to" class="statistic__datepicker__input right" autocomplete="off" />
+        <input type="hidden" id="datepicker_to_init_val" value="<%= to %>" />
       </div>
     </div>
 
@@ -56,7 +60,7 @@
           <td>
             <a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a>
           </td>
-          <td><%= format_date worker[:runtime][:last], 'datetime' %></td>
+          <td><%= format_date worker[:runtime][:last] %></td>
           <td><%= worker[:queue] %></td>
           <td><%= worker[:number_of_calls][:success] %></td>
           <td><%= worker[:number_of_calls][:failure] %></td>

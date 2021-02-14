@@ -1,5 +1,9 @@
 ## HEAD
 
+## v1.6.0
+
+* 14.02.2021: Improve filter capabilities (add i18n support) (#174) *Wender Freese*
+
 ## v1.5.1
 
 * 06.02.2021: Generate new TAG to fix "version.rb" not updated in the previous one (#170) *Wender Freese*

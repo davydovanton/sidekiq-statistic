@@ -44,15 +44,15 @@ module Sidekiq
         end
 
         app.get '/statistic' do
-          statistic = Workers.new(*calculate_date_range(params))
-          
+          statistic = Workers.new(build_filter_from_request)
+
           @all_workers = statistic.display
 
           render(:erb, Views.require_assets('statistic.erb').first)
         end
 
         app.get '/statistic/charts.json' do
-          charts = Charts.new(*calculate_date_range(params))
+          charts = Charts.new(build_filter_from_request)
           date = {
             format: date_format,
             labels: charts.dates
@@ -66,8 +66,10 @@ module Sidekiq
         end
 
         app.get '/statistic/realtime' do
-          @workers = Realtime.new.worker_names
-          
+          @workers = Realtime
+            .new
+            .worker_names
+
           render(:erb, Views.require_assets('realtime.erb').first)
         end
 
@@ -84,7 +86,7 @@ module Sidekiq
         app.get '/statistic/:worker' do
           @name = params[:worker]
 
-          @worker_statistic = Workers.new(*calculate_date_range(params))
+          @worker_statistic = Workers.new(build_filter_from_request)
                                      .display_per_day(@name)
           @worker_log = LogParser.new(@name).parse
 
