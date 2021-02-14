@@ -7,7 +7,8 @@ module Sidekiq
     describe 'Runtime' do
       before { Sidekiq.redis(&:flushdb) }
 
-      let(:statistic)         { Sidekiq::Statistic::Base.new(1) }
+      let(:filter) { Sidekiq::Statistic::Filter.yesterday }
+      let(:statistic) { Sidekiq::Statistic::Base.new(filter) }
       let(:runtime_statistic) { Sidekiq::Statistic::Runtime.new(statistic, 'HistoryWorker') }
 
       describe '#last_runtime' do

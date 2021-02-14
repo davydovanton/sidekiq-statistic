@@ -3,8 +3,6 @@
 module Sidekiq
   module Statistic
     class Realtime < Base
-      DAYS_PREVIOUS = 30
-
       def self.charts_initializer
         workers = new.worker_names.map{ |w| Array.new(12, 0).unshift(w) }
         workers << Array.new(12) { |i| (Time.now - i).strftime('%T') }.unshift('x')
@@ -12,8 +10,7 @@ module Sidekiq
       end
 
       def initialize
-        @start_date = Time.now.utc.to_date
-        @end_date = @start_date - DAYS_PREVIOUS
+        super Filter.month
       end
 
       def realtime_hash

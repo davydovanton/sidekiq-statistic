@@ -5,9 +5,10 @@ module Sidekiq
     class Base
       KEY_SEPARATOR = /(?<!:):(?!:)/
 
-      def initialize(days_previous, start_date = nil)
-        @start_date = start_date || Time.now.utc.to_date
-        @end_date = @start_date - days_previous
+      attr_reader :filter
+
+      def initialize(filter)
+        @filter = filter
       end
 
       def statistic_for(worker)
@@ -23,7 +24,8 @@ module Sidekiq
           redis_hash = {}
           get_statistic_hash(conn, redis_hash)
           update_time_values(conn, redis_hash)
-          desired_dates.map { |key| result_hash(redis_hash, key) }
+
+          filter.range.map { |key| result_hash(redis_hash, key) }
         end
       end
 
@@ -40,10 +42,6 @@ module Sidekiq
 
       def key_or_empty_hash
         ->(h, k) { h[k] || h[k] = {} }
-      end
-
-      def desired_dates
-        (@end_date..@start_date).map { |date| date.strftime "%Y-%m-%d" }
       end
 
       def result_hash(redis_hash, key)

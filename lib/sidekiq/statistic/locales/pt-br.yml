@@ -13,7 +13,7 @@ pt-br: # <---- change this to your locale code
   WorkersTable: Tabela de Workers
   Worker: Worker
   Date: Data
-  Success: Successo
+  Success: Sucesso
   Failure: Falha
   Total: Total
   TimeSec: Tempo(s)
@@ -32,3 +32,5 @@ pt-br: # <---- change this to your locale code
     formats:
       default: "%d/%m/%Y"
       datetime: "%d/%m/%Y - %T"
+      picker:
+        default: "dd/mm/yy"

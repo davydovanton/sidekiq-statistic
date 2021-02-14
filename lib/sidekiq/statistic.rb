@@ -9,6 +9,7 @@ end
 require 'sidekiq/api'
 require 'sidekiq/statistic/configuration'
 require 'sidekiq/statistic/log_parser'
+require 'sidekiq/statistic/statistic/filter'
 require 'sidekiq/statistic/statistic/metric'
 require 'sidekiq/statistic/statistic/metrics/cache_keys'
 require 'sidekiq/statistic/statistic/metrics/store'

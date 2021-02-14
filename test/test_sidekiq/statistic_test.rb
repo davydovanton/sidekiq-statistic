@@ -7,8 +7,9 @@ module Sidekiq
     describe 'Workers' do
       before { Sidekiq.redis(&:flushdb) }
 
-      let(:statistic) { Sidekiq::Statistic::Workers.new(1) }
-      let(:base_statistic) { Sidekiq::Statistic::Base.new(1) }
+      let(:filter) { Sidekiq::Statistic::Filter.yesterday }
+      let(:statistic) { Sidekiq::Statistic::Workers.new(filter) }
+      let(:base_statistic) { Sidekiq::Statistic::Base.new(filter) }
       let(:worker) { 'HistoryWorker' }
 
       describe '#number_of_calls' do

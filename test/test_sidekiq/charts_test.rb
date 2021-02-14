@@ -7,7 +7,8 @@ module Sidekiq
     describe 'Charts' do
       before { Sidekiq.redis(&:flushdb) }
 
-      let(:chart) { Sidekiq::Statistic::Charts.new(1) }
+      let(:filter) { Sidekiq::Statistic::Filter.month }
+      let(:chart) { Sidekiq::Statistic::Charts.new(filter) }
 
       describe '#dates' do
         it 'returns array with all days' do

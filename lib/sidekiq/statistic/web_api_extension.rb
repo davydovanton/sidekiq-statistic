@@ -14,14 +14,14 @@ module Sidekiq
         end
 
         app.get '/api/statistic.json' do
-          statistic = Sidekiq::Statistic::Workers.new(*calculate_date_range(params))
+          statistic = Sidekiq::Statistic::Workers.new(build_filter_from_request)
           Sidekiq.dump_json(workers: statistic.display)
         end
 
         app.get '/api/statistic/:worker.json' do
           worker_statistic =
             Sidekiq::Statistic::Workers
-              .new(*calculate_date_range(params))
+              .new(build_filter_from_request)
               .display_per_day(params[:worker])
 
           Sidekiq.dump_json(days: worker_statistic)
