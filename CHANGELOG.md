@@ -1,5 +1,9 @@
 ## HEAD
 
+## v2.1.0
+* 31.05.2023: Add a new endpoint (/sidekiq/api/statistic_by_last_job_status.json) *Rhian Moraes*
+* 31.05.2023: /sidekiq/statistic: add two checkboxes to show/hide workers based on their last job status (#113) *Rhian Moraes*
+
 ## v2.0.0
 
 #### BREAK

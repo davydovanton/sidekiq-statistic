@@ -123,17 +123,6 @@ module Sidekiq
         end
       end
 
-      describe "#filter_last_job_status" do
-        it 'return array with worker when filtering by passed workers' do
-          middlewared {}
-
-          subject = statistic.filter_last_job_status('passed')
-
-          _(subject).must_be_instance_of Array
-          assert_equal subject[0][:name], worker
-        end
-      end
-
       describe '#display_per_day' do
         it 'return workers job per day' do
           middlewared {}
