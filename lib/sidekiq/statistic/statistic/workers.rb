@@ -17,6 +17,15 @@ module Sidekiq
         end
       end
 
+      def display_by_last_status
+        filtered_workers = display.group_by { |worker| worker[:last_job_status] }
+
+        filtered_workers['passed'] ||= []
+        filtered_workers['failed'] ||= []
+
+        filtered_workers
+      end
+
       def display_per_day(worker_name)
         statistic_hash.flat_map do |day|
           day.reject{ |_, workers| workers.empty? }.map do |date, workers|

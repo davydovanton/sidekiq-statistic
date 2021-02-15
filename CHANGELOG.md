@@ -1,5 +1,9 @@
 ## HEAD
 
+## v1.6.0
+* 11.02.2021: Add a new endpoint (/sidekiq/api/statistic_by_last_job_status.json) *Rhian Moraes*
+* 11.02.2021: /sidekiq/statistic: add two checkboxes to show/hide workers based on their last job status (#113) *Rhian Moraes*
+
 ## v1.5.1
 
 * 06.02.2021: Generate new TAG to fix "version.rb" not updated in the previous one (#170) *Wender Freese*
