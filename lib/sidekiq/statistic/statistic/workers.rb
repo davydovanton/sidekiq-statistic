@@ -18,12 +18,12 @@ module Sidekiq
       end
 
       def display_by_last_status
-        filtered_workers = display.group_by {|worker| worker[:last_job_status] }
+        filtered_workers = display.group_by { |worker| worker[:last_job_status] }
 
         filtered_workers['passed'] ||= []
         filtered_workers['failed'] ||= []
 
-        filtered_workers.transform_keys(&:to_sym)
+        filtered_workers
       end
 
       def display_per_day(worker_name)

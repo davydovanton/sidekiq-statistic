@@ -112,14 +112,14 @@ module Sidekiq
 
           _(subject).must_be_instance_of Hash
           assert_equal subject.keys.sort,
-                       %i[passed failed].sort
+                       %w[passed failed].sort
 
-          _(subject[:passed]).must_be_instance_of Array
-          _(subject[:failed]).must_be_instance_of Array
-          assert_equal subject[:passed][0].keys.sort,
+          _(subject['passed']).must_be_instance_of Array
+          _(subject['failed']).must_be_instance_of Array
+          assert_equal subject['passed'][0].keys.sort,
                       %i[name last_job_status number_of_calls queue runtime].sort
 
-          assert_equal worker, subject[:passed][0][:name]
+          assert_equal worker, subject['passed'][0][:name]
         end
       end
 
