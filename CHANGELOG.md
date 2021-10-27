@@ -1,5 +1,10 @@
 ## HEAD
 
+## v2.0.0
+
+#### BREAK
+* 27.10.2021: Remove support for Logs feature (#171) *Wender Freese*
+
 ## v1.5.1
 
 * 06.02.2021: Generate new TAG to fix "version.rb" not updated in the previous one (#170) *Wender Freese*

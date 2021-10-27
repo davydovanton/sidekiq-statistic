@@ -86,7 +86,6 @@ module Sidekiq
 
           @worker_statistic = Workers.new(*calculate_date_range(params))
                                      .display_per_day(@name)
-          @worker_log = LogParser.new(@name).parse
 
           render(:erb, Views.require_assets('worker.erb').first)
         end

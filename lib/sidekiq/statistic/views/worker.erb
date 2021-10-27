@@ -12,8 +12,9 @@
   <h2><%= t('WorkerInformation', worker: @name) %></h2>
 
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#" class="statistic__tab" data-target=".statistic__table"><%= t('InformationTable') %></a></li>
-    <li><a href="#" class="statistic__tab" data-target=".statistic__log"><%= t('WorkerLog') %></a></li>
+    <li class="active">
+      <a href="#" class="statistic__tab" data-target=".statistic__table"><%= t('InformationTable') %></a>
+    </li>
   </ul>
 
   <div class="statistic__container live-reload">
@@ -59,20 +60,6 @@
           </tr>
         <% end %>
       </table>
-    </div>
-
-    <div class="statistic__log">
-      <input type="text" class="border-radius" placeholder="<%= t('SearchLogs') %>" />
-
-      <% if @worker_log.empty? %>
-        <%= t('EmptyLogs') %>
-        <br/>
-        <small><%= Sidekiq::Statistic.configuration.log_file %></small>
-      <% else %>
-        <% @worker_log.each do |line| %>
-          <p class="statistic__i"><%= line %></p>
-        <% end %>
-      <% end %>
     </div>
   </div>
 </div>

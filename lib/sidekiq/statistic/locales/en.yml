@@ -23,8 +23,5 @@ en: # <---- change this to your locale code
   LastJobStatus: Last Job Status
   WorkerInformation: '%{worker} information'
   InformationTable: Information table
-  WorkerLog: Worker log
   WorkerTablePerDay: Worker table (per day)
   LastRun: Last run
-  EmptyLogs: No results
-  SearchLogs: Search in log file
