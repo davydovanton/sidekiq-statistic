@@ -3,7 +3,10 @@
   <link href="<%= root_path %>ui-datepicker.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="<%= root_path %>sidekiq-statistic-light.css" media="screen and (prefers-color-scheme: light)" rel="stylesheet" type="text/css" />
   <link href="<%= root_path %>sidekiq-statistic-dark.css" media="screen and (prefers-color-scheme: dark)" rel="stylesheet" type="text/css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <% if Sidekiq::VERSION >= '6.3' %>
+    <!-- Jquery was removed in Sidekiq 6.3, so we need to explicitly add it. Several components (e.g. datepicker) require it -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <% end %>
 <% end %>
 
 <script type="text/javascript" src="<%= root_path %>c3.js"></script>
