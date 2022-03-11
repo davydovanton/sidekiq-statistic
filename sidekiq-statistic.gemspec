@@ -22,7 +22,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'sidekiq', '>= 5.0'
   gem.add_dependency 'tilt', '~> 2.0'
 
-  gem.add_development_dependency 'rake', '~> 0'
+  gem.add_development_dependency 'rake', '~> 13.0'
   gem.add_development_dependency 'mocha', '~> 0'
   gem.add_development_dependency 'rack-test', '~> 0'
   gem.add_development_dependency 'rack', '~> 1.6.4'
