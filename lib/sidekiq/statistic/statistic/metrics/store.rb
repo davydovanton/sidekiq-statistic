@@ -19,8 +19,7 @@ module Sidekiq
           cache_length = 0
 
           Sidekiq.redis do |redis|
-            redis.pipelined { cache_length = store_cache_metrics(redis) }
-
+            redis.pipelined { |pipeline| cache_length = store_cache_metrics(pipeline) }
             release_cache_allocation(redis, cache_length)
           end
         end
