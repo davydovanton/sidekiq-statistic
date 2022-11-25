@@ -27,18 +27,18 @@ module Sidekiq
         private
 
         def store_cache_metrics(redis)
-          redis.hincrby(REDIS_HASH, @keys.status, 1)
+          redis.pipelined do |pipeline|
+            pipeline.hincrby(REDIS_HASH, @keys.status, 1)
 
-          redis.hmset(REDIS_HASH, @keys.last_job_status, @metric.status,
+            pipeline.hmset(REDIS_HASH, @keys.last_job_status, @metric.status,
                                   @keys.last_time, @metric.finished_at.to_i,
                                   @keys.queue, @metric.queue)
 
-          length = redis.lpush(@keys.timeslist, @metric.duration)
+            pipeline.hincrby(@keys.realtime, @keys.class_name, 1)
+            pipeline.expire(@keys.realtime, 2)
+          end
 
-          redis.hincrby(@keys.realtime, @keys.class_name, 1)
-          redis.expire(@keys.realtime, 2)
-
-          length
+          redis.lpush(@keys.timeslist, @metric.duration)
         end
 
         # The "timeslist" stores an array of decimal numbers representing
