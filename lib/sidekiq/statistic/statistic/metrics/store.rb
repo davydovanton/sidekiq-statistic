@@ -19,7 +19,7 @@ module Sidekiq
           cache_length = 0
 
           Sidekiq.redis do |redis|
-            redis.pipelined { |pipeline| cache_length = store_cache_metrics(pipeline) }
+            cache_length = store_cache_metrics(redis)
             release_cache_allocation(redis, cache_length)
           end
         end
@@ -51,7 +51,7 @@ module Sidekiq
         def release_cache_allocation(redis, timelist_length)
           max_timelist_length = Sidekiq::Statistic.configuration.max_timelist_length
 
-          if timelist_length.value > max_timelist_length
+          if timelist_length > max_timelist_length
             redis.ltrim(@keys.timeslist, 0, (max_timelist_length * 0.75).to_i)
           end
         end
