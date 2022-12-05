@@ -19,7 +19,7 @@ module Sidekiq
           cache_length = 0
 
           Sidekiq.redis do |redis|
-            redis.pipelined { |pipeline| cache_length = store_cache_metrics(pipeline) }
+            cache_length = store_cache_metrics(redis)
             release_cache_allocation(redis, cache_length)
           end
         end
@@ -27,18 +27,18 @@ module Sidekiq
         private
 
         def store_cache_metrics(redis)
-          redis.hincrby(REDIS_HASH, @keys.status, 1)
+          redis.pipelined do |pipeline|
+            pipeline.hincrby(REDIS_HASH, @keys.status, 1)
 
-          redis.hmset(REDIS_HASH, @keys.last_job_status, @metric.status,
+            pipeline.hmset(REDIS_HASH, @keys.last_job_status, @metric.status,
                                   @keys.last_time, @metric.finished_at.to_i,
                                   @keys.queue, @metric.queue)
 
-          length = redis.lpush(@keys.timeslist, @metric.duration)
+            pipeline.hincrby(@keys.realtime, @keys.class_name, 1)
+            pipeline.expire(@keys.realtime, 2)
+          end
 
-          redis.hincrby(@keys.realtime, @keys.class_name, 1)
-          redis.expire(@keys.realtime, 2)
-
-          length
+          redis.lpush(@keys.timeslist, @metric.duration)
         end
 
         # The "timeslist" stores an array of decimal numbers representing
@@ -51,7 +51,7 @@ module Sidekiq
         def release_cache_allocation(redis, timelist_length)
           max_timelist_length = Sidekiq::Statistic.configuration.max_timelist_length
 
-          if timelist_length.value > max_timelist_length
+          if timelist_length > max_timelist_length
             redis.ltrim(@keys.timeslist, 0, (max_timelist_length * 0.75).to_i)
           end
         end
