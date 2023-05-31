@@ -40,6 +40,11 @@
     </div>
 
     <h2><%= t('WorkersTable') %></h2>
+    <div id="status_filters_checkboxes">
+      <p><strong><%= t('LastJobStatus') %>:</strong></p>
+      <p><input type="checkbox" id="show-passed" checked> <%= t('Passed') %></p>
+      <p><input type="checkbox" id="show-failed" checked> <%= t('Failed') %></p>
+    </div>
     <table class="statistic__table table table-hover table-bordered table-striped table-white live-reload">
       <thead>
         <th><%= t('Worker') %></th>
@@ -56,7 +61,7 @@
       </thead>
       <tbody>
       <% @all_workers.each do |worker| %>
-        <tr>
+        <tr class="worker-<%= worker[:last_job_status] %>">
           <td>
             <a href="<%= root_path %>statistic/<%= worker[:name] %>"><%= worker[:name] %></a>
           </td>
