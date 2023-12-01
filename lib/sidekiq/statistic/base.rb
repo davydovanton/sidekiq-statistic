@@ -85,7 +85,7 @@ module Sidekiq
         statistics = time_statistics(timeslist)
 
         Sidekiq.redis do |redis|
-          redis.hmset Metrics::Store::REDIS_HASH,
+          redis.hset Metrics::Store::REDIS_HASH,
             statistics.flat_map{ |(k, v)| ["#{worker_key}:#{k}", v] }
         end
 
